@@ -1,4 +1,4 @@
-package org.teamseven.tetris.UI.StartMenu;
+package org.teamseven.tetris.ui.startmenu;
 
 public interface IDesign {
     void setComp();
