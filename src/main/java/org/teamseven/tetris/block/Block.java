@@ -23,19 +23,26 @@ public abstract class Block {
         return color;
     }
 
-    public void rotate() {
-        int[][] tmp = new int[2][2];
+    public void left_rotate() {
+        int[][] tmp = new int[shape[0].length][shape.length];
 
         for (int i = 0; i < shape.length; i++) {
             for (int j = 0; j < shape[i].length; j++) {
-                tmp[i][j] = shape[shape.length - 1 - j][i];
+                tmp[shape[i].length - 1 - j][i] = shape[i][j];
             }
         }
+        shape = tmp;
+    }
+
+    public void right_rotate() {
+        int[][] tmp = new int[shape[0].length][shape.length];
+
         for (int i = 0; i < shape.length; i++) {
             for (int j = 0; j < shape[i].length; j++) {
-                shape[i][j] = tmp[i][j];
+                tmp[j][shape.length - 1 - i] = shape[i][j];
             }
         }
+        shape = tmp;
     }
 
     public int height() {
