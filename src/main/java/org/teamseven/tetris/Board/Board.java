@@ -18,7 +18,7 @@ public class Board {
         return board;
     }
 
-    private void eraseCurr(CurrBlock curr) {
+    public void eraseCurr(CurrBlock curr) {
         for (int i = curr.x; i < curr.x + curr.width(); i++) {
             for (int j = curr.y; j < curr.y + curr.height(); j++) {
                 board[j][i] = 0;
@@ -26,9 +26,11 @@ public class Board {
         }
     }
 
-//    public void placeBlock() {
-//        for (int j = 0; j < block.height(); j++) {
-//
-//        }
-//    }
+    public void placeBlock(CurrBlock curr) {
+        for (int j = curr.y; j < curr.height(); j++) {
+            for (int i = curr.x; i < curr.width(); i++) {
+                board[j][i] = curr.getBlock().getShape(i, j);
+            }
+        }
+    }
 }
