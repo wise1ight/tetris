@@ -36,4 +36,16 @@ public class Board {
             }
         }
     }
+
+    /*
+     * 테스트용 메서드
+     */
+    public void printBoard() {
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
 }
