@@ -32,7 +32,8 @@ public class Board {
     public void placeBlock(CurrBlock curr) {
         for (int j = 0; j < curr.height(); j++) {
             for (int i = 0; i < curr.width(); i++) {
-                board[curr.y + j][curr.x + i] = curr.getBlock().getShape(i, j);
+                if (curr.getBlock().getShape(i, j) == 1)
+                    board[curr.y + j][curr.x + i] = 1;
             }
         }
     }
@@ -41,6 +42,7 @@ public class Board {
      * 테스트용 메서드
      */
     public void printBoard() {
+        System.out.println("======================");
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 System.out.print(board[i][j] + " ");
