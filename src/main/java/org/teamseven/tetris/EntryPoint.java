@@ -1,6 +1,6 @@
 package org.teamseven.tetris;
 
-import org.teamseven.tetris.ui.startmenu.MainFrame;
+import org.teamseven.tetris.ui.MainFrame;
 
 public class EntryPoint {
 

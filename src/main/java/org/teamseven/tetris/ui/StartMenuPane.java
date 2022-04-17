@@ -1,9 +1,6 @@
-package org.teamseven.tetris.ui.startmenu;
+package org.teamseven.tetris.ui;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;

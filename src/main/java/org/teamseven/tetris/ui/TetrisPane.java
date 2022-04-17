@@ -1,4 +1,4 @@
-package org.teamseven.tetris.ui.startmenu;
+package org.teamseven.tetris.ui;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
