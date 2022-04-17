@@ -45,7 +45,6 @@ public class BlockMovementHandler {
         int x = curr.x + vec[1];
         int y = curr.y + vec[0];
 
-//        System.out.println("!outOfBoard(x, y, curr) = " + !outOfBoard(x, y, curr));
         return !outOfBoard(x, y, curr) && !isBlocked(x, y, curr, board.getBoard());
     }
 }
