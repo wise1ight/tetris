@@ -4,6 +4,7 @@ import org.teamseven.tetris.block.CurrBlock;
 
 import static org.teamseven.tetris.Const.HEIGHT;
 import static org.teamseven.tetris.Const.WIDTH;
+import static org.teamseven.tetris.util.BoardUtil.isFilled;
 
 public class Board {
 
@@ -36,6 +37,19 @@ public class Board {
                     board[curr.y + j][curr.x + i] = 1;
             }
         }
+    }
+
+    public int eraseLines() {
+        int erased = 0;
+
+        for (int j = 0; j < HEIGHT; j++) {
+            if (isFilled(board[j])) {
+                int[] blankLine = new int[WIDTH];
+                board[j] = blankLine;
+                erased++;
+            }
+        }
+        return erased;
     }
 
     /*
