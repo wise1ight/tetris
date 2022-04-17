@@ -18,7 +18,7 @@ public class BlockMovementHandler {
         }
         else {
             board.placeBlock(curr);
-            curr = new CurrBlock();
+            curr.newBlock();
         }
         board.placeBlock(curr);
     }
