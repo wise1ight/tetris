@@ -52,29 +52,4 @@ class BlockTest {
                                                             {1, 0}}));
         }
     }
-
-
-    @Test
-    @DisplayName("I블럭 회전 테스트")
-    void IBlock_rotate() {
-        int[][] expected = new int[][]{{1}, {1}, {1}, {1}};
-        Block block = new IBlock();
-
-        block.right_rotate();
-
-        assertThat(block.shape).isDeepEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("J블럭 회전 테스트")
-    void rotate() {
-        int[][] expected = new int[][]{{0, 1},
-                                       {0, 1},
-                                       {1, 1}};
-        Block block = new JBlock();
-
-        block.right_rotate();
-
-        assertThat(block.shape).isDeepEqualTo(expected);
-    }
 }
