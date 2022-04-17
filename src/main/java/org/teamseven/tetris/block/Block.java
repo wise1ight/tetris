@@ -53,7 +53,7 @@ public abstract class Block {
     }
 
     public int width() {
-        if(shape.length > 0)
+        if (shape.length > 0)
             return shape[0].length;
         return 0;
     }

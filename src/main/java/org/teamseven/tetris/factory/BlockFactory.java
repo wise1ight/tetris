@@ -8,6 +8,7 @@ public class BlockFactory {
     public static BlockGenerator blockGenerator(String algorithm) {
         if ("random".equals(algorithm))
             return new RandomBlockGenerator();
-        else return null;
+        else
+            return null;
     }
 }

@@ -315,8 +315,6 @@ class BlockMovementHandlerTest {
             moveDown(board, curr);
             board.eraseCurr(curr);
 
-            board.printBoard();
-
             assertThat(board.getBoard()).isDeepEqualTo(expected);
         }
     }

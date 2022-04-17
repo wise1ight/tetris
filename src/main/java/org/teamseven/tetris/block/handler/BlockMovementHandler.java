@@ -9,11 +9,10 @@ import static org.teamseven.tetris.util.BlockMovementHandlerUtil.outOfBoard;
 public class BlockMovementHandler {
 
     public static void moveDown(Board board, CurrBlock curr) {
-        if(canMove(board, curr, new int[]{1, 0})) {
+        if (canMove(board, curr, new int[]{1, 0})) {
             board.eraseCurr(curr);
             curr.y++;
-        }
-        else {
+        } else {
             board.placeBlock(curr);
             curr.newBlock();
         }
