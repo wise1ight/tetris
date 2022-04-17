@@ -1,6 +1,5 @@
 package org.teamseven.tetris.Board;
 
-import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
 
 import static org.teamseven.tetris.Const.HEIGHT;
@@ -27,9 +26,9 @@ public class Board {
     }
 
     public void placeBlock(CurrBlock curr) {
-        for (int j = curr.y; j < curr.height(); j++) {
-            for (int i = curr.x; i < curr.width(); i++) {
-                board[j][i] = curr.getBlock().getShape(i, j);
+        for (int j = 0; j < curr.height(); j++) {
+            for (int i = 0; i < curr.width(); i++) {
+                board[curr.y + j][curr.x + i] = curr.getBlock().getShape(i, j);
             }
         }
     }

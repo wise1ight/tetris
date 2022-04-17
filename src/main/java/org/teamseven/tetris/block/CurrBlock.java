@@ -5,6 +5,11 @@ public class CurrBlock {
     public int y;
     private Block block;
 
+    public CurrBlock() {
+        x = 3;
+        y = 0;
+    }
+
     public int height() {
         return block.height();
     }
@@ -21,3 +26,4 @@ public class CurrBlock {
         this.block = block;
     }
 }
+
