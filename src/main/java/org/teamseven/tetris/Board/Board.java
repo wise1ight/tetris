@@ -7,7 +7,7 @@ import static org.teamseven.tetris.Const.WIDTH;
 
 public class Board {
 
-    private final int[][] board;
+    private int[][] board;
 
     public Board() {
         board = new int[HEIGHT][WIDTH];
@@ -15,6 +15,10 @@ public class Board {
 
     public int[][] getBoard() {
         return board;
+    }
+
+    public void setBoard(int[][] board) {
+        this.board = board;
     }
 
     public void eraseCurr(CurrBlock curr) {

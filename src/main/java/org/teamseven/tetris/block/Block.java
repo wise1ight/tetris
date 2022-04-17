@@ -2,6 +2,9 @@ package org.teamseven.tetris.block;
 
 import java.awt.*;
 
+import static org.teamseven.tetris.Const.HEIGHT;
+import static org.teamseven.tetris.Const.WIDTH;
+
 public abstract class Block {
 
     protected int[][] shape;
@@ -53,5 +56,17 @@ public abstract class Block {
         if(shape.length > 0)
             return shape[0].length;
         return 0;
+    }
+
+    /*
+     * 테스트용 메서드
+     */
+    public void printBoard() {
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                System.out.print(shape[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
