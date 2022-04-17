@@ -37,6 +37,17 @@ public class BlockMovementHandler {
         board.placeBlock(curr);
     }
 
+    public static void moveEnd(Board board, CurrBlock curr) {
+        int[] vec = new int[]{0, 0};
+
+        while (canMove(board, curr, vec)) {
+            vec[0]++;
+        }
+        board.eraseCurr(curr);
+        curr.y = vec[0] - 1;
+        board.placeBlock(curr);
+    }
+
     private static boolean canMove(Board board, CurrBlock curr, int[] vec) {
         int x = curr.x + vec[1];
         int y = curr.y + vec[0];
