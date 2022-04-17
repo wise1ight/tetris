@@ -2,17 +2,14 @@ package org.teamseven.tetris.block.handler;
 
 import org.teamseven.tetris.Board.Board;
 import org.teamseven.tetris.block.CurrBlock;
-import org.teamseven.tetris.factory.BlockFactory;
 
-import static org.teamseven.tetris.Const.HEIGHT;
-import static org.teamseven.tetris.Const.WIDTH;
 import static org.teamseven.tetris.util.BlockMovementHandlerUtil.isBlocked;
 import static org.teamseven.tetris.util.BlockMovementHandlerUtil.outOfBoard;
 
 public class BlockMovementHandler {
 
     public static void moveDown(Board board, CurrBlock curr) {
-        if(canMove(board, curr, new int[]{0, 1})) {
+        if(canMove(board, curr, new int[]{1, 0})) {
             board.eraseCurr(curr);
             curr.y++;
         }
@@ -24,7 +21,7 @@ public class BlockMovementHandler {
     }
 
     public static void moveRight(Board board, CurrBlock curr) {
-        if (!canMove(board, curr, new int[]{1, 0})) {
+        if (!canMove(board, curr, new int[]{0, 1})) {
             return;
         }
         board.eraseCurr(curr);
@@ -33,7 +30,7 @@ public class BlockMovementHandler {
     }
 
     public static void moveLeft(Board board, CurrBlock curr) {
-        if (!canMove(board, curr, new int[]{-1, 0})) {
+        if (!canMove(board, curr, new int[]{0, -1})) {
             return;
         }
         board.eraseCurr(curr);
