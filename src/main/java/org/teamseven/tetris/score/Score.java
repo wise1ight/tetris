@@ -36,7 +36,7 @@ public class Score implements Comparable<Score> {
 
     @Override
     public int compareTo(Score s) {
-        if (this.score.compareTo(s.score) > 0) {
+        if (this.score.compareTo(s.score) < 0) {
             return 1;
         } else if (this.name.compareTo(s.name) > 0) {
             return 1;
@@ -55,7 +55,6 @@ public class Score implements Comparable<Score> {
         }
 
         Score s = (Score) obj;
-        System.out.println("s.uuid = " + s.uuid + " | this.uuid = " + uuid);
         return this.uuid.equals(s.uuid);
     }
 }
