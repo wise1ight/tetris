@@ -1,6 +1,6 @@
 package org.teamseven.tetris.block.handler;
 
-import org.teamseven.tetris.Board.Board;
+import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.CurrBlock;
 
 import static org.teamseven.tetris.util.BlockMovementHandlerUtil.isBlocked;
@@ -8,7 +8,7 @@ import static org.teamseven.tetris.util.BlockMovementHandlerUtil.outOfBoard;
 
 public class BlockMovementHandler {
 
-    public static void moveDown(Board board, CurrBlock curr) {
+    public static void moveDown(GameBoard board, CurrBlock curr) {
         if (canMove(board, curr, new int[]{1, 0})) {
             board.eraseCurr(curr);
             curr.y++;
@@ -19,7 +19,7 @@ public class BlockMovementHandler {
         board.placeBlock(curr);
     }
 
-    public static void moveRight(Board board, CurrBlock curr) {
+    public static void moveRight(GameBoard board, CurrBlock curr) {
         if (!canMove(board, curr, new int[]{0, 1})) {
             return;
         }
@@ -28,7 +28,7 @@ public class BlockMovementHandler {
         board.placeBlock(curr);
     }
 
-    public static void moveLeft(Board board, CurrBlock curr) {
+    public static void moveLeft(GameBoard board, CurrBlock curr) {
         if (!canMove(board, curr, new int[]{0, -1})) {
             return;
         }
@@ -37,7 +37,7 @@ public class BlockMovementHandler {
         board.placeBlock(curr);
     }
 
-    public static void moveEnd(Board board, CurrBlock curr) {
+    public static void moveEnd(GameBoard board, CurrBlock curr) {
         int[] vec = new int[]{0, 0};
 
         while (canMove(board, curr, vec)) {
@@ -48,7 +48,7 @@ public class BlockMovementHandler {
         board.placeBlock(curr);
     }
 
-    private static boolean canMove(Board board, CurrBlock curr, int[] vec) {
+    private static boolean canMove(GameBoard board, CurrBlock curr, int[] vec) {
         int x = curr.x + vec[1];
         int y = curr.y + vec[0];
 

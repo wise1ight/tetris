@@ -4,10 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.teamseven.tetris.Board.Board;
+import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.CurrBlock;
+import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.block.ZBlock;
 
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -16,15 +18,15 @@ import static org.teamseven.tetris.Const.HEIGHT;
 import static org.teamseven.tetris.Const.WIDTH;
 import static org.teamseven.tetris.block.handler.BlockMovementHandler.*;
 
-class BlockMovementHandlerTest {
+class UnitBlockMovementHandlerTest {
 
-    Board board = new Board();
+    GameBoard board = new GameBoard();
     CurrBlock curr;
 
     @BeforeEach
     void init() {
         curr = new CurrBlock();
-        board.setBoard(new int[][]{
+        board.setBoard(initBoard(new int[][]{
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -45,7 +47,7 @@ class BlockMovementHandlerTest {
                 {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
                 {0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
-        });
+        }));
     }
 
     @Nested
@@ -56,7 +58,7 @@ class BlockMovementHandlerTest {
 
         @BeforeEach
         void reflectionMethod() throws NoSuchMethodException {
-            canMove = BlockMovementHandler.class.getDeclaredMethod("canMove", Board.class, CurrBlock.class, int[].class);
+            canMove = BlockMovementHandler.class.getDeclaredMethod("canMove", GameBoard.class, CurrBlock.class, int[].class);
             canMove.setAccessible(true);
         }
 
@@ -125,7 +127,7 @@ class BlockMovementHandlerTest {
         @Test
         @DisplayName("오른쪽 이동 테스트")
         void move_right_test() {
-            int[][] expected = new int[][]{
+            UnitBlock[][] expected = initBoard(new int[][]{
                     {0, 0, 0, 0, 1, 1, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 1, 1, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -146,7 +148,7 @@ class BlockMovementHandlerTest {
                     {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
                     {0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
-            };
+            });
 
             moveRight(board, curr);
 
@@ -156,7 +158,7 @@ class BlockMovementHandlerTest {
         @Test
         @DisplayName("오른쪽 이동 실패 테스트")
         void fail_to_move_right_test() {
-            int[][] expected = new int[][]{
+            UnitBlock[][] expected = initBoard(new int[][]{
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -177,7 +179,7 @@ class BlockMovementHandlerTest {
                     {0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
                     {0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
-            };
+            });
             curr.x = 0;
             curr.y = 16;
             board.placeBlock(curr);
@@ -190,7 +192,7 @@ class BlockMovementHandlerTest {
         @Test
         @DisplayName("왼쪽 이동 테스트")
         void move_left_test() {
-            int[][] expected = new int[][]{
+            UnitBlock[][] expected = initBoard(new int[][]{
                     {0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -211,7 +213,7 @@ class BlockMovementHandlerTest {
                     {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
                     {0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
-            };
+            });
 
             moveLeft(board, curr);
 
@@ -221,7 +223,7 @@ class BlockMovementHandlerTest {
         @Test
         @DisplayName("왼쪽 이동 실패 테스트")
         void fail_to_move_left_test() {
-            int[][] expected = new int[][]{
+            UnitBlock[][] expected = initBoard(new int[][]{
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -242,7 +244,7 @@ class BlockMovementHandlerTest {
                     {0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
                     {0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
-            };
+            });
             curr.x = 0;
             curr.y = 16;
             board.placeBlock(curr);
@@ -255,7 +257,7 @@ class BlockMovementHandlerTest {
         @Test
         @DisplayName("아래 이동 테스트")
         void move_down_test() {
-            int[][] expected = new int[][]{
+            UnitBlock[][] expected = initBoard(new int[][]{
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 1, 1, 0, 0, 0, 0},
@@ -276,7 +278,7 @@ class BlockMovementHandlerTest {
                     {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
                     {0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
-            };
+            });
 
             moveDown(board, curr);
 
@@ -286,7 +288,7 @@ class BlockMovementHandlerTest {
         @Test
         @DisplayName("아래 이동 실패 테스트")
         void fail_to_move_down_test() {
-            int[][] expected = new int[][]{
+            UnitBlock[][] expected = initBoard(new int[][]{
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -307,7 +309,7 @@ class BlockMovementHandlerTest {
                     {1, 1, 0, 1, 0, 0, 0, 0, 0, 0},
                     {0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
                     {0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
-            };
+            });
             curr.x = 0;
             curr.y = 17;
             board.placeBlock(curr);
@@ -321,7 +323,7 @@ class BlockMovementHandlerTest {
         @Test
         @DisplayName("밑으로 한 번에 이동 테스트")
         void move_end_test() {
-            int[][] expected = new int[][]{
+            UnitBlock[][] expected = initBoard(new int[][]{
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -342,11 +344,24 @@ class BlockMovementHandlerTest {
                     {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
                     {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
                     {0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
-            };
+            });
 
             moveEnd(board, curr);
 
             assertThat(board.getBoard()).isDeepEqualTo(expected);
         }
+    }
+
+    UnitBlock[][] initBoard(int[][] bitBoard) {
+        UnitBlock[][] board = new UnitBlock[HEIGHT][WIDTH];
+
+        for (int j = 0; j < HEIGHT; j++) {
+            for (int i = 0; i < WIDTH; i++) {
+                if (bitBoard[j][i] == 1) {
+                    board[j][i] = new UnitBlock(Color.BLACK);
+                }
+            }
+        }
+        return board;
     }
 }

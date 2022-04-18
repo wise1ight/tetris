@@ -1,14 +1,14 @@
 package org.teamseven.tetris.block;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class JBlock extends Block {
 
     public JBlock() {
-        shape = new int[][] {
-                {1, 1, 1},
-                {0, 0, 1}
-        };
         color = Color.BLUE;
+        shape = new UnitBlock[][] {
+                {new UnitBlock(color), new UnitBlock(color), new UnitBlock(color)},
+                {null,                 null,                 new UnitBlock(color)}
+        };
     }
 }

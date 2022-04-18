@@ -1,31 +1,32 @@
 package org.teamseven.tetris.Board;
 
 import org.teamseven.tetris.block.CurrBlock;
+import org.teamseven.tetris.block.UnitBlock;
 
 import static org.teamseven.tetris.Const.HEIGHT;
 import static org.teamseven.tetris.Const.WIDTH;
 import static org.teamseven.tetris.util.BoardUtil.isFilled;
 
-public class Board {
+public class GameBoard {
 
-    private int[][] board;
+    private UnitBlock[][] board;
 
-    public Board() {
-        board = new int[HEIGHT][WIDTH];
+    public GameBoard() {
+        board = new UnitBlock[HEIGHT][WIDTH];
     }
 
-    public int[][] getBoard() {
+    public UnitBlock[][] getBoard() {
         return board;
     }
 
-    public void setBoard(int[][] board) {
+    public void setBoard(UnitBlock[][] board) {
         this.board = board;
     }
 
     public void eraseCurr(CurrBlock curr) {
         for (int i = curr.x; i < curr.x + curr.width(); i++) {
             for (int j = curr.y; j < curr.y + curr.height(); j++) {
-                board[j][i] = 0;
+                board[j][i] = null;
             }
         }
     }
@@ -33,8 +34,8 @@ public class Board {
     public void placeBlock(CurrBlock curr) {
         for (int j = 0; j < curr.height(); j++) {
             for (int i = 0; i < curr.width(); i++) {
-                if (curr.getBlock().getShape(i, j) == 1)
-                    board[curr.y + j][curr.x + i] = 1;
+                if (curr.getBlock().getUnitBlock(i, j) != null)
+                    board[curr.y + j][curr.x + i] = curr.getBlock().getUnitBlock(i, j);
             }
         }
     }
@@ -44,7 +45,7 @@ public class Board {
 
         for (int j = 0; j < HEIGHT; j++) {
             if (isFilled(board[j])) {
-                int[] blankLine = new int[WIDTH];
+                UnitBlock[] blankLine = new UnitBlock[WIDTH];
                 board[j] = blankLine;
                 erased++;
             }
@@ -59,7 +60,7 @@ public class Board {
         System.out.println("======================");
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
-                System.out.print(board[i][j] + " ");
+                System.out.print((board[i][j] != null ? 1 : 0) + " ");
             }
             System.out.println();
         }

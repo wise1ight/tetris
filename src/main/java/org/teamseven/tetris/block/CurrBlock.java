@@ -17,20 +17,20 @@ public class CurrBlock {
         y = 0;
     }
 
-    public int height() {
-        return block.height();
-    }
-
-    public int width() {
-        return block.width();
+    public void setBlock(Block block) {
+        this.block = block;
     }
 
     public Block getBlock() {
         return block;
     }
 
-    public void setBlock(Block block) {
-        this.block = block;
+    public int width() {
+        return block.width();
+    }
+
+    public int height() {
+        return block.height();
     }
 }
 
