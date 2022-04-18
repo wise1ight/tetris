@@ -1,12 +1,14 @@
 package org.teamseven.tetris.util;
 
+import org.teamseven.tetris.block.UnitBlock;
+
 import static org.teamseven.tetris.Const.WIDTH;
 
 public class BoardUtil {
 
-    public static boolean isFilled(int[] line) {
+    public static boolean isFilled(UnitBlock[] line) {
         for (int i = 0; i < WIDTH; i++) {
-            if (line[i] == 0) {
+            if (line[i] == null) {
                 return false;
             }
         }
