@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.teamseven.tetris.Board.Board;
+import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.block.ZBlock;
@@ -20,7 +20,7 @@ import static org.teamseven.tetris.block.handler.BlockMovementHandler.*;
 
 class UnitBlockMovementHandlerTest {
 
-    Board board = new Board();
+    GameBoard board = new GameBoard();
     CurrBlock curr;
 
     @BeforeEach
@@ -58,7 +58,7 @@ class UnitBlockMovementHandlerTest {
 
         @BeforeEach
         void reflectionMethod() throws NoSuchMethodException {
-            canMove = BlockMovementHandler.class.getDeclaredMethod("canMove", Board.class, CurrBlock.class, int[].class);
+            canMove = BlockMovementHandler.class.getDeclaredMethod("canMove", GameBoard.class, CurrBlock.class, int[].class);
             canMove.setAccessible(true);
         }
 

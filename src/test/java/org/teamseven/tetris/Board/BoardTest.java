@@ -16,12 +16,12 @@ import static org.teamseven.tetris.Const.WIDTH;
 class BoardTest {
 
     CurrBlock curr;
-    Board board;
+    GameBoard board;
 
     @BeforeEach
     void init() {
         curr = new CurrBlock();
-        board = new Board();
+        board = new GameBoard();
         curr.setBlock(new ZBlock());
     }
 
@@ -60,7 +60,7 @@ class BoardTest {
     void erase_block_test() {
         CurrBlock curr = new CurrBlock();
         curr.setBlock(new ZBlock());
-        Board originalBoard = new Board();
+        GameBoard originalBoard = new GameBoard();
 
         board.placeBlock(curr);
         board.eraseCurr(curr);

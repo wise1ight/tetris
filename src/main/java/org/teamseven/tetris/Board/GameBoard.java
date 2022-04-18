@@ -7,11 +7,11 @@ import static org.teamseven.tetris.Const.HEIGHT;
 import static org.teamseven.tetris.Const.WIDTH;
 import static org.teamseven.tetris.util.BoardUtil.isFilled;
 
-public class Board {
+public class GameBoard {
 
     private UnitBlock[][] board;
 
-    public Board() {
+    public GameBoard() {
         board = new UnitBlock[HEIGHT][WIDTH];
     }
 
