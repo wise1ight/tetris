@@ -5,13 +5,11 @@ import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.teamseven.tetris.Const.SCORE_FILE;
 import static org.teamseven.tetris.Const.SCORE_ROOT;
 
 public class ScoreHandler {
