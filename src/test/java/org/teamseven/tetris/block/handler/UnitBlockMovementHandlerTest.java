@@ -14,8 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.teamseven.tetris.Const.HEIGHT;
-import static org.teamseven.tetris.Const.WIDTH;
+import static org.teamseven.tetris.Const.*;
 import static org.teamseven.tetris.block.handler.BlockMovementHandler.*;
 
 class UnitBlockMovementHandlerTest {
@@ -150,7 +149,7 @@ class UnitBlockMovementHandlerTest {
                     {0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
             });
 
-            moveRight(board, curr);
+            move(board, curr, RIGHT);
 
             assertThat(board.getBoard()).isDeepEqualTo(expected);
         }
@@ -184,7 +183,7 @@ class UnitBlockMovementHandlerTest {
             curr.y = 16;
             board.placeBlock(curr);
 
-            moveRight(board, curr);
+            move(board, curr, RIGHT);
 
             assertThat(board.getBoard()).isDeepEqualTo(expected);
         }
@@ -215,7 +214,7 @@ class UnitBlockMovementHandlerTest {
                     {0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
             });
 
-            moveLeft(board, curr);
+            move(board, curr, LEFT);
 
             assertThat(board.getBoard()).isDeepEqualTo(expected);
         }
@@ -249,7 +248,7 @@ class UnitBlockMovementHandlerTest {
             curr.y = 16;
             board.placeBlock(curr);
 
-            moveLeft(board, curr);
+            move(board, curr, LEFT);
 
             assertThat(board.getBoard()).isDeepEqualTo(expected);
         }
@@ -280,7 +279,7 @@ class UnitBlockMovementHandlerTest {
                     {0, 0, 1, 1, 1, 1, 0, 0, 0, 0}
             });
 
-            moveDown(board, curr);
+            move(board, curr, DOWN);
 
             assertThat(board.getBoard()).isDeepEqualTo(expected);
         }
@@ -314,8 +313,7 @@ class UnitBlockMovementHandlerTest {
             curr.y = 17;
             board.placeBlock(curr);
 
-            moveDown(board, curr);
-            board.eraseCurr(curr);
+            move(board, curr, DOWN);
 
             assertThat(board.getBoard()).isDeepEqualTo(expected);
         }
