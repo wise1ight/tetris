@@ -2,9 +2,11 @@ package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.Const;
+import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.block.handler.BlockMovementHandler;
+import org.teamseven.tetris.factory.BlockFactory;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -17,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import static org.teamseven.tetris.Const.*;
+
 public class TetrisFrame extends JFrame implements KeyListener {
 
     public static final char BORDER_CHAR = 'X';
@@ -26,8 +30,8 @@ public class TetrisFrame extends JFrame implements KeyListener {
     private SimpleAttributeSet styleSet;
     private Timer timer;
     private CurrBlock curr;
-    int x = 3; //Default Position.
-    int y = 0;
+    private Block nextBlock;
+    private boolean nextFlag;
 
     private static final int initInterval = 1000;
 
@@ -35,7 +39,7 @@ public class TetrisFrame extends JFrame implements KeyListener {
         super("SeoulTech SE Tetris");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setSize(400, 400);
+        setSize(400, 600);
 
         setVisible(true);
 
@@ -57,11 +61,23 @@ public class TetrisFrame extends JFrame implements KeyListener {
         StyleConstants.setForeground(styleSet, Color.WHITE);
         StyleConstants.setAlignment(styleSet, StyleConstants.ALIGN_CENTER);
 
+        //Create first block and next block
+        curr = new CurrBlock();
+        nextBlock = BlockFactory.blockGenerator("random").generate();
+
         //Set timer for block drops.
         timer = new Timer(initInterval, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                BlockMovementHandler.moveDown(board, curr);
+                BlockMovementHandler.move(board, curr, DOWN);
+                if (nextFlag) {
+                    curr.newBlock(nextBlock);
+                    nextBlock = BlockFactory.blockGenerator("random").generate();
+                    board.placeBlock(curr);
+                    nextFlag = false;
+                } else if (BlockMovementHandler.isStopped(board, curr, nextBlock)) {
+                    nextFlag = true;
+                }
                 drawBoard();
             }
         });
@@ -72,8 +88,7 @@ public class TetrisFrame extends JFrame implements KeyListener {
         setFocusable(true);
         requestFocus();
 
-        //Create the first block and draw.
-        curr = new CurrBlock();
+        //Draw board.
         board.placeBlock(curr);
         drawBoard();
         timer.start();
@@ -81,13 +96,14 @@ public class TetrisFrame extends JFrame implements KeyListener {
 
     public void drawBoard() {
         StringBuffer sb = new StringBuffer();
-        for(int t = 0; t< Const.WIDTH+2; t++)sb.append(BORDER_CHAR);
+
+        sb = drawWidthBorder(sb);
         sb.append("\n");
         UnitBlock[][] unitBlocks = board.getBoard();
-        for(int i=0; i < unitBlocks.length; i++) {
+        for (UnitBlock[] unitBlock : unitBlocks) {
             sb.append(BORDER_CHAR);
-            for(int j=0; j < unitBlocks[i].length; j++) {
-                if(unitBlocks[i][j] != null) {
+            for (UnitBlock block : unitBlock) {
+                if (block != null) {
                     sb.append("O");
                 } else {
                     sb.append(" ");
@@ -96,11 +112,20 @@ public class TetrisFrame extends JFrame implements KeyListener {
             sb.append(BORDER_CHAR);
             sb.append("\n");
         }
-        for(int t=0; t<Const.WIDTH+2; t++) sb.append(BORDER_CHAR);
+        sb = drawWidthBorder(sb);
+
         pane.setText(sb.toString());
         StyledDocument doc = pane.getStyledDocument();
         doc.setParagraphAttributes(0, doc.getLength(), styleSet, false);
         pane.setStyledDocument(doc);
+    }
+
+    private StringBuffer drawWidthBorder(StringBuffer sb) {
+        StringBuffer buffer = new StringBuffer(sb);
+        for (int t = 0; t< Const.WIDTH+2; t++) {
+            buffer.append(BORDER_CHAR);
+        }
+        return buffer;
     }
 
     @Override
@@ -110,22 +135,24 @@ public class TetrisFrame extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+//        System.out.println("e.toString() = " + e.toString());
         switch(e.getKeyCode()) {
             case KeyEvent.VK_DOWN:
-                BlockMovementHandler.moveDown(board, curr);
+                BlockMovementHandler.move(board, curr, DOWN);
                 drawBoard();
                 break;
             case KeyEvent.VK_RIGHT:
-                BlockMovementHandler.moveRight(board, curr);
+                BlockMovementHandler.move(board, curr, RIGHT);
                 drawBoard();
                 break;
             case KeyEvent.VK_LEFT:
-                BlockMovementHandler.moveLeft(board, curr);
+                BlockMovementHandler.move(board, curr, LEFT);
                 drawBoard();
                 break;
             case KeyEvent.VK_UP:
                 board.eraseCurr(curr);
                 curr.getBlock().right_rotate();
+                board.placeBlock(curr);
                 drawBoard();
                 break;
         }

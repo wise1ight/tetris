@@ -10,6 +10,7 @@ import static org.teamseven.tetris.util.BoardUtil.isFilled;
 public class GameBoard {
 
     private UnitBlock[][] board;
+    public static final char BORDER_CHAR = 'X';
 
     public GameBoard() {
         board = new UnitBlock[HEIGHT][WIDTH];
@@ -24,9 +25,11 @@ public class GameBoard {
     }
 
     public void eraseCurr(CurrBlock curr) {
-        for (int i = curr.x; i < curr.x + curr.width(); i++) {
-            for (int j = curr.y; j < curr.y + curr.height(); j++) {
-                board[j][i] = null;
+        for (int i = 0; i < curr.width(); i++) {
+            for (int j = 0; j < curr.height(); j++) {
+                if (curr.getBlock().getUnitBlock(i, j) != null) {
+                    board[j + curr.y][i + curr.x] = null;
+                }
             }
         }
     }

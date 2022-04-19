@@ -8,11 +8,13 @@ public class CurrBlock {
     private Block block;
 
     public CurrBlock() {
-        newBlock();
+        block = BlockFactory.blockGenerator("random").generate();
+        x = 3;
+        y = 0;
     }
 
-    public void newBlock() {
-        block = BlockFactory.blockGenerator("random").generate();
+    public void newBlock(Block nextBlock) {
+        block = nextBlock;
         x = 3;
         y = 0;
     }
