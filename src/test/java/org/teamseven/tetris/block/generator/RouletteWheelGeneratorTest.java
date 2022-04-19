@@ -2,16 +2,12 @@ package org.teamseven.tetris.block.generator;
 
 import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.ReflectionUtils;
-import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.*;
-import org.teamseven.tetris.block.handler.BlockMovementHandler;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.teamseven.tetris.Const.EASY;
 
 class RouletteWheelGeneratorTest {
