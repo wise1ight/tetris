@@ -23,22 +23,33 @@ public class RouletteWheelGenerator implements BlockGenerator {
         double num = random.nextInt(100) / 100.;
         int level = EASY;
         double[] prob = getProb(level);
+        double[] cumProb = getCumProb(prob);
 
-        if (num < prob[0]) {
+        if (num < cumProb[0]) {
             return new IBlock();
-        } else if (num < prob[1]) {
+        } else if (num < cumProb[1]) {
             return new OBlock();
-        } else if (num < prob[2]) {
+        } else if (num < cumProb[2]) {
             return new TBlock();
-        } else if (num < prob[3]) {
+        } else if (num < cumProb[3]) {
             return new JBlock();
-        } else if (num < prob[4]) {
+        } else if (num < cumProb[4]) {
             return new LBlock();
-        } else if (num < prob[5]) {
+        } else if (num < cumProb[5]) {
             return new SBlock();
         } else {
             return new ZBlock();
         }
+    }
+
+    private double[] getCumProb(double[] prob) {
+        double[] cumProb = new double[7];
+
+        cumProb[0] = prob[0];
+        for (int i = 1; i < 7; i++) {
+            cumProb[i] = cumProb[i - 1] + prob[i];
+        }
+        return cumProb;
     }
 
     private double[] getProb(int level) {
@@ -52,5 +63,4 @@ public class RouletteWheelGenerator implements BlockGenerator {
                 ZBlockFitness[level] / totalFitness[level]
         };
     }
-
 }
