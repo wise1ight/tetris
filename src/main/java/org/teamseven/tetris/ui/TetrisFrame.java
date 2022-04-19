@@ -71,10 +71,7 @@ public class TetrisFrame extends JFrame implements KeyListener {
             public void actionPerformed(ActionEvent e) {
                 BlockMovementHandler.move(board, curr, DOWN);
                 if (nextFlag) {
-                    curr.newBlock(nextBlock);
-                    nextBlock = BlockFactory.blockGenerator("random").generate();
-                    board.placeBlock(curr);
-                    nextFlag = false;
+                    nextTurn();
                 } else if (BlockMovementHandler.isStopped(board, curr, nextBlock)) {
                     nextFlag = true;
                 }
@@ -92,6 +89,13 @@ public class TetrisFrame extends JFrame implements KeyListener {
         board.placeBlock(curr);
         drawBoard();
         timer.start();
+    }
+
+    private void nextTurn() {
+        curr.newBlock(nextBlock);
+        nextBlock = BlockFactory.blockGenerator("random").generate();
+        board.placeBlock(curr);
+        nextFlag = false;
     }
 
     public void drawBoard() {
@@ -135,7 +139,7 @@ public class TetrisFrame extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-//        System.out.println("e.toString() = " + e.toString());
+        System.out.println("e.toString() = " + e.toString());
         switch(e.getKeyCode()) {
             case KeyEvent.VK_DOWN:
                 BlockMovementHandler.move(board, curr, DOWN);
@@ -155,6 +159,10 @@ public class TetrisFrame extends JFrame implements KeyListener {
                 board.placeBlock(curr);
                 drawBoard();
                 break;
+            case KeyEvent.VK_SPACE:
+                BlockMovementHandler.moveEnd(board, curr);
+                nextTurn();
+                drawBoard();
         }
     }
 

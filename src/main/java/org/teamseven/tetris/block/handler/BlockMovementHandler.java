@@ -31,44 +31,15 @@ public class BlockMovementHandler {
         return true;
     }
 
-    public static void moveDown(GameBoard board, CurrBlock curr) {
-//        board.eraseCurr(curr);
-        if (!canMove(board, curr, new int[]{1, 0})) {
-            return;
-//            board.placeBlock(curr);
-        }
-            curr.y++;
-    }
-
-    public static void moveRight(GameBoard board, CurrBlock curr) {
-//        board.eraseCurr(curr);
-        if (!canMove(board, curr, new int[]{0, 1})) {
-//            board.placeBlock(curr);
-            return;
-        }
-        curr.x++;
-//        board.placeBlock(curr);
-    }
-
-    public static void moveLeft(GameBoard board, CurrBlock curr) {
-//        board.eraseCurr(curr);
-        if (!canMove(board, curr, new int[]{0, -1})) {
-//            board.placeBlock(curr);
-            return;
-        }
-        curr.x--;
-//        board.placeBlock(curr);
-    }
-
     public static void moveEnd(GameBoard board, CurrBlock curr) {
         int[] vec = new int[]{0, 0};
 
-//        board.eraseCurr(curr);
+        board.eraseCurr(curr);
         while (canMove(board, curr, vec)) {
             vec[0]++;
         }
-        curr.y = vec[0] - 1;
-//        board.placeBlock(curr);
+        curr.y += vec[0] - 1;
+        board.placeBlock(curr);
     }
 
     private static boolean canMove(GameBoard board, CurrBlock curr, int[] vec) {
