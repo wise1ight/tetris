@@ -25,12 +25,12 @@ public class CurrBlock {
         y = 0;
     }
 
-    public void move(GameBoard board, int[] vec) {
-        handler.move(board, this, vec);
+    public int move(GameBoard board, int[] vec) {
+        return handler.move(board, this, vec);
     }
 
-    public void moveEnd(GameBoard board) {
-        handler.moveEnd(board, this);
+    public int moveEnd(GameBoard board) {
+        return handler.moveEnd(board, this);
     }
 
     public void rotate(GameBoard board) {

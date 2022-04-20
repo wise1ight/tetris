@@ -1,6 +1,7 @@
 package org.teamseven.tetris.score;
 
 import com.opencsv.bean.CsvDate;
+import org.teamseven.tetris.enums.Level;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -15,6 +16,7 @@ public class Score implements Comparable<Score> {
     @CsvDate("yyyy-MM-dd")
     private final LocalDate date;
     private final String uuid;
+//    private final Level level;
 
     public Score(int score, String name) {
         this.score = score;

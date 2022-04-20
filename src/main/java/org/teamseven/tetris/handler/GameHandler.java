@@ -1,21 +1,23 @@
 package org.teamseven.tetris.handler;
 
+import javax.swing.*;
+
+import static org.teamseven.tetris.util.GameHandlerUtil.*;
+
 public class GameHandler {
     private boolean pause = false;
     private int blockCnt;
-    private int score;
     private int erasedLines;
 
-    public boolean checkBlockCnt() {
-        if (blockCnt >= 10) {
-            blockCnt = 0;
-            return true;
+    public void speedUp(Timer timer) {
+        int delay = timer.getDelay();
+        if (checkBlockCnt(blockCnt)) {
+            timer.setDelay((int)(delay * 0.9));
         }
-        return false;
-    }
-
-    public boolean checkErasedLines(int erasedLines) {
-        return erasedLines > 0;
+        if (checkErasedLines(erasedLines)) {
+            timer.setDelay((int)(delay * Math.pow(0.99, erasedLines)));
+            erasedLines = 0;
+        }
     }
 
     public int getErasedLines() {
