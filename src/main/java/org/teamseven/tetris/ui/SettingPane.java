@@ -1,15 +1,13 @@
 package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Const;
+import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.util.PreferencesUtil;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 public class SettingPane extends JLayeredPane implements IDesign {
 
@@ -62,16 +60,16 @@ public class SettingPane extends JLayeredPane implements IDesign {
         GridLayout gridLayout = new GridLayout(4, 2);
         pKeyboard.setLayout(gridLayout);
         pKeyboard.add(new JLabel("왼쪽 이동"));
-        btnLeft = new JButton("LEFT ARROW");
+        btnLeft = new JButton("");
         pKeyboard.add(btnLeft);
         pKeyboard.add(new JLabel("오른쪽 이동"));
-        btnRight = new JButton("RIGHT ARROW");
+        btnRight = new JButton("");
         pKeyboard.add(btnRight);
         pKeyboard.add(new JLabel("시계 방향 회전"));
-        btnRotateRight = new JButton("RIGHT ARROW");
+        btnRotateRight = new JButton("");
         pKeyboard.add(btnRotateRight);
         pKeyboard.add(new JLabel("일시 중지"));
-        btnPause = new JButton("P");
+        btnPause = new JButton("");
         pKeyboard.add(btnPause);
 
         /*
@@ -154,39 +152,57 @@ public class SettingPane extends JLayeredPane implements IDesign {
         // Keyboard
         ActionListener keyboardActionListener = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getSource() instanceof JButton) {
-                    ((JButton) e.getSource()).setText("---");
+            public void actionPerformed(ActionEvent ae) {
+                if(ae.getSource() instanceof JButton) {
+                    JDialog dialog = new JDialog(Pipeline.getMainFrame(), "설정");
+                    dialog.setModal(true);
+                    JLabel label = new JLabel("키를 입력하세요");
+                    dialog.add(label);
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setSize(100, 100);
+                    dialog.setResizable(false);
+                    dialog.setFocusTraversalKeysEnabled(false);
+                    dialog.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            refreshPref();
+                        }
+                    });
+                    dialog.addKeyListener(new KeyListener() {
+                        @Override
+                        public void keyTyped(KeyEvent e) {
+
+                        }
+
+                        @Override
+                        public void keyPressed(KeyEvent e) {
+                            System.out.println(e.getKeyCode());
+                            if (ae.getSource() == btnLeft)
+                                PreferencesUtil.setLeftBtnCode(e.getKeyCode());
+                            else if (ae.getSource() == btnRight)
+                                PreferencesUtil.setRightBtnCode(e.getKeyCode());
+                            else if (ae.getSource() == btnRotateRight)
+                                PreferencesUtil.setRotateRightBtnCode(e.getKeyCode());
+                            else if (ae.getSource() == btnPause)
+                                PreferencesUtil.setPauseBtnCode(e.getKeyCode());
+
+                            dialog.dispose();
+                        }
+
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+
+                        }
+                    });
+                    dialog.setVisible(true);
                 }
             }
         };
 
-        KeyListener keyboardKeyListener = new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if(e.getSource() instanceof JButton) {
-                    ((JButton) e.getSource()).setText(KeyEvent.getKeyText(e.getKeyCode()));
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        };
         btnLeft.addActionListener(keyboardActionListener);
-        btnLeft.addKeyListener(keyboardKeyListener);
         btnRight.addActionListener(keyboardActionListener);
-        btnRight.addKeyListener(keyboardKeyListener);
         btnRotateRight.addActionListener(keyboardActionListener);
-        btnRotateRight.addKeyListener(keyboardKeyListener);
         btnPause.addActionListener(keyboardActionListener);
-        btnPause.addKeyListener(keyboardKeyListener);
 
         // Color Blindness
         ActionListener colorBlindnessActionListener = new ActionListener() {
@@ -248,6 +264,12 @@ public class SettingPane extends JLayeredPane implements IDesign {
                 rbLargeSize.setSelected(true);
                 break;
         }
+
+        // Keyboard
+        btnLeft.setText(KeyEvent.getKeyText(PreferencesUtil.getLeftBtnCode()));
+        btnRight.setText(KeyEvent.getKeyText(PreferencesUtil.getRightBtnCode()));
+        btnRotateRight.setText(KeyEvent.getKeyText(PreferencesUtil.getRotateRightBtnCode()));
+        btnPause.setText(KeyEvent.getKeyText(PreferencesUtil.getPauseBtnCode()));
 
         // Color Blindness
         switch (PreferencesUtil.getColorBlindnessType()) {

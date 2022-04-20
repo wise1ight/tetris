@@ -2,6 +2,7 @@ package org.teamseven.tetris.util;
 
 import org.teamseven.tetris.Const;
 
+import java.awt.event.KeyEvent;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -20,6 +21,38 @@ public class PreferencesUtil {
         } catch (BackingStoreException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int getLeftBtnCode() {
+        return prefs.getInt(Const.PREF_BTN_LEFT_KEY, KeyEvent.VK_LEFT);
+    }
+
+    public static void setLeftBtnCode(int keyCode) {
+        prefs.putInt(Const.PREF_BTN_LEFT_KEY, keyCode);
+    }
+
+    public static int getRightBtnCode() {
+        return prefs.getInt(Const.PREF_BTN_RIGHT_KEY, KeyEvent.VK_RIGHT);
+    }
+
+    public static void setRightBtnCode(int keyCode) {
+        prefs.putInt(Const.PREF_BTN_RIGHT_KEY, keyCode);
+    }
+
+    public static int getRotateRightBtnCode() {
+        return prefs.getInt(Const.PREF_BTN_ROTATE_RIGHT_KEY, KeyEvent.VK_UP);
+    }
+
+    public static void setRotateRightBtnCode(int keyCode) {
+        prefs.putInt(Const.PREF_BTN_ROTATE_RIGHT_KEY, keyCode);
+    }
+
+    public static int getPauseBtnCode() {
+        return prefs.getInt(Const.PREF_BTN_PAUSE_KEY, KeyEvent.VK_ESCAPE);
+    }
+
+    public static void setPauseBtnCode(int keyCode) {
+        prefs.putInt(Const.PREF_BTN_PAUSE_KEY, keyCode);
     }
 
     public static Const.ColorBlindnessType getColorBlindnessType() {
