@@ -9,7 +9,7 @@ import static org.teamseven.tetris.Const.WIDTH;
 public class BlockMovementHandlerUtil {
 
     public static boolean outOfBoard(int x, int y, CurrBlock curr) {
-        return !(y < HEIGHT - curr.height() && x >= 0 && x < WIDTH - curr.width());
+        return !(y <= HEIGHT - curr.height() && x >= 0 && x <= WIDTH - curr.width());
     }
 
     public static boolean isBlocked(int x, int y, CurrBlock curr, UnitBlock[][] board) {
