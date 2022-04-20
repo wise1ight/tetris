@@ -71,15 +71,11 @@ public class TetrisFrame extends JFrame implements KeyListener {
         timer = new Timer(initInterval, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("timer.getDelay() = " + timer.getDelay());
-                if (nextFlag) {
+                if (curr.isStopped(board, nextBlock)) {
+                    gameHandler.setErasedLines(board.eraseLines());
                     nextTurn();
                 } else {
                     curr.move(board, DOWN);
-                    if (curr.isStopped(board, nextBlock)) {
-                        gameHandler.setErasedLines(board.eraseLines());
-                        nextFlag = true;
-                    }
                 }
                 drawBoard();
             }

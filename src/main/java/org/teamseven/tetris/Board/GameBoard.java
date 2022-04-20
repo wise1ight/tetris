@@ -49,7 +49,10 @@ public class GameBoard {
         for (int j = 0; j < HEIGHT; j++) {
             if (isFilled(board[j])) {
                 UnitBlock[] blankLine = new UnitBlock[WIDTH];
-                board[j] = blankLine;
+                for (int i = j; i >= 1; i--) {
+                    board[i] = board[i - 1].clone();
+                }
+                board[0] = blankLine;
                 erased++;
             }
         }
