@@ -1,8 +1,9 @@
-package org.teamseven.tetris.score;
+package org.teamseven.tetris.handler;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
+import org.teamseven.tetris.score.Score;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 import static org.teamseven.tetris.Const.SCORE_ROOT;
 
-public class ScoreHandler {
+public class ScoreMemoryHandler {
 
     public void saveScoreFile(Score score, String fileName) {
         File file = new File(SCORE_ROOT + fileName);
