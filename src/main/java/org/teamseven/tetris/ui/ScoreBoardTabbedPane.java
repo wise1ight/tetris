@@ -58,16 +58,16 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
         itemScorePanelTab = new JPanel();
 
         titlePanel = new JPanel();
-        scorePanel1st = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        scorePanel2st = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        scorePanel3st = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        scorePanel4st = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        scorePanel5st = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        scorePanel6st = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        scorePanel7st = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        scorePanel8st = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        scorePanel9st = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        scorePanel10st = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        scorePanel1st = new JPanel(new GridLayout(0,4,0,0));
+        scorePanel2st = new JPanel(new GridLayout(0,4,0,0));
+        scorePanel3st = new JPanel(new GridLayout(0,4,0,0));
+        scorePanel4st = new JPanel(new GridLayout(0,4,0,0));
+        scorePanel5st = new JPanel(new GridLayout(0,4,0,0));
+        scorePanel6st = new JPanel(new GridLayout(0,4,0,0));
+        scorePanel7st = new JPanel(new GridLayout(0,4,0,0));
+        scorePanel8st = new JPanel(new GridLayout(0,4,0,0));
+        scorePanel9st = new JPanel(new GridLayout(0,4,0,0));
+        scorePanel10st = new JPanel(new GridLayout(0,4,0,0));
 
         scorePanels = new JPanel[]{scorePanel1st, scorePanel2st, scorePanel3st, scorePanel4st, scorePanel5st,
                 scorePanel6st, scorePanel7st, scorePanel8st, scorePanel9st, scorePanel10st};
@@ -125,11 +125,11 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
         gridBagConstraints.insets = new Insets(preferredResolution[1] * 4 / 130, 0, 0, 0);
         make(itemScorePanelTab, titlePanel,1,0,1,1);
         gridBagConstraints.weighty = 2.0;
-        gridBagConstraints.insets = new Insets(preferredResolution[1] * 4 / 130, preferredResolution[0] / 6, 0, preferredResolution[0] / 6);
+        gridBagConstraints.insets = new Insets(preferredResolution[1] * 4 / 130, preferredResolution[0] / 6, 0, preferredResolution[0] / 8);
 
         make(itemScorePanelTab, scorePanel1st,1,1,1,1);
 
-        gridBagConstraints.insets = new Insets(0, preferredResolution[0] / 6, 0, preferredResolution[0] / 6);
+        gridBagConstraints.insets = new Insets(0, preferredResolution[0] / 6, 0, preferredResolution[0] / 8);
         gridBagConstraints.weighty = 0.1;
         make(itemScorePanelTab, line1st,1,2,1,1);
         gridBagConstraints.weighty = 2.0;
@@ -193,8 +193,8 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
 
         itemScorePanelTab.setBackground(Color.white);
 
-        this.addTab("ddd",noItemScorePanelTab);
-        this.addTab("ccc",itemScorePanelTab);
+        this.addTab("noitem",noItemScorePanelTab);
+        this.addTab("item",itemScorePanelTab);
 
 
         leftButton.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 8 / 130));
@@ -248,7 +248,7 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
 
         // for test
         c.setBackground(Color.white);
-         //c.setBackground(Color.getHSBColor((y+1)  /9f + (x+1) /9f,0.75f,0.95f));
+        // c.setBackground(Color.getHSBColor((y+1)  /9f + (x+1) /9f,0.75f,0.95f));
         //  gridBagConstraints.insets = new Insets(15,10,15,10);
 
     }
@@ -261,11 +261,29 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
             JLabel tempLabel = new JLabel();
             tempLabel.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
             tempLabel.setForeground(Color.gray);
-            tempLabel.setText(pageNum*10+i+1 + "             " + scores.get(pageNum*10+i).getName() + "      " + scores.get(pageNum*10+i).getScore() + "          " + scores.get(pageNum*10+i).getDate());
-            scorePanels[i].setPreferredSize(new Dimension(preferredResolution[1] * 8 / 130,preferredResolution[1] * 3 / 130));
+            tempLabel.setText(String.valueOf(pageNum*10+i+1));
             scorePanels[i].add(tempLabel);
-        }
 
+            JLabel tempLabel2 = new JLabel();
+            tempLabel2.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
+            tempLabel2.setForeground(Color.gray);
+            tempLabel2.setText(scores.get(pageNum*10+i).getName());
+            scorePanels[i].add(tempLabel2);
+
+            JLabel tempLabel3 = new JLabel();
+            tempLabel3.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
+            tempLabel3.setForeground(Color.gray);
+            tempLabel3.setText(scores.get(pageNum*10+i).getScore());
+            scorePanels[i].add(tempLabel3);
+
+            JLabel tempLabel4 = new JLabel();
+            tempLabel4.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
+            tempLabel4.setForeground(Color.gray);
+            tempLabel4.setText(scores.get(pageNum*10+i).getDate());
+            scorePanels[i].add(tempLabel4);
+
+            scorePanels[i].setPreferredSize(new Dimension(preferredResolution[1] * 8 / 130,preferredResolution[1] * 3 / 130));
+        }
     }
 
     public  void clear(){
