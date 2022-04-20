@@ -176,6 +176,14 @@ public class SettingPane extends JLayeredPane implements IDesign {
             }
         });
 
+        btnInit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PreferencesUtil.clear();
+                refreshPref();
+            }
+        });
+
         refreshPref();
     }
 

@@ -36,4 +36,12 @@ public class PreferencesUtil {
         }
     }
 
+    public static void clear() {
+        try {
+            prefs.clear();
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
