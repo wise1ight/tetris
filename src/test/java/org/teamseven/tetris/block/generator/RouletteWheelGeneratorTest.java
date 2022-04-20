@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.teamseven.tetris.Const.EASY;
+import static org.teamseven.tetris.enums.Level.EASY;
 
 class RouletteWheelGeneratorTest {
 
@@ -22,7 +22,7 @@ class RouletteWheelGeneratorTest {
         getProb.setAccessible(true);
 
         int[] cnt = new int[7];
-        double[] prob = (double[]) getProb.invoke(generator, EASY);
+        double[] prob = (double[]) getProb.invoke(generator, EASY.code());
 
         for (int i = 0; i < iterCnt; i++) {
             Block block = generator.generate();
