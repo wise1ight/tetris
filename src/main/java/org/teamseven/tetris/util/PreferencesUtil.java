@@ -22,4 +22,18 @@ public class PreferencesUtil {
         }
     }
 
+    public static Const.ColorBlindnessType getColorBlindnessType() {
+        return Const.ColorBlindnessType.toEnum(
+                prefs.get(Const.PREF_COLOR_BLINDNESS_KEY, Const.ColorBlindnessType.NONE.name()));
+    }
+
+    public static void setColorBlindnessType(Const.ColorBlindnessType colorBlindnessType) {
+        prefs.put(Const.PREF_COLOR_BLINDNESS_KEY, colorBlindnessType.name());
+        try {
+            prefs.flush();
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

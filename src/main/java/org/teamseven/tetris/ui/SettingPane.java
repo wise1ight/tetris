@@ -14,7 +14,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
     private int[] preferredResolution;  // frame resolution - frame top border
     private CardSwitcher cardSwitcher;
 
-    JRadioButton rbSmallSize, rbMediumSize, rbLargeSize, rbNormal, rbGreenBlindess, rbRedBlindess, rbBrueBlindess;
+    JRadioButton rbSmallSize, rbMediumSize, rbLargeSize, rbNone, rbGreenBlindess, rbRedBlindess, rbBlueBlindess;
     JButton btnInitScoreboard, btnLeft, btnRight, btnRotateRight, btnPause, btnInit, btnConfirm;
     JLabel lScreenSize, lScoreboard, lBlindess;
     JPanel pScreenSize, pKeyboard, pScoreboard, pBlindess, pButton;
@@ -85,19 +85,19 @@ public class SettingPane extends JLayeredPane implements IDesign {
          */
         lBlindess = new JLabel("색각이상 모드 : ");
         pBlindess = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        rbNormal = new JRadioButton("일반",true);
+        rbNone = new JRadioButton("끄기",true);
         rbGreenBlindess = new JRadioButton("녹색맹",true);
         rbRedBlindess = new JRadioButton("적색맹",true);
-        rbBrueBlindess = new JRadioButton("청색맹",true);
+        rbBlueBlindess = new JRadioButton("청색맹",true);
         ButtonGroup groupBlindess = new ButtonGroup();
-        groupBlindess.add(rbNormal);
+        groupBlindess.add(rbNone);
         groupBlindess.add(rbGreenBlindess);
         groupBlindess.add(rbRedBlindess);
-        groupBlindess.add(rbBrueBlindess);
-        pBlindess.add(rbNormal);
+        groupBlindess.add(rbBlueBlindess);
+        pBlindess.add(rbNone);
         pBlindess.add(rbGreenBlindess);
         pBlindess.add(rbRedBlindess);
-        pBlindess.add(rbBrueBlindess);
+        pBlindess.add(rbBlueBlindess);
 
         /*
             하단 버튼
@@ -131,6 +131,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
 
     @Override
     public void setAction() {
+        // Screen Size
         ActionListener screenSizeActionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 //AbstractButton aButton = (AbstractButton) actionEvent.getSource();
@@ -148,6 +149,26 @@ public class SettingPane extends JLayeredPane implements IDesign {
         rbMediumSize.addActionListener(screenSizeActionListener);
         rbLargeSize.addActionListener(screenSizeActionListener);
 
+        // Color Blindness
+        ActionListener colorBlindnessActionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(rbNone.isSelected()) {
+                    PreferencesUtil.setColorBlindnessType(Const.ColorBlindnessType.NONE);
+                } else if (rbRedBlindess.isSelected()) {
+                    PreferencesUtil.setColorBlindnessType(Const.ColorBlindnessType.RED);
+                } else if (rbGreenBlindess.isSelected()) {
+                    PreferencesUtil.setColorBlindnessType(Const.ColorBlindnessType.GREEN);
+                } else if (rbBlueBlindess.isSelected()) {
+                    PreferencesUtil.setColorBlindnessType(Const.ColorBlindnessType.BLUE);
+                }
+            }
+        };
+
+        rbNone.addActionListener(colorBlindnessActionListener);
+        rbRedBlindess.addActionListener(colorBlindnessActionListener);
+        rbGreenBlindess.addActionListener(colorBlindnessActionListener);
+        rbBlueBlindess.addActionListener(colorBlindnessActionListener);
+
         refreshPref();
     }
 
@@ -161,6 +182,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
     }
 
     private void refreshPref() {
+        // Screen Size
         switch (PreferencesUtil.getScreenSize()) {
             case SMALL:
                 rbSmallSize.setSelected(true);
@@ -170,6 +192,22 @@ public class SettingPane extends JLayeredPane implements IDesign {
                 break;
             case LARGE:
                 rbLargeSize.setSelected(true);
+                break;
+        }
+
+        // Color Blindness
+        switch (PreferencesUtil.getColorBlindnessType()) {
+            case NONE:
+                rbNone.setSelected(true);
+                break;
+            case RED:
+                rbRedBlindess.setSelected(true);
+                break;
+            case GREEN:
+                rbGreenBlindess.setSelected(true);
+                break;
+            case BLUE:
+                rbBlueBlindess.setSelected(true);
                 break;
         }
     }
