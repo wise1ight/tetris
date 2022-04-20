@@ -33,7 +33,6 @@ public class TetrisFrame extends JFrame implements KeyListener {
     private CurrBlock curr;
     private Block nextBlock;
     private GameHandler gameHandler = new GameHandler();
-    private ScoreHandler scoreHandler = new ScoreHandler();
 
     private static final int initInterval = 1000;
 
@@ -74,11 +73,11 @@ public class TetrisFrame extends JFrame implements KeyListener {
             public void actionPerformed(ActionEvent e) {
                 if (curr.isStopped(board, nextBlock)) {
                     gameHandler.setErasedLines(board.eraseLines());
-                    scoreHandler.addScoreByEraseLine(gameHandler.getErasedLines());
+                    gameHandler.addScoreByEraseLine();
                     nextTurn();
                 } else {
                     int cnt = curr.move(board, DOWN);
-                    scoreHandler.addScoreByMove(cnt);
+                    gameHandler.addScoreByMove(cnt);
                 }
                 drawBoard();
             }
@@ -111,7 +110,7 @@ public class TetrisFrame extends JFrame implements KeyListener {
         nextBlock = BlockFactory.blockGenerator("random").generate();
         board.placeBlock(curr);
     }
-    
+
     public void drawBoard() {
         StringBuffer sb = new StringBuffer();
 
@@ -191,8 +190,8 @@ public class TetrisFrame extends JFrame implements KeyListener {
             case KeyEvent.VK_SPACE:
                 int cnt = curr.moveEnd(board);
                 gameHandler.setErasedLines(board.eraseLines());
-                scoreHandler.addScoreByMove(cnt);
-                scoreHandler.addScoreByEraseLine(gameHandler.getErasedLines());
+                gameHandler.addScoreByMove(cnt);
+                gameHandler.addScoreByEraseLine();
                 nextTurn();
                 drawBoard();
         }

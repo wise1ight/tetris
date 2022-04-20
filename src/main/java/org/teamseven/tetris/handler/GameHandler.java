@@ -8,6 +8,7 @@ public class GameHandler {
     private boolean pause = false;
     private int blockCnt;
     private int erasedLines;
+    private ScoreHandler scoreHandler = new ScoreHandler();
 
     public void speedUp(Timer timer) {
         int delay = timer.getDelay();
@@ -18,6 +19,14 @@ public class GameHandler {
             timer.setDelay((int)(delay * Math.pow(0.99, erasedLines)));
             erasedLines = 0;
         }
+    }
+
+    public void addScoreByMove(int cnt) {
+        scoreHandler.addScoreByMove(cnt);
+    }
+
+    public void addScoreByEraseLine() {
+        scoreHandler.addScoreByEraseLine(erasedLines);
     }
 
     public int getErasedLines() {
