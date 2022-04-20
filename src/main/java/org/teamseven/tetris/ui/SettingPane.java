@@ -169,6 +169,13 @@ public class SettingPane extends JLayeredPane implements IDesign {
         rbGreenBlindess.addActionListener(colorBlindnessActionListener);
         rbBlueBlindess.addActionListener(colorBlindnessActionListener);
 
+        btnConfirm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardSwitcher.switchCard(Const.SCENE_START_MENU);
+            }
+        });
+
         refreshPref();
     }
 

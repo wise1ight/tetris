@@ -2,6 +2,7 @@ package org.teamseven.tetris;
 
 public class Const {
 
+    public static final String SCENE_START_MENU = "startMenu";
     public static final String SCENE_SETTING = "SCENE_SETTING";
 
     public static final String PREF_SCREEN_SIZE_KEY = "SCREEN_SIZE";
