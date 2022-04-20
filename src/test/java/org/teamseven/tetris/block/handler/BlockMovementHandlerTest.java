@@ -54,7 +54,8 @@ class BlockMovementHandlerTest {
     class RotateTest {
 
         @ParameterizedTest(name = "블럭 회전")
-        @MethodSource("blockProvider")
+        @MethodSource("rotatedBlockProvider")
+        @DisplayName("회전 성공한 경우")
         void rotate(Block block, int[][] expected) {
             UnitBlock[][] shape = initBoard(expected);
             curr.setBlock(block);
@@ -64,6 +65,30 @@ class BlockMovementHandlerTest {
             assertThat(curr.getBlock().getShape()).isDeepEqualTo(shape);
         }
 
+        @ParameterizedTest(name = "블럭 회전")
+        @MethodSource("rotatedBlockProvider")
+        @DisplayName("회전 실패한 경우")
+        void not_rotate(Block block) {
+            curr.setBlock(block);
+            curr.rotate(board);
+            UnitBlock[][] expected = block.getShape();
+            curr.x = 8;
+
+            curr.rotate(board);
+
+            assertThat(curr.getBlock().getShape()).isDeepEqualTo(expected);
+        }
+
+
+        private Stream<Arguments> rotatedBlockProvider() {
+            return Stream.of(
+                    Arguments.of(new IBlock()),
+                    Arguments.of(new JBlock()),
+                    Arguments.of(new LBlock()),
+                    Arguments.of(new SBlock()),
+                    Arguments.of(new TBlock()),
+                    Arguments.of(new ZBlock()));
+        }
 
         private Stream<Arguments> blockProvider() {
             return Stream.of(
