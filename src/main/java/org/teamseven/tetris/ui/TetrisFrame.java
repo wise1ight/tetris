@@ -5,7 +5,6 @@ import org.teamseven.tetris.Const;
 import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
-import org.teamseven.tetris.block.handler.BlockMovementHandler;
 import org.teamseven.tetris.factory.BlockFactory;
 
 import javax.swing.*;
@@ -72,8 +71,8 @@ public class TetrisFrame extends JFrame implements KeyListener {
                 if (nextFlag) {
                     nextTurn();
                 } else {
-                    BlockMovementHandler.move(board, curr, DOWN);
-                    if (BlockMovementHandler.isStopped(board, curr, nextBlock)) {
+                    curr.move(board, DOWN);
+                    if (curr.isStopped(board, nextBlock)) {
                         board.eraseLines();
                         nextFlag = true;
                     }
@@ -145,25 +144,25 @@ public class TetrisFrame extends JFrame implements KeyListener {
         System.out.println("e.toString() = " + e.toString());
         switch(e.getKeyCode()) {
             case KeyEvent.VK_DOWN:
-                BlockMovementHandler.move(board, curr, DOWN);
+                curr.move(board, DOWN);
                 drawBoard();
                 break;
             case KeyEvent.VK_RIGHT:
-                BlockMovementHandler.move(board, curr, RIGHT);
+                curr.move(board, RIGHT);
                 drawBoard();
                 break;
             case KeyEvent.VK_LEFT:
-                BlockMovementHandler.move(board, curr, LEFT);
+                curr.move(board, LEFT);
                 drawBoard();
                 break;
             case KeyEvent.VK_UP:
                 board.eraseCurr(curr);
-                curr.getBlock().right_rotate();
+                curr.rotate(board);
                 board.placeBlock(curr);
                 drawBoard();
                 break;
             case KeyEvent.VK_SPACE:
-                BlockMovementHandler.moveEnd(board, curr);
+                curr.moveEnd(board);
                 board.eraseLines();
                 nextTurn();
                 drawBoard();

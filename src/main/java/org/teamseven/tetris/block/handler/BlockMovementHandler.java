@@ -3,6 +3,7 @@ package org.teamseven.tetris.block.handler;
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
+import org.teamseven.tetris.block.UnitBlock;
 
 import static org.teamseven.tetris.Const.DOWN;
 import static org.teamseven.tetris.util.BlockMovementHandlerUtil.isBlocked;
@@ -10,7 +11,7 @@ import static org.teamseven.tetris.util.BlockMovementHandlerUtil.outOfBoard;
 
 public class BlockMovementHandler {
 
-    public static void move(GameBoard board, CurrBlock curr, int[] vec) {
+    public void move(GameBoard board, CurrBlock curr, int[] vec) {
         board.eraseCurr(curr);
         if (!canMove(board, curr, vec)) {
             board.placeBlock(curr);
@@ -21,7 +22,7 @@ public class BlockMovementHandler {
         board.placeBlock(curr);
     }
 
-    public static boolean isStopped(GameBoard board, CurrBlock curr, Block nextBlock) {
+    public boolean isStopped(GameBoard board, CurrBlock curr, Block nextBlock) {
         board.eraseCurr(curr);
         if (canMove(board, curr, DOWN)) {
             board.placeBlock(curr);
@@ -31,7 +32,7 @@ public class BlockMovementHandler {
         return true;
     }
 
-    public static void moveEnd(GameBoard board, CurrBlock curr) {
+    public void moveEnd(GameBoard board, CurrBlock curr) {
         int[] vec = new int[]{0, 0};
 
         board.eraseCurr(curr);
@@ -42,10 +43,22 @@ public class BlockMovementHandler {
         board.placeBlock(curr);
     }
 
-    private static boolean canMove(GameBoard board, CurrBlock curr, int[] vec) {
+    private boolean canMove(GameBoard board, CurrBlock curr, int[] vec) {
         int x = curr.x + vec[1];
         int y = curr.y + vec[0];
 
         return !outOfBoard(x, y, curr) && !isBlocked(x, y, curr, board.getBoard());
+    }
+
+    public void rotate(CurrBlock curr) {
+        UnitBlock[][] shape = curr.getBlock().getShape();
+        UnitBlock[][] tmp = new UnitBlock[shape[0].length][shape.length];
+
+        for (int i = 0; i < shape.length; i++) {
+            for (int j = 0; j < shape[i].length; j++) {
+                tmp[j][shape.length - 1 - i] = shape[i][j];
+            }
+        }
+        curr.getBlock().setShape(tmp);
     }
 }

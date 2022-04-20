@@ -24,6 +24,10 @@ public abstract class Block {
         return shape[y][x];
     }
 
+    public UnitBlock[][] getShape() {
+        return shape;
+    }
+
     public void setShape(UnitBlock[][] shape) {
         this.shape = shape;
     }
@@ -34,17 +38,6 @@ public abstract class Block {
         for (int i = 0; i < shape.length; i++) {
             for (int j = 0; j < shape[i].length; j++) {
                 tmp[shape[i].length - 1 - j][i] = shape[i][j];
-            }
-        }
-        shape = tmp;
-    }
-
-    public void right_rotate() {
-        UnitBlock[][] tmp = new UnitBlock[shape[0].length][shape.length];
-
-        for (int i = 0; i < shape.length; i++) {
-            for (int j = 0; j < shape[i].length; j++) {
-                tmp[j][shape.length - 1 - i] = shape[i][j];
             }
         }
         shape = tmp;
