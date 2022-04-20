@@ -97,9 +97,17 @@ public class TetrisFrame extends JFrame implements KeyListener {
         timer.start();
     }
 
+    private boolean isFinished() {
+        return !curr.canMove(board);
+    }
+
     private void nextTurn() {
         speedUp();
         curr.newBlock(nextBlock);
+        if (isFinished()) {
+            System.out.println("Finished!");
+            System.exit(0);
+        }
         gameHandler.addBlockCnt();
         nextBlock = BlockFactory.blockGenerator("random").generate();
         board.placeBlock(curr);

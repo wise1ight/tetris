@@ -4,6 +4,8 @@ import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.handler.BlockMovementHandler;
 import org.teamseven.tetris.factory.BlockFactory;
 
+import static org.teamseven.tetris.Const.PLACE;
+
 public class CurrBlock {
     public int x;
     public int y;
@@ -37,6 +39,10 @@ public class CurrBlock {
 
     public boolean isStopped(GameBoard board, Block nextBlock) {
         return handler.isStopped(board, this, nextBlock);
+    }
+
+    public boolean canMove(GameBoard board) {
+        return handler.canMove(board, this, PLACE);
     }
 
     public void setBlock(Block block) {
