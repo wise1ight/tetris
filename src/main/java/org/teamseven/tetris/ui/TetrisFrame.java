@@ -159,6 +159,9 @@ public class TetrisFrame extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
+        }
         if (e.getKeyCode() == KeyEvent.VK_P) {
             if (gameHandler.isPaused()) {
                 gameHandler.start();
