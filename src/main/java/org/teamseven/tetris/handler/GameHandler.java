@@ -29,10 +29,6 @@ public class GameHandler {
         scoreHandler.addScoreByEraseLine(erasedLines);
     }
 
-    public int getErasedLines() {
-        return erasedLines;
-    }
-
     public void setErasedLines(int erasedLines) {
         this.erasedLines = erasedLines;
     }
