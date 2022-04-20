@@ -8,16 +8,22 @@ public class GameHandler {
     private boolean pause = false;
     private int blockCnt;
     private int erasedLines;
+    private int totalErasedLines;
     private ScoreHandler scoreHandler = new ScoreHandler();
 
     public void speedUp(Timer timer) {
-        int delay = timer.getDelay();
         if (checkBlockCnt(blockCnt)) {
-            timer.setDelay((int)(delay * 0.9));
+            scoreHandler.addAlphaScore();
+            int time = (int) (Math.pow(0.8 - ((getLevel(blockCnt) - 1) * 0.007), getLevel(blockCnt) - 1) * 1000 * Math.pow(0.99, totalErasedLines));
+            System.out.println("time1 = " + time);
+            timer.setDelay(time);
         }
         if (checkErasedLines(erasedLines)) {
-            timer.setDelay((int)(delay * Math.pow(0.99, erasedLines)));
+            int delay = timer.getDelay();
+            int time = (int)(delay * Math.pow(0.99, erasedLines));
+            timer.setDelay(time);
             erasedLines = 0;
+            System.out.println("time2 = " + time);
         }
     }
 
@@ -29,7 +35,12 @@ public class GameHandler {
         scoreHandler.addScoreByEraseLine(erasedLines);
     }
 
+    public int getScore() {
+        return scoreHandler.getScore();
+    }
+
     public void setErasedLines(int erasedLines) {
+        this.totalErasedLines += erasedLines;
         this.erasedLines = erasedLines;
     }
 

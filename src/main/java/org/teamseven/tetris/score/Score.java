@@ -1,7 +1,6 @@
 package org.teamseven.tetris.score;
 
 import com.opencsv.bean.CsvDate;
-import org.teamseven.tetris.enums.Level;
 
 import java.time.LocalDate;
 import java.util.Optional;

@@ -23,10 +23,10 @@ public class GameHandlerUtil {
     }
 
     public static boolean checkBlockCnt(int blockCnt) {
-        if (blockCnt >= 10) {
-            blockCnt = 0;
-            return true;
-        }
-        return false;
+        return blockCnt % 10 == 0 && blockCnt / 10 > 0;
+    }
+
+    public static int getLevel(int blockCnt) {
+        return blockCnt / 10;
     }
 }

@@ -18,4 +18,6 @@ public class Const {
     public final static int TWO_LINES = 2;
     public final static int THREE_LINES = 3;
     public final static int FOUR_LINES = 4;
+
+    public static int DEFAULT_SCORE = 100;
 }

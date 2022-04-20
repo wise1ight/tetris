@@ -71,6 +71,7 @@ public class TetrisFrame extends JFrame implements KeyListener {
         timer = new Timer(initInterval, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("gameHandler.getScore() = " + gameHandler.getScore());
                 if (curr.isStopped(board, nextBlock)) {
                     gameHandler.setErasedLines(board.eraseLines());
                     gameHandler.addScoreByEraseLine();
