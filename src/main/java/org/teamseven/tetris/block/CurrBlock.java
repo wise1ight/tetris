@@ -32,7 +32,7 @@ public class CurrBlock {
     }
 
     public void rotate(GameBoard board) {
-        handler.rotate(this);
+        handler.rotate(board, this);
     }
 
     public boolean isStopped(GameBoard board, Block nextBlock) {

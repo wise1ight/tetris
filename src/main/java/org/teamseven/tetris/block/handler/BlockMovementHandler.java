@@ -6,6 +6,7 @@ import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
 
 import static org.teamseven.tetris.Const.DOWN;
+import static org.teamseven.tetris.Const.ROTATE;
 import static org.teamseven.tetris.util.BlockMovementHandlerUtil.isBlocked;
 import static org.teamseven.tetris.util.BlockMovementHandlerUtil.outOfBoard;
 
@@ -50,7 +51,7 @@ public class BlockMovementHandler {
         return !outOfBoard(x, y, curr) && !isBlocked(x, y, curr, board.getBoard());
     }
 
-    public void rotate(CurrBlock curr) {
+    public void rotate(GameBoard board, CurrBlock curr) {
         UnitBlock[][] shape = curr.getBlock().getShape();
         UnitBlock[][] tmp = new UnitBlock[shape[0].length][shape.length];
 
@@ -60,5 +61,8 @@ public class BlockMovementHandler {
             }
         }
         curr.getBlock().setShape(tmp);
+        if (!canMove(board, curr, ROTATE)) {
+            curr.getBlock().setShape(shape);
+        }
     }
 }
