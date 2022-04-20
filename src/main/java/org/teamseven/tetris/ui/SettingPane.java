@@ -10,7 +10,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
     private CardSwitcher cardSwitcher;
 
     JRadioButton rbSmallSize, rbMediumSize, rbLargeSize, rbNormal, rbGreenBlindess, rbRedBlindess, rbBrueBlindess;
-    JButton btnInitScoreboard, btnLeft, btnRight, btnRotateRight, btnPause, btnInit, btnApply, btnConfirm;
+    JButton btnInitScoreboard, btnLeft, btnRight, btnRotateRight, btnPause, btnInit, btnConfirm;
     JLabel lScreenSize, lScoreboard, lBlindess;
     JPanel pScreenSize, pKeyboard, pScoreboard, pBlindess, pButton;
     GridBagLayout gb;
@@ -99,10 +99,8 @@ public class SettingPane extends JLayeredPane implements IDesign {
          */
         pButton = new JPanel();
         btnInit = new JButton("초기화");
-        btnApply = new JButton("적용");
         btnConfirm = new JButton("확인");
         pButton.add(btnInit);
-        pButton.add(btnApply);
         pButton.add(btnConfirm);
     }
 
