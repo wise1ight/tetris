@@ -1,7 +1,7 @@
 package org.teamseven.tetris.block;
 
 import org.teamseven.tetris.Board.GameBoard;
-import org.teamseven.tetris.block.handler.BlockMovementHandler;
+import org.teamseven.tetris.handler.BlockMovementHandler;
 import org.teamseven.tetris.factory.BlockFactory;
 
 public class CurrBlock {

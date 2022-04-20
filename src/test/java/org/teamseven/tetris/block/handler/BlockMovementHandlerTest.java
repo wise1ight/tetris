@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.*;
+import org.teamseven.tetris.handler.BlockMovementHandler;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;

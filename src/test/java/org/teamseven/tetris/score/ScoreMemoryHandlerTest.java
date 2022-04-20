@@ -3,6 +3,7 @@ package org.teamseven.tetris.score;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.teamseven.tetris.handler.ScoreMemoryHandler;
 
 import java.io.File;
 import java.util.List;
@@ -11,9 +12,9 @@ import java.util.Random;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.teamseven.tetris.Const.SCORE_ROOT;
 
-class ScoreHandlerTest {
+class ScoreMemoryHandlerTest {
 
-    ScoreHandler handler = new ScoreHandler();
+    ScoreMemoryHandler handler = new ScoreMemoryHandler();
     String fileName = "test.csv";
 
     @AfterEach

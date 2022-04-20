@@ -1,4 +1,4 @@
-package org.teamseven.tetris.block.handler;
+package org.teamseven.tetris.handler;
 
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.Block;

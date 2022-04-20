@@ -15,7 +15,7 @@ public class Const {
     public static int[] LEFT = new int[]{0, -1};
     public static int[] ROTATE = new int[]{0, 0};
   
-    public static int EASY = 0;
-    public static int NORMAL = 1;
-    public static int HARD = 2;
+//    public static int EASY = 0;
+//    public static int NORMAL = 1;
+//    public static int HARD = 2;
 }
