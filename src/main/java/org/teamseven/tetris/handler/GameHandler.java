@@ -1,12 +1,18 @@
 package org.teamseven.tetris.handler;
 
-import org.teamseven.tetris.score.Score;
-
 public class GameHandler {
-    private boolean paused;
-    private Score score;
+    private boolean pause = false;
+    private int score;
 
     public boolean isPaused() {
-        return paused;
+        return pause;
+    }
+
+    public void pause() {
+        this.pause = true;
+    }
+
+    public void start() {
+        this.pause = false;
     }
 }

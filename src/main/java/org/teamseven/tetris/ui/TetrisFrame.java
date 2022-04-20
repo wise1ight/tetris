@@ -6,6 +6,7 @@ import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.factory.BlockFactory;
+import org.teamseven.tetris.handler.GameHandler;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -30,6 +31,7 @@ public class TetrisFrame extends JFrame implements KeyListener {
     private Timer timer;
     private CurrBlock curr;
     private Block nextBlock;
+    private GameHandler gameHandler = new GameHandler();
     private boolean nextFlag;
 
     private static final int initInterval = 1000;
@@ -142,6 +144,19 @@ public class TetrisFrame extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         System.out.println("e.toString() = " + e.toString());
+        if (e.getKeyCode() == KeyEvent.VK_P) {
+            if (gameHandler.isPaused()) {
+                gameHandler.start();
+                timer.start();
+            } else {
+                gameHandler.pause();
+                timer.stop();
+            }
+            return;
+        }
+        if (gameHandler.isPaused()) {
+            return;
+        }
         switch(e.getKeyCode()) {
             case KeyEvent.VK_DOWN:
                 curr.move(board, DOWN);
