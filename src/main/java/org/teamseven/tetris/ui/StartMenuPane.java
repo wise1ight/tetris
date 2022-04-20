@@ -180,6 +180,10 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
         });
         scoreButton.addActionListener(e -> {
             this.add(scoreBoard1, JLayeredPane.POPUP_LAYER);
+            startButton.setFocusable(false);
+            settingButton.setFocusable(false);
+            scoreButton.setFocusable(false);
+            exitButton.setFocusable(false);
         });
         exitButton.addActionListener(e -> {
             ((JFrame) this.getTopLevelAncestor()).dispose();

@@ -29,6 +29,8 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
 
     private CustomButton leftButton, rightButton;
 
+    private int pageNum = 0;
+    private int totalPageNum = 0;
     private GridBagConstraints gridBagConstraints;
     private GridBagLayout gridBagLayout, gridBagLayout2;
     ScoreHandler handler = new ScoreHandler();
@@ -115,7 +117,6 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
         line9st.setBackground(Color.orange);
         line10st.setBackground(Color.orange);
 
-        int pageNum = 0;
         draw(pageNum);
 
         gridBagConstraints.weightx = 1.0;
@@ -200,7 +201,13 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
         leftButton.setForeground(Color.gray);
         rightButton.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 8 / 130));
         rightButton.setForeground(Color.gray);
+        leftButton.removeFocusListener(leftButton.getFocusListeners()[1]);
+        leftButton.removeFocusListener(leftButton.getFocusListeners()[0]);
 
+        rightButton.removeFocusListener(rightButton.getFocusListeners()[1]);
+        rightButton.removeFocusListener(rightButton.getFocusListeners()[0]);
+
+        rightButton.requestFocus();
         leftButton.setText("<");
         rightButton.setText(">");
         buttonPanel.add(leftButton);
@@ -211,7 +218,25 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
 
     @Override
     public void setAction() {
+        leftButton.addActionListener(e -> {
+            if(pageNum > 0) {
+                pageNum--;
+                clear();
+                draw(pageNum);
+                this.revalidate();
+                this.repaint();
+           }
+        });
 
+        rightButton.addActionListener(e -> {
+            if(pageNum < totalPageNum) {
+                pageNum++;
+                clear();
+                draw(pageNum);
+                this.revalidate();
+                this.repaint();
+            }
+        });
     }
 
     public void make(JPanel p, JComponent c, int x, int y, int w, int h) {
@@ -230,6 +255,7 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
 
     public  void draw(int pageNum){
         List<Score> scores = handler.getScores(fileName);
+        totalPageNum = scores.size() % 10;
         for(int i = 0; i<10; i++){
             if(scores.size() == pageNum*10 + i){break;};
             JLabel tempLabel = new JLabel();
@@ -238,6 +264,15 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
             tempLabel.setText(pageNum*10+i+1 + "             " + scores.get(pageNum*10+i).getName() + "      " + scores.get(pageNum*10+i).getScore() + "          " + scores.get(pageNum*10+i).getDate());
             scorePanels[i].setPreferredSize(new Dimension(preferredResolution[1] * 8 / 130,preferredResolution[1] * 3 / 130));
             scorePanels[i].add(tempLabel);
+        }
+
+    }
+
+    public  void clear(){
+        List<Score> scores = handler.getScores(fileName);
+        for(int i = 0; i<10; i++) {
+            scorePanels[i].removeAll();
+
         }
 
     }
