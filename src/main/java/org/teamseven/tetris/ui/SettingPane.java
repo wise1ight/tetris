@@ -8,6 +8,8 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class SettingPane extends JLayeredPane implements IDesign {
 
@@ -148,6 +150,43 @@ public class SettingPane extends JLayeredPane implements IDesign {
         rbSmallSize.addActionListener(screenSizeActionListener);
         rbMediumSize.addActionListener(screenSizeActionListener);
         rbLargeSize.addActionListener(screenSizeActionListener);
+
+        // Keyboard
+        ActionListener keyboardActionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() instanceof JButton) {
+                    ((JButton) e.getSource()).setText("---");
+                }
+            }
+        };
+
+        KeyListener keyboardKeyListener = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getSource() instanceof JButton) {
+                    ((JButton) e.getSource()).setText(KeyEvent.getKeyText(e.getKeyCode()));
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        };
+        btnLeft.addActionListener(keyboardActionListener);
+        btnLeft.addKeyListener(keyboardKeyListener);
+        btnRight.addActionListener(keyboardActionListener);
+        btnRight.addKeyListener(keyboardKeyListener);
+        btnRotateRight.addActionListener(keyboardActionListener);
+        btnRotateRight.addKeyListener(keyboardKeyListener);
+        btnPause.addActionListener(keyboardActionListener);
+        btnPause.addKeyListener(keyboardKeyListener);
 
         // Color Blindness
         ActionListener colorBlindnessActionListener = new ActionListener() {
