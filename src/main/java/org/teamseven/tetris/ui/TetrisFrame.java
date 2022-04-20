@@ -65,17 +65,19 @@ public class TetrisFrame extends JFrame implements KeyListener {
         //Create first block and next block
         curr = new CurrBlock();
         nextBlock = BlockFactory.blockGenerator("random").generate();
+        gameHandler.addBlockCnt();
 
         //Set timer for block drops.
         timer = new Timer(initInterval, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("timer.getDelay() = " + timer.getDelay());
                 if (nextFlag) {
                     nextTurn();
                 } else {
                     curr.move(board, DOWN);
                     if (curr.isStopped(board, nextBlock)) {
-                        board.eraseLines();
+                        gameHandler.setErasedLines(board.eraseLines());
                         nextFlag = true;
                     }
                 }
@@ -96,10 +98,24 @@ public class TetrisFrame extends JFrame implements KeyListener {
     }
 
     private void nextTurn() {
+        speedUp();
         curr.newBlock(nextBlock);
+        gameHandler.addBlockCnt();
         nextBlock = BlockFactory.blockGenerator("random").generate();
         board.placeBlock(curr);
         nextFlag = false;
+    }
+
+    private void speedUp() {
+        int erasedLines = gameHandler.getErasedLines();
+        int delay = timer.getDelay();
+        if (gameHandler.checkBlockCnt()) {
+            timer.setDelay((int)(delay * 0.9));
+        }
+        if (gameHandler.checkErasedLines(erasedLines)) {
+            timer.setDelay((int)(delay * Math.pow(0.99, erasedLines)));
+            gameHandler.setErasedLines(0);
+        }
     }
 
     public void drawBoard() {
@@ -143,7 +159,6 @@ public class TetrisFrame extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("e.toString() = " + e.toString());
         if (e.getKeyCode() == KeyEvent.VK_P) {
             if (gameHandler.isPaused()) {
                 gameHandler.start();
@@ -178,7 +193,7 @@ public class TetrisFrame extends JFrame implements KeyListener {
                 break;
             case KeyEvent.VK_SPACE:
                 curr.moveEnd(board);
-                board.eraseLines();
+                gameHandler.setErasedLines(board.eraseLines());
                 nextTurn();
                 drawBoard();
         }
