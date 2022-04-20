@@ -1,8 +1,13 @@
 package org.teamseven.tetris.ui;
 
+import org.teamseven.tetris.Const;
+import org.teamseven.tetris.util.PreferencesUtil;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SettingPane extends JLayeredPane implements IDesign {
 
@@ -126,7 +131,24 @@ public class SettingPane extends JLayeredPane implements IDesign {
 
     @Override
     public void setAction() {
+        ActionListener screenSizeActionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                //AbstractButton aButton = (AbstractButton) actionEvent.getSource();
+                if(rbSmallSize.isSelected()) {
+                    PreferencesUtil.setScreenSize(Const.ScreenSize.SMALL);
+                } else if (rbMediumSize.isSelected()) {
+                    PreferencesUtil.setScreenSize(Const.ScreenSize.MEDIUM);
+                } else if (rbLargeSize.isSelected()) {
+                    PreferencesUtil.setScreenSize(Const.ScreenSize.LARGE);
+                }
+            }
+        };
 
+        rbSmallSize.addActionListener(screenSizeActionListener);
+        rbMediumSize.addActionListener(screenSizeActionListener);
+        rbLargeSize.addActionListener(screenSizeActionListener);
+
+        refreshPref();
     }
 
     private void gbAdd(JComponent c, int x, int y, int w, int h){
@@ -136,5 +158,19 @@ public class SettingPane extends JLayeredPane implements IDesign {
         gbc.gridheight = h;
         gbc.insets = new Insets(2, 2, 2, 2);
         add(c, gbc);
+    }
+
+    private void refreshPref() {
+        switch (PreferencesUtil.getScreenSize()) {
+            case SMALL:
+                rbSmallSize.setSelected(true);
+                break;
+            case MEDIUM:
+                rbMediumSize.setSelected(true);
+                break;
+            case LARGE:
+                rbLargeSize.setSelected(true);
+                break;
+        }
     }
 }
