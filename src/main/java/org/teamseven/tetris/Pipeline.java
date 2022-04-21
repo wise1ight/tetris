@@ -23,5 +23,6 @@ public class Pipeline {
         container.add(component);
         container.revalidate();
         container.repaint();
+        container.requestFocus();
     }
 }

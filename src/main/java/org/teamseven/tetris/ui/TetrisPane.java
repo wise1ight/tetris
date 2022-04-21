@@ -206,8 +206,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyListener {
 
     @Override
     public void setAction() {
-        this.setFocusable(true);
-        this.requestFocusInWindow();
+        this.requestFocus();
         addKeyListener(this);
     }
 
