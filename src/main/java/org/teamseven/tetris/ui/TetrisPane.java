@@ -36,7 +36,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private Timer timer;
     private CurrBlock curr;
     private Block nextBlock;
-    private GameHandler gameHandler = new GameHandler();
+    private GameHandler gameHandler;
     private ItemModeHandler itemModeHandler = new ItemModeHandler();
 
     private int[] preferredResolution;  // frame resolution - frame top border
@@ -49,13 +49,15 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private static final int KEY_CODE_SOFT_DROP = PreferencesHandler.getSoftDropBtnCode();
     private static final int KEY_CODE_EXIT = PreferencesHandler.getExitBtnCode();
 
-    public TetrisPane() {
+    public TetrisPane(boolean itemMode) {
         int[] frameBorderSize = new int[2];       // frame top border
         frameBorderSize[0] = this.getInsets().left + this.getInsets().right;
         frameBorderSize[1] = this.getInsets().top + this.getInsets().bottom;
         preferredResolution = new int[2];
         preferredResolution[0] = Pipeline.getScreenResolutionX() - frameBorderSize[0];
         preferredResolution[1] = Pipeline.getScreenResolutionY() - frameBorderSize[1];
+
+        gameHandler = new GameHandler(itemMode);
 
         setComp();
         setDesign();
