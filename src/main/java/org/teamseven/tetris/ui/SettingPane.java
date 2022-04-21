@@ -14,7 +14,7 @@ import java.awt.event.*;
 public class SettingPane extends JLayeredPane implements IDesign {
 
     JRadioButton rbSmallSize, rbMediumSize, rbLargeSize, rbEasy, rbNormal, rbHard, rbNone, rbColorBlindess;
-    JButton btnInitScoreboard, btnLeft, btnRight, btnRotateRight, btnHardDrop, btnSoftDrop, btnPause, btnInit, btnConfirm;
+    JButton btnInitScoreboard, btnLeft, btnRight, btnRotateRight, btnHardDrop, btnSoftDrop, btnPause, btnExit, btnInit, btnConfirm;
     JLabel lScreenSize, lGameMode, lScoreboard, lBlindess;
     JPanel pScreenSize, pGameMode, pKeyboard, pScoreboard, pBlindess, pButton;
     GridBagLayout gb;
@@ -69,7 +69,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
          */
         pKeyboard = new JPanel();
         pKeyboard.setBorder(new TitledBorder(null, "키 설정", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        GridLayout gridLayout = new GridLayout(8, 2);
+        GridLayout gridLayout = new GridLayout(10, 2);
         pKeyboard.setLayout(gridLayout);
         pKeyboard.add(new JLabel("왼쪽 이동"));
         btnLeft = new JButton("");
@@ -89,6 +89,9 @@ public class SettingPane extends JLayeredPane implements IDesign {
         pKeyboard.add(new JLabel("일시 중지"));
         btnPause = new JButton("");
         pKeyboard.add(btnPause);
+        pKeyboard.add(new JLabel("게임 종료"));
+        btnExit = new JButton("");
+        pKeyboard.add(btnExit);
 
         /*
             스코어보드
@@ -224,6 +227,8 @@ public class SettingPane extends JLayeredPane implements IDesign {
                                 PreferencesHandler.setSoftDropBtnCode(e.getKeyCode());
                             else if (ae.getSource() == btnPause)
                                 PreferencesHandler.setPauseBtnCode(e.getKeyCode());
+                            else if (ae.getSource() == btnExit)
+                                PreferencesHandler.setPauseBtnCode(e.getKeyCode());
 
                             dialog.dispose();
                         }
@@ -244,6 +249,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
         btnHardDrop.addActionListener(keyboardActionListener);
         btnSoftDrop.addActionListener(keyboardActionListener);
         btnPause.addActionListener(keyboardActionListener);
+        btnExit.addActionListener(keyboardActionListener);
 
         // Color Blindness
         ActionListener colorBlindnessActionListener = new ActionListener() {
@@ -320,6 +326,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
         btnHardDrop.setText(KeyEvent.getKeyText(PreferencesHandler.getHardDropBtnCode()));
         btnSoftDrop.setText(KeyEvent.getKeyText(PreferencesHandler.getSoftDropBtnCode()));
         btnPause.setText(KeyEvent.getKeyText(PreferencesHandler.getPauseBtnCode()));
+        btnExit.setText(KeyEvent.getKeyText(PreferencesHandler.getExitBtnCode()));
 
         // Color Blindness
         switch (PreferencesHandler.getColorBlindnessType()) {

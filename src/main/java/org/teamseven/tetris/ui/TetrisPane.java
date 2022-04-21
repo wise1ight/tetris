@@ -42,6 +42,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private static final int KEY_CODE_PAUSE = PreferencesHandler.getPauseBtnCode();
     private static final int KEY_CODE_HARD_DROP = PreferencesHandler.getHardDropBtnCode();
     private static final int KEY_CODE_SOFT_DROP = PreferencesHandler.getSoftDropBtnCode();
+    private static final int KEY_CODE_EXIT = PreferencesHandler.getExitBtnCode();
 
     public TetrisPane() {
         int[] frameBorderSize = new int[2];       // frame top border
@@ -264,7 +265,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
         if(e.getID() == KeyEvent.KEY_PRESSED && e.getModifiers() == 0) {
-            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            if (e.getKeyCode() == KEY_CODE_EXIT) {
                 System.exit(0);
                 return true;
             }

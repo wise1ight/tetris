@@ -79,11 +79,19 @@ public class PreferencesHandler {
     }
 
     public static int getPauseBtnCode() {
-        return prefs.getInt(Const.PREF_BTN_PAUSE_KEY, KeyEvent.VK_ESCAPE);
+        return prefs.getInt(Const.PREF_BTN_PAUSE_KEY, KeyEvent.VK_P);
     }
 
     public static void setPauseBtnCode(int keyCode) {
         prefs.putInt(Const.PREF_BTN_PAUSE_KEY, keyCode);
+    }
+
+    public static int getExitBtnCode() {
+        return prefs.getInt(Const.PREF_BTN_EXIT_KEY, KeyEvent.VK_ESCAPE);
+    }
+
+    public static void setExitBtnCode(int keyCode) {
+        prefs.putInt(Const.PREF_BTN_EXIT_KEY, keyCode);
     }
 
     public static ColorBlindnessType getColorBlindnessType() {

@@ -26,6 +26,7 @@ public class Const {
     public static final String PREF_BTN_HARD_DROP_KEY = "BTN_HARD_DROP";
     public static final String PREF_BTN_SOFT_DROP_KEY = "BTN_SOFT_DROP";
     public static final String PREF_BTN_PAUSE_KEY = "BTN_PAUSE";
+    public static final String PREF_BTN_EXIT_KEY = "BTN_EXIT";
     public static final String PREF_COLOR_BLINDNESS_KEY = "COLOR_BLINDNESS";
     public static final String PREF_MODE_KEY = "MODE";
 

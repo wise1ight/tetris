@@ -67,6 +67,12 @@ public class PreferencesHandlerTest {
     }
 
     @Test
+    public void testSetExitBtn() {
+        PreferencesHandler.setExitBtnCode(KeyEvent.VK_ESCAPE);
+        Assertions.assertEquals(KeyEvent.VK_ESCAPE, PreferencesHandler.getExitBtnCode());
+    }
+
+    @Test
     public void testSetNoneColorBlindness() {
         PreferencesHandler.setColorBlindnessType(ColorBlindnessType.NONE);
         Assertions.assertEquals(ColorBlindnessType.NONE, PreferencesHandler.getColorBlindnessType());
