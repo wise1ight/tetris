@@ -3,6 +3,7 @@ package org.teamseven.tetris.ui;
 import org.teamseven.tetris.Const;
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.enums.ColorBlindnessType;
+import org.teamseven.tetris.enums.ScreenSize;
 import org.teamseven.tetris.handler.PreferencesHandler;
 
 import javax.swing.*;
@@ -137,11 +138,11 @@ public class SettingPane extends JLayeredPane implements IDesign {
             public void actionPerformed(ActionEvent actionEvent) {
                 //AbstractButton aButton = (AbstractButton) actionEvent.getSource();
                 if(rbSmallSize.isSelected()) {
-                    PreferencesHandler.setScreenSize(Const.ScreenSize.SMALL);
+                    PreferencesHandler.setScreenSize(ScreenSize.SMALL);
                 } else if (rbMediumSize.isSelected()) {
-                    PreferencesHandler.setScreenSize(Const.ScreenSize.MEDIUM);
+                    PreferencesHandler.setScreenSize(ScreenSize.MEDIUM);
                 } else if (rbLargeSize.isSelected()) {
-                    PreferencesHandler.setScreenSize(Const.ScreenSize.LARGE);
+                    PreferencesHandler.setScreenSize(ScreenSize.LARGE);
                 }
             }
         };
