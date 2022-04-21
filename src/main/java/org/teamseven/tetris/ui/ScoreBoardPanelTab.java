@@ -303,7 +303,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
     public  void clear(){
         for(int i = 0; i<10; i++) {
             scorePanels[i].removeAll();
-
+            scorePanels[i].setBorder(null);
         }
 
 
@@ -319,8 +319,8 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
             System.out.println(index);
 
         }
-        int pageNum = index / 10;
-        index = index - pageNum*10;
+        int tempPageNum = index / 10;
+        index = index - tempPageNum*10;
         System.out.println(index);
 
         handler.saveScoreFile(score, this.fileName);
@@ -328,6 +328,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
         clear();
         Border border = BorderFactory.createLineBorder(Color.orange, 3);
         scorePanels[index].setBorder(border);
-        draw(pageNum);
+        draw(tempPageNum);
+        pageNum = tempPageNum;
     }
 }
