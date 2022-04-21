@@ -1,5 +1,6 @@
 package org.teamseven.tetris.ui;
 
+import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.handler.PreferencesHandler;
 import org.teamseven.tetris.handler.ScoreMemoryHandler;
 import org.teamseven.tetris.score.Score;
@@ -7,8 +8,6 @@ import org.teamseven.tetris.score.Score;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.List;
 
 import static javax.swing.JOptionPane.showInputDialog;
@@ -26,7 +25,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
     private  JPanel[] scorePanels;
     private JPanel line1st, line2st, line3st, line4st, line5st, line6st, line7st, line8st, line9st, line10st;
 
-    private CustomButton leftButton, rightButton;
+    private CustomButton homeBtn;
 
     private int pageNum = 0;
     private int totalPageNum = 0;
@@ -96,8 +95,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
 
         title = new JLabel("SCORE");
 
-        leftButton = new CustomButton();
-        rightButton = new CustomButton();
+        homeBtn = new CustomButton();
     }
 
     @Override
@@ -184,71 +182,20 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
         make(this, buttonPanel,1,21,1,1);
 
-        leftButton.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 8 / 130));
-        leftButton.setForeground(Color.gray);
-        rightButton.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 8 / 130));
-        rightButton.setForeground(Color.gray);
+        homeBtn.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 8 / 130));
+        homeBtn.setForeground(Color.gray);
 
 
-        leftButton.setText("<");
-        rightButton.setText(">");
-        buttonPanel.add(leftButton);
-        buttonPanel.add(rightButton);
-
-
+        homeBtn.setText("홈");
+        buttonPanel.add(homeBtn);
     }
 
     @Override
     public void setAction() {
         draw(pageNum);
-        leftButton.removeFocusListener(leftButton.getFocusListeners()[1]);
-        leftButton.removeFocusListener(leftButton.getFocusListeners()[0]);
 
-        rightButton.removeFocusListener(rightButton.getFocusListeners()[1]);
-        rightButton.removeFocusListener(rightButton.getFocusListeners()[0]);
-
-        leftButton.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                leftButton.setForeground(Color.darkGray);
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                leftButton.setForeground(Color.gray);
-
-            }
-        });
-        rightButton.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                rightButton.setForeground(Color.darkGray);
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                rightButton.setForeground(Color.gray);
-
-            }
-        });
-
-
-        leftButton.addActionListener(e -> {
-            if (this.pageNum > 0) {
-                pageNum--;
-                clear();
-                draw(pageNum);
-
-            }
-        });
-
-        rightButton.addActionListener(e -> {
-            if(this.pageNum < this.totalPageNum) {
-                pageNum++;
-                clear();
-                draw(pageNum);
-
-            }
+        homeBtn.addActionListener(e -> {
+            Pipeline.replacePane(new GameMenuPane());
         });
     }
 
