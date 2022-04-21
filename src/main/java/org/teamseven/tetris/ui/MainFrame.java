@@ -1,5 +1,7 @@
 package org.teamseven.tetris.ui;
 
+import static org.teamseven.tetris.Const.APPLICATION_TITLE;
+
 public class MainFrame extends BaseFrame {
 
     private int[] resolution = new int[2];           // frame resolution
@@ -14,7 +16,7 @@ public class MainFrame extends BaseFrame {
         preferredResolution[0] = resolution[0] - frameBorderSize[0];
         preferredResolution[1] = resolution[1] - frameBorderSize[1];
 
-        this.setFrame("Tetris");
+        this.setFrame(APPLICATION_TITLE);
     }
 
     @Override
