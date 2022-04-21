@@ -10,6 +10,10 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.List;
 
+import static javax.swing.JOptionPane.showInputDialog;
+import static org.teamseven.tetris.Const.SCORE_ITEM_FILE;
+import static org.teamseven.tetris.Const.SCORE_NORMAL_FILE;
+
 public class ScoreBoardPanelTab extends JPanel implements  IDesign {
 
     private int[] preferredResolution;  // frame resolution - frame top border
@@ -29,16 +33,25 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
     private GridBagLayout gridBagLayout;
     private ScoreMemoryHandler handler = new ScoreMemoryHandler();
     private String fileName;
+    List<Score> scores;
 
-
-    public ScoreBoardPanelTab(int[] preferredResolution, String fileName) {
-        this.fileName = fileName;
+    public ScoreBoardPanelTab(int[] preferredResolution, boolean itemMode, int newScore) {
         this.preferredResolution = preferredResolution;
 
+        fileName = itemMode ? SCORE_ITEM_FILE : SCORE_NORMAL_FILE;
+        scores = handler.getScores(fileName);
 
         setComp();
         setDesign();
         setAction();
+
+        if(newScore >= 0 && (scores.size() < 10 || newScore > scores.stream().map(Score::getScore).map(Integer::valueOf).mapToInt(k -> k).min().getAsInt())) {
+            String name = showInputDialog("이름을 입력하세요.");
+            Score score = new Score(newScore, name == null ? "Unknown" : name);
+            addScore(score);
+            clear();
+            draw(pageNum);
+        }
     }
 
     @Override
@@ -79,18 +92,12 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
 
         leftButton = new CustomButton();
         rightButton = new CustomButton();
-
-
-
     }
 
     @Override
     public void setDesign() {
-
         this.setLayout(gridBagLayout);
         this.setBackground(Color.white);
-
-
 
         gridBagConstraints.fill = GridBagConstraints.BOTH;
 
@@ -255,7 +262,6 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
     }
 
     public  void draw(int pageNum){
-        List<Score> scores = handler.getScores(fileName);
         totalPageNum = scores.size() / 10;
         for(int i = 0; i<10; i++){
             if(scores.size() == pageNum*10 + i){break;};

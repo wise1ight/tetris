@@ -20,7 +20,7 @@ class GameHandlerTest {
 
     @BeforeEach
     void init() {
-        gameHandler = new GameHandler();
+        gameHandler = new GameHandler(false);
         timer = new Timer(INIT_DELAY, null);
     }
 

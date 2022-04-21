@@ -4,9 +4,6 @@ import org.teamseven.tetris.Pipeline;
 
 import javax.swing.*;
 
-import static org.teamseven.tetris.Const.SCORE_ITEM_FILE;
-import static org.teamseven.tetris.Const.SCORE_NORMAL_FILE;
-
 public class ScoreBoardTabbedPane extends JTabbedPane implements IDesign {
     private ScoreBoardPanelTab noItem, item;
     private int[] preferredResolution;  // frame resolution - frame top border
@@ -26,8 +23,8 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements IDesign {
 
     @Override
     public void setComp() {
-        noItem = new ScoreBoardPanelTab(preferredResolution,SCORE_NORMAL_FILE);
-        item = new ScoreBoardPanelTab(preferredResolution,SCORE_ITEM_FILE);
+        noItem = new ScoreBoardPanelTab(preferredResolution, false,-1);
+        item = new ScoreBoardPanelTab(preferredResolution, true,-1);
     }
 
     @Override
