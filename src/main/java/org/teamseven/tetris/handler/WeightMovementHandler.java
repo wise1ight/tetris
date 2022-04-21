@@ -29,9 +29,12 @@ public class WeightMovementHandler extends BlockMovementHandler {
         int x = curr.x + vec[1];
         int y = curr.y + vec[0];
 
+        if (y + 1 == HEIGHT || outOfBoard(x, y, curr)) {
+            return false;
+        }
         if (y != HEIGHT && isBlocked(x, y, curr, board.getBoard())) {
             flag = true;
         }
-        return !outOfBoard(x, y, curr);
+        return true;
     }
 }

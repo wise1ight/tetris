@@ -35,7 +35,10 @@ public class ItemModeHandler {
     }
 
     public boolean isNewItem(int totalErasedLines) {
-        if (totalErasedLines != 0 && totalErasedLines % 10 == 0 && save != totalErasedLines) {
+        System.out.println("(save != totalErasedLines) = " + (save != totalErasedLines));
+        System.out.println("(totalErasedLines != 0) = " + (totalErasedLines != 0));
+        System.out.println("(totalErasedLines % 2 == 0 = " + (totalErasedLines % 2 == 0));
+        if (totalErasedLines != 0 && totalErasedLines % 2 == 0 && save != totalErasedLines) {
             save = totalErasedLines / 10;
             return true;
         }

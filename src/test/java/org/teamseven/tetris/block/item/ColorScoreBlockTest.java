@@ -17,7 +17,7 @@ class ColorScoreBlockTest {
     CurrBlock curr;
     GameBoard board = new GameBoard();
     ItemModeHandler itemModeHandler = new ItemModeHandler();
-    GameHandler gameHandler = new GameHandler();
+    GameHandler gameHandler = new GameHandler(false);
 
     @Test
     void test() {
