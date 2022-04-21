@@ -195,6 +195,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
 
     @Override
     public void setAction() {
+        draw(pageNum);
         leftButton.removeFocusListener(leftButton.getFocusListeners()[1]);
         leftButton.removeFocusListener(leftButton.getFocusListeners()[0]);
 
@@ -228,7 +229,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
 
 
         leftButton.addActionListener(e -> {
-            if (pageNum > 0) {
+            if (this.pageNum > 0) {
                 pageNum--;
                 clear();
                 draw(pageNum);
@@ -237,7 +238,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
         });
 
         rightButton.addActionListener(e -> {
-            if(pageNum < totalPageNum) {
+            if(this.pageNum < this.totalPageNum) {
                 pageNum++;
                 clear();
                 draw(pageNum);
@@ -245,7 +246,6 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
             }
         });
 
-        draw(pageNum);
     }
 
     public void make(JPanel p, JComponent c, int x, int y, int w, int h) {
@@ -276,6 +276,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
             JLabel tempLabel2 = new JLabel();
             tempLabel2.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
             tempLabel2.setForeground(Color.gray);
+            System.out.println(this.pageNum);
             tempLabel2.setText(scores.get(pageNum*10+i).getName());
             scorePanels[i].add(tempLabel2);
 
