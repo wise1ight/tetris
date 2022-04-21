@@ -7,6 +7,9 @@ import org.teamseven.tetris.block.UnitBlock;
 
 import java.awt.*;
 
+import static org.teamseven.tetris.Const.HEIGHT;
+import static org.teamseven.tetris.Const.WIDTH;
+
 public class WeightBlock extends Block implements ItemBlock {
 
     public WeightBlock() {
@@ -20,7 +23,7 @@ public class WeightBlock extends Block implements ItemBlock {
 
     @Override
     public void execute(GameBoard board, CurrBlock curr) {
-        
+        board.eraseCurr(curr);
     }
 
     @Override

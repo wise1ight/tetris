@@ -5,9 +5,12 @@ import org.teamseven.tetris.Const;
 import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
+import org.teamseven.tetris.block.item.WeightBlock;
 import org.teamseven.tetris.factory.BlockFactory;
+import org.teamseven.tetris.handler.BlockMovementHandler;
 import org.teamseven.tetris.handler.GameHandler;
 import org.teamseven.tetris.handler.ItemModeHandler;
+import org.teamseven.tetris.handler.WeightMovementHandler;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -121,13 +124,21 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
         }
         gameHandler.setErasedLines(board.eraseLines());
         gameHandler.addScoreByEraseLine();
+
         gameHandler.speedUp(timer);
+        if (nextBlock instanceof WeightBlock) {
+            curr.setHandler(new WeightMovementHandler());
+        } else {
+            curr.setHandler(new BlockMovementHandler());
+        }
         curr.newBlock(nextBlock);
         gameHandler.addBlockCnt();
+
         if (isFinished()) {
             System.out.println("Finished!");
             System.exit(0);
         }
+
         if (gameHandler.isItemMode() && itemModeHandler.isNewItem(gameHandler.getTotalErasedLines())) {
             nextBlock = BlockFactory.blockGenerator("item").generate();
         } else {

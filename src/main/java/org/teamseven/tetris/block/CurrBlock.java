@@ -12,6 +12,10 @@ public class CurrBlock {
     private Block block;
     private BlockMovementHandler handler;
 
+    public void setHandler(BlockMovementHandler handler) {
+        this.handler = handler;
+    }
+
     public CurrBlock() {
         handler = new BlockMovementHandler();
         block = BlockFactory.blockGenerator("random").generate();
