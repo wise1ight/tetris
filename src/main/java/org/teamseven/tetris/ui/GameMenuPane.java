@@ -201,10 +201,7 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
             settingButton.requestFocus();
         });
         scoreBoard_ExitButton.addActionListener(e -> {
-            this.remove(scoreBoard1);
-            this.revalidate();
-            this.repaint();
-            scoreButton.requestFocus();
+            System.exit(0);
         });
         noItemModeButton.addActionListener(e -> {
             //TODO show tetris game screen
