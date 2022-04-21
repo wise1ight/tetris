@@ -24,11 +24,13 @@ public class ItemModeHandler {
         return false;
     }
 
-    public void executeItem(GameBoard board, CurrBlock curr) {
+    public void executeItem(GameBoard board, CurrBlock curr, GameHandler handler) {
         if (curr.getBlock() instanceof ItemBlock) {
             ((ItemBlock) curr.getBlock()).execute(board, curr);
         } else if (curr.getBlock().getUnitBlock(pos[1], pos[0]) instanceof ItemBlock) {
-            ((ItemBlock) curr.getBlock().getUnitBlock(pos[1], pos[0])).execute(board, curr, pos);
+            int cnt = ((ItemBlock) curr.getBlock().getUnitBlock(pos[1], pos[0])).execute(board, curr, pos);
+            handler.setErasedLines(cnt);
+            handler.addScoreByEraseLine();
         }
     }
 

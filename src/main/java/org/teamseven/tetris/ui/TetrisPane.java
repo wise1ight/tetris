@@ -117,7 +117,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
 
     private void nextTurn() {
         if (gameHandler.isItemMode() && itemModeHandler.hasItem(curr)) {
-            itemModeHandler.executeItem(board, curr);
+            itemModeHandler.executeItem(board, curr, gameHandler);
         }
         gameHandler.setErasedLines(board.eraseLines());
         gameHandler.addScoreByEraseLine();

@@ -17,7 +17,7 @@ public class LineRemoveBlock extends ItemUnitBlock {
     }
 
     @Override
-    public void execute(GameBoard board, CurrBlock curr, int[] pos) {
-
+    public int execute(GameBoard board, CurrBlock curr, int[] pos) {
+        return board.eraseLine(pos[0]);
     }
 }

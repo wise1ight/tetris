@@ -24,7 +24,7 @@ public class WeightBlock extends Block implements ItemBlock {
     }
 
     @Override
-    public void execute(GameBoard board, CurrBlock curr, int[] pos) {
-        return;
+    public int execute(GameBoard board, CurrBlock curr, int[] pos) {
+        return 0;
     }
 }
