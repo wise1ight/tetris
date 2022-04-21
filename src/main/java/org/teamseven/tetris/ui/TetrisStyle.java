@@ -29,7 +29,7 @@ public class TetrisStyle {
                 for(Color color : COLORS) {
                     SimpleAttributeSet styleSet = new SimpleAttributeSet();
                     StyleConstants.setFontSize(styleSet, fontSize);
-                    StyleConstants.setFontFamily(styleSet, "Courier");
+                    StyleConstants.setFontFamily(styleSet, "courier new");
                     StyleConstants.setBold(styleSet, true);
                     StyleConstants.setForeground(styleSet, getColorForBlindness(colorBlindnessType, color));
                     StyleConstants.setAlignment(styleSet, StyleConstants.ALIGN_CENTER);
