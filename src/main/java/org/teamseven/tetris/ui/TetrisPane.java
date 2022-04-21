@@ -2,7 +2,6 @@ package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.Const;
-import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
@@ -18,7 +17,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import static org.teamseven.tetris.Const.*;
 
