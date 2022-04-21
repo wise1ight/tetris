@@ -22,8 +22,6 @@ import static org.teamseven.tetris.Const.*;
 
 public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatcher {
 
-    public static final char BORDER_CHAR = 'X';
-
     private JPanel main;
     private JTextPane tetrisBoard, currBlockBoard, scoreBoard;
 

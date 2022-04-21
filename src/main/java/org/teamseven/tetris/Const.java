@@ -15,6 +15,10 @@ public class Const {
     public static final String PREF_COLOR_BLINDNESS_KEY = "COLOR_BLINDNESS";
     public static final String PREF_MODE_KEY = "MODE";
 
+    public static final char BORDER_CHAR = 'X';
+
+    public enum ScreenSize {
+        SMALL, MEDIUM, LARGE;
 
 
 
