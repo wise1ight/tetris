@@ -14,6 +14,7 @@ public class Score implements Comparable<Score> {
     private final String name;
     @CsvDate("yyyy-MM-dd")
     private final LocalDate date;
+
     private final String uuid;
 //    private final Level level;
 
@@ -45,6 +46,10 @@ public class Score implements Comparable<Score> {
 
     public String getDate() {
         return date.toString();
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     @Override

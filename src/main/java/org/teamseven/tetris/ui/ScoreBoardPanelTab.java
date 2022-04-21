@@ -33,6 +33,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
     private GridBagLayout gridBagLayout;
     private ScoreMemoryHandler handler = new ScoreMemoryHandler();
     private String fileName;
+    private String highlightUUID = null;
     List<Score> scores;
 
     public ScoreBoardPanelTab(int[] preferredResolution, boolean itemMode, int newScore) {
@@ -46,9 +47,14 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
         setAction();
 
         if(newScore >= 0 && (scores.size() < 10 || newScore > scores.stream().map(Score::getScore).map(Integer::valueOf).mapToInt(k -> k).min().getAsInt())) {
+            this.revalidate();
+            this.repaint();
             String name = showInputDialog("이름을 입력하세요.");
             Score score = new Score(newScore, name);
+            highlightUUID = score.getUuid();
             addScore(score);
+
+            scores = handler.getScores(fileName);
             clear();
             draw(pageNum);
         }
@@ -271,22 +277,27 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
             tempLabel.setText(String.valueOf(pageNum*10+i+1));
             scorePanels[i].add(tempLabel);
 
+            Score score = scores.get(pageNum*10+i);
+
             JLabel tempLabel2 = new JLabel();
             tempLabel2.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
-            tempLabel2.setForeground(Color.gray);
-            tempLabel2.setText(scores.get(pageNum*10+i).getName());
+            if(score.getUuid().equals(highlightUUID))
+                tempLabel2.setForeground(Color.YELLOW);
+            else
+                tempLabel2.setForeground(Color.gray);
+            tempLabel2.setText(score.getName());
             scorePanels[i].add(tempLabel2);
 
             JLabel tempLabel3 = new JLabel();
             tempLabel3.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
             tempLabel3.setForeground(Color.gray);
-            tempLabel3.setText(scores.get(pageNum*10+i).getScore());
+            tempLabel3.setText(score.getScore());
             scorePanels[i].add(tempLabel3);
 
             JLabel tempLabel4 = new JLabel();
             tempLabel4.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
             tempLabel4.setForeground(Color.gray);
-            tempLabel4.setText(scores.get(pageNum*10+i).getDate());
+            tempLabel4.setText(score.getDate());
             tempLabel4.setHorizontalAlignment(JLabel.RIGHT);
             scorePanels[i].add(tempLabel4);
 
