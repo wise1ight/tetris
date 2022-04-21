@@ -28,7 +28,7 @@ class ScoreMemoryHandlerTest {
     @DisplayName("파일 저장 및 불러오기 테스트")
     void file_save_test() {
         int num = (new Random()).nextInt();
-        Score score = new Score(num, "아아악" + num);
+        Score score = new Score(num, "아아악" + num, "NORMAL");
 
         List<Score> before = handler.getScores(fileName);
         handler.saveScoreFile(score, fileName);
@@ -41,9 +41,9 @@ class ScoreMemoryHandlerTest {
     @Test
     @DisplayName("점수 내림차순 정렬 테스트")
     void score_descending_name() {
-        Score score1 = new Score(100, "AAA");
-        Score score2 = new Score(200, "AAA");
-        Score score3 = new Score(100, "AAB");
+        Score score1 = new Score(100, "AAA", "NORMAL");
+        Score score2 = new Score(200, "AAA", "NORMAL");
+        Score score3 = new Score(100, "AAB", "NORMAL");
 
         handler.saveScoreFile(score1, fileName);
         handler.saveScoreFile(score2, fileName);
