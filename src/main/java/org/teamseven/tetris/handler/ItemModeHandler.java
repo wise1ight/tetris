@@ -3,6 +3,7 @@ package org.teamseven.tetris.handler;
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.item.ItemBlock;
+import org.teamseven.tetris.util.GameHandlerUtil;
 
 public class ItemModeHandler {
 
@@ -34,9 +35,11 @@ public class ItemModeHandler {
         }
     }
 
-    public boolean isNewItem(int totalErasedLines) {
-        if (totalErasedLines != 0 && totalErasedLines % 10 == 0 && save != totalErasedLines) {
-            save = totalErasedLines / 10;
+    public boolean isNewItem(GameHandler handler) {
+        int totalErasedLines = handler.getTotalErasedLines();
+
+        if (totalErasedLines != 0 && totalErasedLines / 10 > 0) {
+            handler.setTotalErasedLines(0);
             return true;
         }
         return false;

@@ -24,7 +24,6 @@ public class ColorScoreBlock extends ItemUnitBlock{
     public int execute(GameBoard board, CurrBlock curr, int[] pos, GameHandler handler) {
         int cnt = 0;
 
-        System.out.println("awe");
         for (int j = 0; j < HEIGHT; j++) {
             for (int i = 0; i < WIDTH; i++) {
                 if (board.getBoard()[j][i] != null && board.getBoard()[j][i].getColor() == curr.getBlock().getColor()) {

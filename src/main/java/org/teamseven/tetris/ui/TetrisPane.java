@@ -131,7 +131,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
             return;
         }
 
-        if (gameHandler.isItemMode() && itemModeHandler.isNewItem(gameHandler.getTotalErasedLines())) {
+        if (gameHandler.isItemMode() && itemModeHandler.isNewItem(gameHandler)) {
             nextBlock = BlockFactory.blockGenerator("item").generate();
         } else {
             nextBlock = BlockFactory.blockGenerator("random").generate();
