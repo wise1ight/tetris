@@ -1,5 +1,7 @@
 package org.teamseven.tetris;
 
+import java.awt.*;
+
 public class Const {
 
     public static final String APPLICATION_TITLE = "Tetris";
@@ -14,6 +16,8 @@ public class Const {
     public static final int SCREEN_SMALL_BLOCK_FONT_SIZE = 24;
     public static final int SCREEN_MEDIUM_BLOCK_FONT_SIZE = 33;
     public static final int SCREEN_LARGE_BLOCK_FONT_SIZE = 38;
+
+    public static final Color[] COLORS = {Color.WHITE, Color.MAGENTA, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.BLUE, Color.CYAN, Color.RED};
 
     public static final String PREF_SCREEN_SIZE_KEY = "SCREEN_SIZE";
     public static final String PREF_BTN_LEFT_KEY = "BTN_LEFT";

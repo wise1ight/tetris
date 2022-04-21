@@ -1,7 +1,7 @@
 package org.teamseven.tetris.enums;
 
 public enum ColorBlindnessType {
-    NONE, RED, GREEN, BLUE;
+    NONE, BLINDNESS;
 
     public static ColorBlindnessType toEnum(String str) {
         try {
