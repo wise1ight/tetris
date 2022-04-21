@@ -36,4 +36,7 @@ public class Const {
     public final static int FOUR_LINES = 4;
 
     public static int DEFAULT_SCORE = 100;
+
+    public static final int INIT_DELAY = 1000;
+
 }

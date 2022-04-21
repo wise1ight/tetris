@@ -23,14 +23,14 @@ public class GameHandlerUtil {
     }
 
     public static boolean checkBlockCnt(int blockCnt) {
-        return blockCnt % 10 == 0 && blockCnt / 10 > 0;
+        return blockCnt % WIDTH == 0 && blockCnt / WIDTH > 0;
     }
 
     public static int getLevel(int blockCnt) {
-        return blockCnt / 10;
+        return blockCnt / WIDTH;
     }
 
     public static double basicTetrisSpeedRule(int blockCnt) {
-        return Math.pow(0.8 - ((getLevel(blockCnt) - 1) * 0.007), getLevel(blockCnt) - 1) * 1000;
+        return Math.pow(0.8 - (getLevel(blockCnt) * 0.007), getLevel(blockCnt)) * 1000;
     }
 }

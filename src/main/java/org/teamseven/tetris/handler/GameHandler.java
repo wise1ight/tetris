@@ -2,6 +2,7 @@ package org.teamseven.tetris.handler;
 
 import javax.swing.*;
 
+import static org.teamseven.tetris.Const.WIDTH;
 import static org.teamseven.tetris.util.GameHandlerUtil.*;
 
 public class GameHandler {
@@ -12,18 +13,18 @@ public class GameHandler {
     private ScoreHandler scoreHandler = new ScoreHandler();
 
     public void speedUp(Timer timer) {
-        if (checkBlockCnt(blockCnt)) {
-            scoreHandler.addAlphaScore();
-            int time = (int) (basicTetrisSpeedRule(blockCnt) * Math.pow(0.99, totalErasedLines) * PreferencesHandler.getMode().speedProb());
-            System.out.println("time1 = " + time);
-            timer.setDelay(time);
-        }
+        int delay = timer.getDelay();
+        double nextDelay = basicTetrisSpeedRule(blockCnt + totalErasedLines * WIDTH);
+        double alpha = PreferencesHandler.getMode().speedProb();
+        int time = (int) ((1 - alpha) * delay + alpha * nextDelay);
+
         if (checkErasedLines(erasedLines)) {
-            int delay = timer.getDelay();
-            int time = (int)(delay * Math.pow(0.99, erasedLines));
             timer.setDelay(time);
             erasedLines = 0;
-            System.out.println("time2 = " + time);
+        }
+        if (checkBlockCnt(blockCnt)) {
+            scoreHandler.addAlphaScore();
+            timer.setDelay(time);
         }
     }
 
