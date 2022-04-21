@@ -10,5 +10,4 @@ public class ItemUnitBlock extends UnitBlock {
         super(color);
     }
 
-
 }
