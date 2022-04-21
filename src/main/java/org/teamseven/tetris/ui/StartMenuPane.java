@@ -1,5 +1,7 @@
 package org.teamseven.tetris.ui;
 
+import org.teamseven.tetris.Const;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashSet;
@@ -171,7 +173,7 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
 
         });
         settingButton.addActionListener(e -> {
-            this.add(settingBoard, JLayeredPane.POPUP_LAYER);
+            cardSwitcher.switchCard(Const.SCENE_SETTING);
         });
         scoreButton.addActionListener(e -> {
             this.add(scoreBoard, JLayeredPane.POPUP_LAYER);
