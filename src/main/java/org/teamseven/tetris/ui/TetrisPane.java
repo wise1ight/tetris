@@ -8,6 +8,7 @@ import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.factory.BlockFactory;
 import org.teamseven.tetris.handler.GameHandler;
+import org.teamseven.tetris.handler.PreferencesHandler;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -34,6 +35,14 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private GameHandler gameHandler = new GameHandler();
 
     private int[] preferredResolution;  // frame resolution - frame top border
+
+    private static final int KEY_CODE_LEFT = PreferencesHandler.getLeftBtnCode();
+    private static final int KEY_CODE_RIGHT = PreferencesHandler.getRightBtnCode();
+    private static final int KEY_CODE_ROTATE_RIGHT = PreferencesHandler.getRotateRightBtnCode();
+    private static final int KEY_CODE_PAUSE = PreferencesHandler.getPauseBtnCode();
+    private static final int KEY_CODE_HARD_DROP = PreferencesHandler.getHardDropBtnCode();
+    private static final int KEY_CODE_SOFT_DROP = PreferencesHandler.getSoftDropBtnCode();
+    private static final int KEY_CODE_EXIT = PreferencesHandler.getExitBtnCode();
 
     public TetrisPane() {
         int[] frameBorderSize = new int[2];       // frame top border
@@ -256,11 +265,11 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
         if(e.getID() == KeyEvent.KEY_PRESSED && e.getModifiers() == 0) {
-            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            if (e.getKeyCode() == KEY_CODE_EXIT) {
                 System.exit(0);
                 return true;
             }
-            if (e.getKeyCode() == KeyEvent.VK_P) {
+            if (e.getKeyCode() == KEY_CODE_PAUSE) {
                 if (gameHandler.isPaused()) {
                     gameHandler.start();
                     timer.start();
@@ -274,34 +283,33 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
                 return true;
             }
             int cnt = 0;
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_DOWN:
-                    cnt = curr.move(board, DOWN);
-                    gameHandler.addScoreByMove(cnt);
-                    drawBoard();
-                    return true;
-                case KeyEvent.VK_RIGHT:
-                    curr.move(board, RIGHT);
-                    drawBoard();
-                    return true;
-                case KeyEvent.VK_LEFT:
-                    curr.move(board, LEFT);
-                    drawBoard();
-                    return true;
-                case KeyEvent.VK_UP:
-                    board.eraseCurr(curr);
-                    curr.rotate(board);
-                    board.placeBlock(curr);
-                    drawBoard();
-                    return true;
-                case KeyEvent.VK_SPACE:
-                    cnt = curr.moveEnd(board);
-                    gameHandler.setErasedLines(board.eraseLines());
-                    gameHandler.addScoreByMove(cnt);
-                    gameHandler.addScoreByEraseLine();
-                    nextTurn();
-                    drawBoard();
-                    return true;
+            if (e.getKeyCode() == KEY_CODE_SOFT_DROP) {
+                cnt = curr.move(board, DOWN);
+                gameHandler.addScoreByMove(cnt);
+                drawBoard();
+                return true;
+            } else if (e.getKeyCode() == KEY_CODE_RIGHT) {
+                curr.move(board, RIGHT);
+                drawBoard();
+                return true;
+            } else if (e.getKeyCode() == KEY_CODE_LEFT) {
+                curr.move(board, LEFT);
+                drawBoard();
+                return true;
+            } else if (e.getKeyCode() == KEY_CODE_ROTATE_RIGHT) {
+                board.eraseCurr(curr);
+                curr.rotate(board);
+                board.placeBlock(curr);
+                drawBoard();
+                return true;
+            } else if (e.getKeyCode() == KEY_CODE_HARD_DROP) {
+                cnt = curr.moveEnd(board);
+                gameHandler.setErasedLines(board.eraseLines());
+                gameHandler.addScoreByMove(cnt);
+                gameHandler.addScoreByEraseLine();
+                nextTurn();
+                drawBoard();
+                return true;
             }
         }
 
