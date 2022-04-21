@@ -2,9 +2,13 @@ package org.teamseven.tetris.block.item;
 
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.Block;
+import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
 
 import java.awt.*;
+
+import static org.teamseven.tetris.Const.HEIGHT;
+import static org.teamseven.tetris.Const.WIDTH;
 
 public class ClearBlock extends Block implements ItemBlock {
 
@@ -16,7 +20,12 @@ public class ClearBlock extends Block implements ItemBlock {
     }
 
     @Override
-    public void execute(GameBoard board) {
+    public void execute(GameBoard board, CurrBlock curr) {
+        board.setBoard(new UnitBlock[HEIGHT][WIDTH]);
+    }
 
+    @Override
+    public void execute(GameBoard board, CurrBlock curr, int[] pos) {
+        return;
     }
 }

@@ -26,9 +26,9 @@ public class ItemModeHandler {
 
     public void executeItem(GameBoard board, CurrBlock curr) {
         if (curr.getBlock() instanceof ItemBlock) {
-            ((ItemBlock) curr.getBlock()).execute(board);
+            ((ItemBlock) curr.getBlock()).execute(board, curr);
         } else if (curr.getBlock().getUnitBlock(pos[1], pos[0]) instanceof ItemBlock) {
-            ((ItemBlock) curr.getBlock().getUnitBlock(pos[1], pos[0])).execute(board);
+            ((ItemBlock) curr.getBlock().getUnitBlock(pos[1], pos[0])).execute(board, curr, pos);
         }
     }
 
