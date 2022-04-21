@@ -22,8 +22,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.TimerTask;
 
 import static org.teamseven.tetris.Const.*;
+import static org.teamseven.tetris.util.BoardUtil.isFilled;
 
 public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatcher {
 
@@ -39,7 +41,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private Block nextBlock;
     private GameHandler gameHandler;
     private ItemModeHandler itemModeHandler = new ItemModeHandler();
-
+    private boolean isAnimating;
     private int[] preferredResolution;  // frame resolution - frame top border
 
     private static final int KEY_CODE_LEFT = PreferencesHandler.getLeftBtnCode();
@@ -108,9 +110,27 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     }
 
     private void nextTurn() {
+        if (!isAnimating) {
+            boolean flag = false;
+            for (int j = 0; j < Const.HEIGHT; j++) {
+                if (isFilled(board.getBoard()[j])) {
+                    for (int i = 0; i < Const.WIDTH; i++) {
+                        board.getBoard()[j][i].setColor(Color.WHITE);
+                    }
+                    isAnimating = true;
+                    flag = true;
+                }
+            }
+            if (flag) {
+                return;
+            }
+        } else {
+            isAnimating = false;
+        }
         if (gameHandler.isItemMode() && itemModeHandler.hasItem(curr)) {
             itemModeHandler.executeItem(board, curr, gameHandler);
         }
+
         gameHandler.setErasedLines(board.eraseLines());
         gameHandler.addScoreByEraseLine();
 
@@ -381,6 +401,9 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
                 return true;
             }
             if (gameHandler.isPaused()) {
+                return true;
+            }
+            if (isAnimating) {
                 return true;
             }
             int cnt = 0;
