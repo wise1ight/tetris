@@ -23,12 +23,14 @@ public class GameHandler {
         double alpha = PreferencesHandler.getMode().speedProb();
 
         if (checkErasedLines(erasedLines)) {
-            int time = (int) (timer.getDelay() * (0.98 * erasedLines));
+            int time = (int) (timer.getDelay() * Math.pow(0.98, erasedLines));
+            System.out.println("erase time = " + time);
             timer.setDelay(time);
             erasedLines = 0;
         }
         if (checkBlockCnt(blockCnt)) {
             int time = (int) ((1 - alpha) * delay + alpha * nextDelay);
+            System.out.println("block time = " + time);
             scoreHandler.addAlphaScore();
             timer.setDelay(time);
         }
