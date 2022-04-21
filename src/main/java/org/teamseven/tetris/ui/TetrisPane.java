@@ -22,7 +22,7 @@ import static org.teamseven.tetris.Const.*;
 public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatcher {
 
     private JPanel main;
-    private JTextPane tetrisBoard, currBlockBoard, scoreBoard;
+    private JTextPane tetrisBoard, nextBlockBoard, scoreBoard;
 
     private GridBagConstraints gridBagConstraints;
     private GridBagLayout gridBagLayout;
@@ -52,19 +52,11 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     public void setComp() {
         main = new JPanel();
         tetrisBoard = new JTextPane();
-        currBlockBoard = new JTextPane();
+        nextBlockBoard = new JTextPane();
         scoreBoard = new JTextPane();
 
         gridBagConstraints = new GridBagConstraints();
         gridBagLayout = new GridBagLayout();
-
-        tetrisBoard = new JTextPane();
-        tetrisBoard.setEditable(false);
-        tetrisBoard.setBackground(Color.BLACK);
-        CompoundBorder border = BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.GRAY, 10),
-                BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
-        tetrisBoard.setBorder(border);
 
         //Create first block and next block
         curr = new CurrBlock();
@@ -90,8 +82,6 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
 
         //Initialize board for the game.
         board = new GameBoard();
-        setFocusable(true);
-        requestFocus();
 
         //Draw board.
         board.placeBlock(curr);
@@ -116,6 +106,11 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     }
 
     public void drawBoard() {
+        drawGameBoard();
+        drawNextBlock();
+    }
+    
+    private void drawGameBoard() {
         StringBuffer sb = new StringBuffer();
 
         sb = drawWidthBorder(sb);
@@ -148,6 +143,37 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
             }
         }
     }
+    
+    private void drawNextBlock() {
+        StringBuffer sb = new StringBuffer();
+
+        UnitBlock[][] unitBlocks = nextBlock.getShape();
+        for (UnitBlock[] unitBlock : unitBlocks) {
+            for (UnitBlock block : unitBlock) {
+                if (block != null) {
+                    sb.append("O");
+                } else {
+                    sb.append(" ");
+                }
+            }
+            sb.append("\n");
+        }
+
+        nextBlockBoard.setText(sb.toString());
+        StyledDocument doc = nextBlockBoard.getStyledDocument();
+        doc.setParagraphAttributes(0, doc.getLength(), TetrisStyle.getStyle(Color.WHITE), false);
+        nextBlockBoard.setStyledDocument(doc);
+
+        for (int row = 0; row < unitBlocks.length; row++) {
+            for (int col = 0; col < unitBlocks[row].length; col++) {
+                int offset = (unitBlocks[row].length + 1) * row + col;
+                if(unitBlocks[row][col] != null) {
+                    System.out.println(offset);
+                    doc.setCharacterAttributes(offset, 1, TetrisStyle.getStyle(unitBlocks[row][col].getColor()), false);
+                }
+            }
+        }
+    }
 
     private StringBuffer drawWidthBorder(StringBuffer sb) {
         StringBuffer buffer = new StringBuffer(sb);
@@ -160,15 +186,18 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     @Override
     public void setDesign() {
         tetrisBoard.setEditable(false);
-        currBlockBoard.setEditable(false);
+        nextBlockBoard.setEditable(false);
         scoreBoard.setEditable(false);
+
+        tetrisBoard.setBackground(Color.BLACK);
+        nextBlockBoard.setBackground(Color.BLACK);
 
         CompoundBorder border = BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.gray, preferredResolution[1] / 60),
                 BorderFactory.createLineBorder(Color.darkGray, preferredResolution[1] / 90));
 
         tetrisBoard.setBorder(border);
-        currBlockBoard.setBorder(border);
+        nextBlockBoard.setBorder(border);
         scoreBoard.setBorder(border);
 
         main.setLayout(gridBagLayout);
@@ -181,14 +210,14 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
 
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new Insets(preferredResolution[1] / 18, preferredResolution[0] / 16, preferredResolution[1] / 180, preferredResolution[0] * 3 / 16);
-        make(currBlockBoard, 1, 0, 1, 1);
+        make(nextBlockBoard, 1, 0, 1, 1);
 
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new Insets(preferredResolution[1] / 180, preferredResolution[0] / 16, preferredResolution[1] * 3 / 5, preferredResolution[0] * 3 / 16);
         make(scoreBoard, 1, 1, 1, 1);
 
         main.add(tetrisBoard);
-        main.add(currBlockBoard);
+        main.add(nextBlockBoard);
         main.add(scoreBoard);
 
         main.setBounds(0, 0, preferredResolution[0], preferredResolution[1]);
