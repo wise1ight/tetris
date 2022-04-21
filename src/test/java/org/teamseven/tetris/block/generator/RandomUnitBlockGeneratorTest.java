@@ -5,7 +5,7 @@ import org.teamseven.tetris.block.Block;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RandomBlockGeneratorTest {
+class RandomUnitBlockGeneratorTest {
 
     @Test
     public void 블럭_생성_확인() {

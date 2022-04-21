@@ -3,28 +3,11 @@ package org.teamseven.tetris.block;
 import java.awt.*;
 
 public abstract class Block {
-
-    protected int[][] shape;
+    protected UnitBlock[][] shape;
     protected Color color;
-
-    public Block() {
-        shape = new int[][]{
-                {1, 1},
-                {1, 1}
-        };
-        color = Color.YELLOW;
-    }
-
-    public int getShape(int x, int y) {
-        return shape[y][x];
-    }
 
     public Color getColor() {
         return color;
-    }
-
-    public void rotate() {
-        //Rotate the block 90 deg. clockwise.
     }
 
     public int height() {
@@ -32,8 +15,31 @@ public abstract class Block {
     }
 
     public int width() {
-        if(shape.length > 0)
+        if (shape.length > 0)
             return shape[0].length;
         return 0;
+    }
+
+    public UnitBlock getUnitBlock(int x, int y) {
+        return shape[y][x];
+    }
+
+    public UnitBlock[][] getShape() {
+        return shape;
+    }
+
+    public void setShape(UnitBlock[][] shape) {
+        this.shape = shape;
+    }
+
+    public void left_rotate() {
+        UnitBlock[][] tmp = new UnitBlock[shape[0].length][shape.length];
+
+        for (int i = 0; i < shape.length; i++) {
+            for (int j = 0; j < shape[i].length; j++) {
+                tmp[shape[i].length - 1 - j][i] = shape[i][j];
+            }
+        }
+        shape = tmp;
     }
 }

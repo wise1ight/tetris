@@ -5,7 +5,10 @@ import org.teamseven.tetris.block.generator.RandomBlockGenerator;
 
 public class BlockFactory {
 
-    public BlockGenerator blockGenerator() {
-        return new RandomBlockGenerator();
+    public static BlockGenerator blockGenerator(String algorithm) {
+        if ("random".equals(algorithm))
+            return new RandomBlockGenerator();
+        else
+            return null;
     }
 }
