@@ -1,16 +1,6 @@
 package org.teamseven.tetris.ui;
 
-import org.teamseven.tetris.Const;
-
-import javax.swing.*;
-import java.awt.*;
-
 public class MainFrame extends BaseFrame {
-    private JPanel scenes;
-    private CardLayout cardLayout;
-    private StartMenuPane startMenu;
-    private TetrisPane tetris;
-    private SettingPane settingPane;
 
     private int[] resolution = new int[2];           // frame resolution
     private int[] preferredResolution = new int[2];  // frame resolution - frame top border
@@ -29,30 +19,12 @@ public class MainFrame extends BaseFrame {
 
     @Override
     public void setComp() {
-        cardLayout = new CardLayout();
-        scenes = new JPanel(cardLayout);
-        /*
-        startMenu = new StartMenuPane(cardSwitcher, preferredResolution);
-        tetris = new TetrisPane(cardSwitcher, preferredResolution);
-        settingPane = new SettingPane(cardSwitcher, preferredResolution);
-         */
+        getContentPane().add(new StartMenuPane(preferredResolution));
     }
 
     @Override
     public void setDesign() {
-        //set scenes
-        scenes.setPreferredSize(new Dimension(preferredResolution[0], preferredResolution[1]));
-        /*
-        scenes.add(startMenu, "startMenu");
-        scenes.add(tetris, "tetris");
-        scenes.add(settingPane, Const.SCENE_SETTING);
-
-         */
-
-        //set MainFrame
-        this.add(scenes);
-        this.pack();
-        this.setLocationRelativeTo(null);
+        setSize(resolution[0], resolution[1]);
     }
 
     @Override
