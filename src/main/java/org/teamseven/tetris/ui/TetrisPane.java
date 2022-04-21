@@ -2,6 +2,7 @@ package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.Const;
+import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
@@ -21,7 +22,7 @@ import java.awt.event.KeyListener;
 
 import static org.teamseven.tetris.Const.*;
 
-public class TetrisPane extends JLayeredPane implements IDesign, KeyListener {
+public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatcher {
 
     public static final char BORDER_CHAR = 'X';
 
@@ -105,7 +106,6 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyListener {
 
         //Initialize board for the game.
         board = new GameBoard();
-        addKeyListener(this);
         setFocusable(true);
         requestFocus();
 
@@ -206,8 +206,8 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyListener {
 
     @Override
     public void setAction() {
-        this.requestFocus();
-        addKeyListener(this);
+        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(this);
     }
 
     public void make(JComponent c, int x, int y, int w, int h) {
@@ -226,59 +226,55 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            System.exit(0);
-        }
-        if (e.getKeyCode() == KeyEvent.VK_P) {
-            if (gameHandler.isPaused()) {
-                gameHandler.start();
-                timer.start();
-            } else {
-                gameHandler.pause();
-                timer.stop();
+    public boolean dispatchKeyEvent(KeyEvent e) {
+        if(e.getID() == KeyEvent.KEY_PRESSED && e.getModifiers() == 0) {
+            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                System.exit(0);
+                return true;
             }
-            return;
+            if (e.getKeyCode() == KeyEvent.VK_P) {
+                if (gameHandler.isPaused()) {
+                    gameHandler.start();
+                    timer.start();
+                } else {
+                    gameHandler.pause();
+                    timer.stop();
+                }
+                return true;
+            }
+            if (gameHandler.isPaused()) {
+                return true;
+            }
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_DOWN:
+                    curr.move(board, DOWN);
+                    drawBoard();
+                    return true;
+                case KeyEvent.VK_RIGHT:
+                    curr.move(board, RIGHT);
+                    drawBoard();
+                    return true;
+                case KeyEvent.VK_LEFT:
+                    curr.move(board, LEFT);
+                    drawBoard();
+                    return true;
+                case KeyEvent.VK_UP:
+                    board.eraseCurr(curr);
+                    curr.rotate(board);
+                    board.placeBlock(curr);
+                    drawBoard();
+                    return true;
+                case KeyEvent.VK_SPACE:
+                    int cnt = curr.moveEnd(board);
+                    gameHandler.setErasedLines(board.eraseLines());
+                    gameHandler.addScoreByMove(cnt);
+                    gameHandler.addScoreByEraseLine();
+                    nextTurn();
+                    drawBoard();
+                    return true;
+            }
         }
-        if (gameHandler.isPaused()) {
-            return;
-        }
-        switch(e.getKeyCode()) {
-            case KeyEvent.VK_DOWN:
-                curr.move(board, DOWN);
-                drawBoard();
-                break;
-            case KeyEvent.VK_RIGHT:
-                curr.move(board, RIGHT);
-                drawBoard();
-                break;
-            case KeyEvent.VK_LEFT:
-                curr.move(board, LEFT);
-                drawBoard();
-                break;
-            case KeyEvent.VK_UP:
-                board.eraseCurr(curr);
-                curr.rotate(board);
-                board.placeBlock(curr);
-                drawBoard();
-                break;
-            case KeyEvent.VK_SPACE:
-                int cnt = curr.moveEnd(board);
-                gameHandler.setErasedLines(board.eraseLines());
-                gameHandler.addScoreByMove(cnt);
-                gameHandler.addScoreByEraseLine();
-                nextTurn();
-                drawBoard();
-        }
-    }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-
+        return false;
     }
 }
