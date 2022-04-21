@@ -137,29 +137,14 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
 
         tetrisBoard.setText(sb.toString());
         StyledDocument doc = tetrisBoard.getStyledDocument();
-        doc.setParagraphAttributes(0, doc.getLength(), TetrisStyle.DEFAULT_STYLE_SET, false);
+        doc.setParagraphAttributes(0, doc.getLength(), TetrisStyle.getStyle(Color.WHITE), false);
         tetrisBoard.setStyledDocument(doc);
 
         for (int row = 0; row < Const.HEIGHT; row++) {
             for (int col = 0; col < Const.WIDTH; col++) {
                 int offset = col + (row + 1) * (Const.WIDTH + 3) + 1;
-                if(unitBlocks[row][col] != null) {
-                    if(unitBlocks[row][col].getColor().equals(Color.MAGENTA)) {
-                        doc.setCharacterAttributes(offset, 1, TetrisStyle.MAGENTA_STYLE_SET, false);
-                    } else if (unitBlocks[row][col].getColor().equals(Color.GREEN)) {
-                        doc.setCharacterAttributes(offset, 1, TetrisStyle.GREEN_STYLE_SET, false);
-                    } else if (unitBlocks[row][col].getColor().equals(Color.YELLOW)) {
-                        doc.setCharacterAttributes(offset, 1, TetrisStyle.YELLOW_STYLE_SET, false);
-                    } else if (unitBlocks[row][col].getColor().equals(Color.ORANGE)) {
-                        doc.setCharacterAttributes(offset, 1, TetrisStyle.ORANGE_STYLE_SET, false);
-                    } else if (unitBlocks[row][col].getColor().equals(Color.BLUE)) {
-                        doc.setCharacterAttributes(offset, 1, TetrisStyle.BLUE_STYLE_SET, false);
-                    } else if (unitBlocks[row][col].getColor().equals(Color.CYAN)) {
-                        doc.setCharacterAttributes(offset, 1, TetrisStyle.CYAN_STYLE_SET, false);
-                    } else if (unitBlocks[row][col].getColor().equals(Color.RED)) {
-                        doc.setCharacterAttributes(offset, 1, TetrisStyle.RED_STYLE_SET, false);
-                    }
-                }
+                if(unitBlocks[row][col] != null)
+                    doc.setCharacterAttributes(offset, 1, TetrisStyle.getStyle(unitBlocks[row][col].getColor()), false);
             }
         }
     }
