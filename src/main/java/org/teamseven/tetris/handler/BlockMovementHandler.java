@@ -12,15 +12,16 @@ import static org.teamseven.tetris.util.BlockMovementHandlerUtil.outOfBoard;
 
 public class BlockMovementHandler {
 
-    public void move(GameBoard board, CurrBlock curr, int[] vec) {
+    public int move(GameBoard board, CurrBlock curr, int[] vec) {
         board.eraseCurr(curr);
         if (!canMove(board, curr, vec)) {
             board.placeBlock(curr);
-            return;
+            return 0;
         }
         curr.x += vec[1];
         curr.y += vec[0];
         board.placeBlock(curr);
+        return 1;
     }
 
     public boolean isStopped(GameBoard board, CurrBlock curr, Block nextBlock) {
@@ -33,7 +34,7 @@ public class BlockMovementHandler {
         return true;
     }
 
-    public void moveEnd(GameBoard board, CurrBlock curr) {
+    public int moveEnd(GameBoard board, CurrBlock curr) {
         int[] vec = new int[]{0, 0};
 
         board.eraseCurr(curr);
@@ -42,6 +43,7 @@ public class BlockMovementHandler {
         }
         curr.y += vec[0] - 1;
         board.placeBlock(curr);
+        return vec[0] - 1;
     }
 
     public boolean canMove(GameBoard board, CurrBlock curr, int[] vec) {

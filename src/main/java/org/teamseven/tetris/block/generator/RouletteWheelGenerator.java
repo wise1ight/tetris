@@ -1,11 +1,11 @@
 package org.teamseven.tetris.block.generator;
 
 import org.teamseven.tetris.block.*;
-import org.teamseven.tetris.enums.Level;
+import org.teamseven.tetris.enums.Mode;
 
 import java.util.Random;
 
-import static org.teamseven.tetris.enums.Level.EASY;
+import static org.teamseven.tetris.enums.Mode.EASY;
 
 public class RouletteWheelGenerator implements BlockGenerator {
 
@@ -22,8 +22,8 @@ public class RouletteWheelGenerator implements BlockGenerator {
     public Block generate() {
         Random random = new Random();
         double num = random.nextInt(100) / 100.;
-        Level level = EASY;
-        double[] prob = getProb(level.code());
+        Mode mode = EASY;
+        double[] prob = getProb(mode.code());
         double[] cumProb = getCumProb(prob);
 
         if (num < cumProb[0]) {

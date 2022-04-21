@@ -48,4 +48,11 @@ public class Const {
     public static int[] LEFT = new int[]{0, -1};
     public static int[] PLACE = new int[]{0, 0};
 
+
+    public final static int ONE_LINE = 1;
+    public final static int TWO_LINES = 2;
+    public final static int THREE_LINES = 3;
+    public final static int FOUR_LINES = 4;
+
+    public static int DEFAULT_SCORE = 100;
 }

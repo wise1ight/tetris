@@ -15,6 +15,7 @@ public class Score implements Comparable<Score> {
     @CsvDate("yyyy-MM-dd")
     private final LocalDate date;
     private final String uuid;
+//    private final Level level;
 
     public Score(int score, String name) {
         this.score = score;

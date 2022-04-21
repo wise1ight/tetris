@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.teamseven.tetris.enums.Level.EASY;
+import static org.teamseven.tetris.enums.Mode.EASY;
 
 class RouletteWheelGeneratorTest {
 
