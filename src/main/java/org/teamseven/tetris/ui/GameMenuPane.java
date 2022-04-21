@@ -1,13 +1,11 @@
 package org.teamseven.tetris.ui;
 
-import org.teamseven.tetris.Const;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class StartMenuPane extends JLayeredPane implements IDesign {
+public class GameMenuPane extends JLayeredPane implements IDesign {
     private JLabel title;
     private CustomButton startButton, settingButton, scoreButton, exitButton, noItemModeButton, ItemModeButton;
     private JButton settingBoard_ExitButton, scoreBoard_ExitButton;                         // exit button on popup panel
@@ -20,7 +18,7 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
 
     private int[] preferredResolution;  // frame resolution - frame top border
 
-    public StartMenuPane(int[] preferredResolution) {
+    public GameMenuPane(int[] preferredResolution) {
         // for test
         this.setOpaque(true);
         this.setBackground(Color.orange);

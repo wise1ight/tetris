@@ -19,7 +19,7 @@ public class MainFrame extends BaseFrame {
 
     @Override
     public void setComp() {
-        getContentPane().add(new StartMenuPane(preferredResolution));
+        getContentPane().add(new GameMenuPane(preferredResolution));
     }
 
     @Override
