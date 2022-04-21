@@ -1,8 +1,8 @@
 package org.teamseven.tetris.ui;
 
-import org.teamseven.tetris.Const;
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.enums.ColorBlindnessType;
+import org.teamseven.tetris.enums.Mode;
 import org.teamseven.tetris.enums.ScreenSize;
 import org.teamseven.tetris.handler.PreferencesHandler;
 
@@ -13,10 +13,10 @@ import java.awt.event.*;
 
 public class SettingPane extends JLayeredPane implements IDesign {
 
-    JRadioButton rbSmallSize, rbMediumSize, rbLargeSize, rbNone, rbGreenBlindess, rbRedBlindess, rbBlueBlindess;
-    JButton btnInitScoreboard, btnLeft, btnRight, btnRotateRight, btnPause, btnInit, btnConfirm;
-    JLabel lScreenSize, lScoreboard, lBlindess;
-    JPanel pScreenSize, pKeyboard, pScoreboard, pBlindess, pButton;
+    JRadioButton rbSmallSize, rbMediumSize, rbLargeSize, rbEasy, rbNormal, rbHard, rbNone, rbColorBlindess;
+    JButton btnInitScoreboard, btnLeft, btnRight, btnRotateRight, btnHardDrop, btnSoftDrop, btnPause, btnExit, btnInit, btnConfirm;
+    JLabel lScreenSize, lGameMode, lScoreboard, lBlindess;
+    JPanel pScreenSize, pGameMode, pKeyboard, pScoreboard, pBlindess, pButton;
     GridBagLayout gb;
     GridBagConstraints gbc;
 
@@ -49,11 +49,27 @@ public class SettingPane extends JLayeredPane implements IDesign {
         pScreenSize.add(rbLargeSize);
 
         /*
+            일반 게임 모드 난이도 설정
+         */
+        lGameMode = new JLabel("일반 게임모드 난이도 : ");
+        pGameMode = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        rbEasy = new JRadioButton("Easy",true);
+        rbNormal = new JRadioButton("Normal",true);
+        rbHard = new JRadioButton("Hard",true);
+        ButtonGroup groupGameMOde = new ButtonGroup();
+        groupGameMOde.add(rbEasy);
+        groupGameMOde.add(rbNormal);
+        groupGameMOde.add(rbHard);
+        pGameMode.add(rbEasy);
+        pGameMode.add(rbNormal);
+        pGameMode.add(rbHard);
+
+        /*
             게임 키 설정
          */
         pKeyboard = new JPanel();
         pKeyboard.setBorder(new TitledBorder(null, "키 설정", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        GridLayout gridLayout = new GridLayout(4, 2);
+        GridLayout gridLayout = new GridLayout(10, 2);
         pKeyboard.setLayout(gridLayout);
         pKeyboard.add(new JLabel("왼쪽 이동"));
         btnLeft = new JButton("");
@@ -64,9 +80,18 @@ public class SettingPane extends JLayeredPane implements IDesign {
         pKeyboard.add(new JLabel("시계 방향 회전"));
         btnRotateRight = new JButton("");
         pKeyboard.add(btnRotateRight);
+        pKeyboard.add(new JLabel("하드 드롭"));
+        btnHardDrop = new JButton("");
+        pKeyboard.add(btnHardDrop);
+        pKeyboard.add(new JLabel("소프트 드롭"));
+        btnSoftDrop = new JButton("");
+        pKeyboard.add(btnSoftDrop);
         pKeyboard.add(new JLabel("일시 중지"));
         btnPause = new JButton("");
         pKeyboard.add(btnPause);
+        pKeyboard.add(new JLabel("게임 종료"));
+        btnExit = new JButton("");
+        pKeyboard.add(btnExit);
 
         /*
             스코어보드
@@ -82,18 +107,12 @@ public class SettingPane extends JLayeredPane implements IDesign {
         lBlindess = new JLabel("색각이상 모드 : ");
         pBlindess = new JPanel(new FlowLayout(FlowLayout.LEFT));
         rbNone = new JRadioButton("끄기",true);
-        rbGreenBlindess = new JRadioButton("녹색맹",true);
-        rbRedBlindess = new JRadioButton("적색맹",true);
-        rbBlueBlindess = new JRadioButton("청색맹",true);
+        rbColorBlindess = new JRadioButton("켜기",true);
         ButtonGroup groupBlindess = new ButtonGroup();
         groupBlindess.add(rbNone);
-        groupBlindess.add(rbGreenBlindess);
-        groupBlindess.add(rbRedBlindess);
-        groupBlindess.add(rbBlueBlindess);
+        groupBlindess.add(rbColorBlindess);
         pBlindess.add(rbNone);
-        pBlindess.add(rbGreenBlindess);
-        pBlindess.add(rbRedBlindess);
-        pBlindess.add(rbBlueBlindess);
+        pBlindess.add(rbColorBlindess);
 
         /*
             하단 버튼
@@ -114,15 +133,18 @@ public class SettingPane extends JLayeredPane implements IDesign {
         gbAdd(lScreenSize,0, 1, 1, 1);
         gbAdd(pScreenSize, 1, 1, 3, 1);
 
-        gbAdd(pKeyboard, 0, 2, 4, 4);
+        gbAdd(lGameMode, 0, 2, 1, 1);
+        gbAdd(pGameMode, 1, 2, 3, 1);
 
-        gbAdd(lScoreboard, 0,6,1,1);
-        gbAdd(pScoreboard,1,6,3,1);
+        gbAdd(pKeyboard, 0, 3, 4, 4);
 
-        gbAdd(lBlindess, 0,7,1,1);
-        gbAdd(pBlindess,1,7,3,1);
+        gbAdd(lScoreboard, 0,7,1,1);
+        gbAdd(pScoreboard,1,7,3,1);
 
-        gbAdd(pButton, 0, 8, 4, 1);
+        gbAdd(lBlindess, 0,8,1,1);
+        gbAdd(pBlindess,1,8,3,1);
+
+        gbAdd(pButton, 0, 9, 4, 1);
     }
 
     @Override
@@ -133,10 +155,13 @@ public class SettingPane extends JLayeredPane implements IDesign {
                 //AbstractButton aButton = (AbstractButton) actionEvent.getSource();
                 if(rbSmallSize.isSelected()) {
                     PreferencesHandler.setScreenSize(ScreenSize.SMALL);
+                    Pipeline.changeScreenSize(ScreenSize.SMALL);
                 } else if (rbMediumSize.isSelected()) {
                     PreferencesHandler.setScreenSize(ScreenSize.MEDIUM);
+                    Pipeline.changeScreenSize(ScreenSize.MEDIUM);
                 } else if (rbLargeSize.isSelected()) {
                     PreferencesHandler.setScreenSize(ScreenSize.LARGE);
+                    Pipeline.changeScreenSize(ScreenSize.LARGE);
                 }
             }
         };
@@ -144,6 +169,23 @@ public class SettingPane extends JLayeredPane implements IDesign {
         rbSmallSize.addActionListener(screenSizeActionListener);
         rbMediumSize.addActionListener(screenSizeActionListener);
         rbLargeSize.addActionListener(screenSizeActionListener);
+
+        // Game Mode
+        ActionListener gameModeActionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(rbEasy.isSelected()) {
+                    PreferencesHandler.setMode(Mode.EASY);
+                } else if (rbNormal.isSelected()) {
+                    PreferencesHandler.setMode(Mode.NORMAL);
+                } else if (rbHard.isSelected()) {
+                    PreferencesHandler.setMode(Mode.HARD);
+                }
+            }
+        };
+
+        rbEasy.addActionListener(gameModeActionListener);
+        rbNormal.addActionListener(gameModeActionListener);
+        rbHard.addActionListener(gameModeActionListener);
 
         // Keyboard
         ActionListener keyboardActionListener = new ActionListener() {
@@ -179,7 +221,13 @@ public class SettingPane extends JLayeredPane implements IDesign {
                                 PreferencesHandler.setRightBtnCode(e.getKeyCode());
                             else if (ae.getSource() == btnRotateRight)
                                 PreferencesHandler.setRotateRightBtnCode(e.getKeyCode());
+                            else if (ae.getSource() == btnHardDrop)
+                                PreferencesHandler.setHardDropBtnCode(e.getKeyCode());
+                            else if (ae.getSource() == btnSoftDrop)
+                                PreferencesHandler.setSoftDropBtnCode(e.getKeyCode());
                             else if (ae.getSource() == btnPause)
+                                PreferencesHandler.setPauseBtnCode(e.getKeyCode());
+                            else if (ae.getSource() == btnExit)
                                 PreferencesHandler.setPauseBtnCode(e.getKeyCode());
 
                             dialog.dispose();
@@ -198,27 +246,24 @@ public class SettingPane extends JLayeredPane implements IDesign {
         btnLeft.addActionListener(keyboardActionListener);
         btnRight.addActionListener(keyboardActionListener);
         btnRotateRight.addActionListener(keyboardActionListener);
+        btnHardDrop.addActionListener(keyboardActionListener);
+        btnSoftDrop.addActionListener(keyboardActionListener);
         btnPause.addActionListener(keyboardActionListener);
+        btnExit.addActionListener(keyboardActionListener);
 
         // Color Blindness
         ActionListener colorBlindnessActionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 if(rbNone.isSelected()) {
                     PreferencesHandler.setColorBlindnessType(ColorBlindnessType.NONE);
-                } else if (rbRedBlindess.isSelected()) {
-                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.RED);
-                } else if (rbGreenBlindess.isSelected()) {
-                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.GREEN);
-                } else if (rbBlueBlindess.isSelected()) {
-                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.BLUE);
+                } else if (rbColorBlindess.isSelected()) {
+                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.BLINDNESS);
                 }
             }
         };
 
         rbNone.addActionListener(colorBlindnessActionListener);
-        rbRedBlindess.addActionListener(colorBlindnessActionListener);
-        rbGreenBlindess.addActionListener(colorBlindnessActionListener);
-        rbBlueBlindess.addActionListener(colorBlindnessActionListener);
+        rbColorBlindess.addActionListener(colorBlindnessActionListener);
 
         btnConfirm.addActionListener(new ActionListener() {
             @Override
@@ -261,25 +306,35 @@ public class SettingPane extends JLayeredPane implements IDesign {
                 break;
         }
 
+        // Game Mode
+        switch (PreferencesHandler.getMode()) {
+            case EASY:
+                rbEasy.setSelected(true);
+                break;
+            case NORMAL:
+                rbNormal.setSelected(true);
+                break;
+            case HARD:
+                rbHard.setSelected(true);
+                break;
+        }
+
         // Keyboard
         btnLeft.setText(KeyEvent.getKeyText(PreferencesHandler.getLeftBtnCode()));
         btnRight.setText(KeyEvent.getKeyText(PreferencesHandler.getRightBtnCode()));
         btnRotateRight.setText(KeyEvent.getKeyText(PreferencesHandler.getRotateRightBtnCode()));
+        btnHardDrop.setText(KeyEvent.getKeyText(PreferencesHandler.getHardDropBtnCode()));
+        btnSoftDrop.setText(KeyEvent.getKeyText(PreferencesHandler.getSoftDropBtnCode()));
         btnPause.setText(KeyEvent.getKeyText(PreferencesHandler.getPauseBtnCode()));
+        btnExit.setText(KeyEvent.getKeyText(PreferencesHandler.getExitBtnCode()));
 
         // Color Blindness
         switch (PreferencesHandler.getColorBlindnessType()) {
             case NONE:
                 rbNone.setSelected(true);
                 break;
-            case RED:
-                rbRedBlindess.setSelected(true);
-                break;
-            case GREEN:
-                rbGreenBlindess.setSelected(true);
-                break;
-            case BLUE:
-                rbBlueBlindess.setSelected(true);
+            case BLINDNESS:
+                rbColorBlindess.setSelected(true);
                 break;
         }
     }

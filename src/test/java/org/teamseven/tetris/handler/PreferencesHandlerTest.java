@@ -49,9 +49,27 @@ public class PreferencesHandlerTest {
     }
 
     @Test
+    public void testSetHardDropBtn() {
+        PreferencesHandler.setHardDropBtnCode(KeyEvent.VK_SPACE);
+        Assertions.assertEquals(KeyEvent.VK_SPACE, PreferencesHandler.getHardDropBtnCode());
+    }
+
+    @Test
+    public void testSetSoftDropBtn() {
+        PreferencesHandler.setSoftDropBtnCode(KeyEvent.VK_DOWN);
+        Assertions.assertEquals(KeyEvent.VK_DOWN, PreferencesHandler.getSoftDropBtnCode());
+    }
+
+    @Test
     public void testSetPauseBtn() {
         PreferencesHandler.setPauseBtnCode(KeyEvent.VK_3);
         Assertions.assertEquals(KeyEvent.VK_3, PreferencesHandler.getPauseBtnCode());
+    }
+
+    @Test
+    public void testSetExitBtn() {
+        PreferencesHandler.setExitBtnCode(KeyEvent.VK_ESCAPE);
+        Assertions.assertEquals(KeyEvent.VK_ESCAPE, PreferencesHandler.getExitBtnCode());
     }
 
     @Test
@@ -61,21 +79,9 @@ public class PreferencesHandlerTest {
     }
 
     @Test
-    public void testSetRedColorBlindness() {
-        PreferencesHandler.setColorBlindnessType(ColorBlindnessType.RED);
-        Assertions.assertEquals(ColorBlindnessType.RED, PreferencesHandler.getColorBlindnessType());
-    }
-
-    @Test
-    public void testSetGreenColorBlindness() {
-        PreferencesHandler.setColorBlindnessType(ColorBlindnessType.GREEN);
-        Assertions.assertEquals(ColorBlindnessType.GREEN, PreferencesHandler.getColorBlindnessType());
-    }
-
-    @Test
-    public void testSetBlueColorBlindness() {
-        PreferencesHandler.setColorBlindnessType(ColorBlindnessType.BLUE);
-        Assertions.assertEquals(ColorBlindnessType.BLUE, PreferencesHandler.getColorBlindnessType());
+    public void testSetColorBlindness() {
+        PreferencesHandler.setColorBlindnessType(ColorBlindnessType.BLINDNESS);
+        Assertions.assertEquals(ColorBlindnessType.BLINDNESS, PreferencesHandler.getColorBlindnessType());
     }
 
     @AfterAll

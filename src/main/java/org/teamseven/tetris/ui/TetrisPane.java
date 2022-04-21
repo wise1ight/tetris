@@ -2,6 +2,7 @@ package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.Const;
+import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
@@ -11,11 +12,10 @@ import org.teamseven.tetris.handler.BlockMovementHandler;
 import org.teamseven.tetris.handler.GameHandler;
 import org.teamseven.tetris.handler.ItemModeHandler;
 import org.teamseven.tetris.handler.WeightMovementHandler;
+import org.teamseven.tetris.handler.PreferencesHandler;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,16 +26,13 @@ import static org.teamseven.tetris.Const.*;
 
 public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatcher {
 
-    public static final char BORDER_CHAR = 'X';
-
     private JPanel main;
-    private JTextPane tetrisBoard, currBlockBoard, scoreBoard;
+    private JTextPane tetrisBoard, nextBlockBoard, scoreBoard;
 
     private GridBagConstraints gridBagConstraints;
     private GridBagLayout gridBagLayout;
 
     private GameBoard board;
-    private SimpleAttributeSet styleSet;
     private Timer timer;
     private CurrBlock curr;
     private Block nextBlock;
@@ -44,13 +41,21 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
 
     private int[] preferredResolution;  // frame resolution - frame top border
 
+    private static final int KEY_CODE_LEFT = PreferencesHandler.getLeftBtnCode();
+    private static final int KEY_CODE_RIGHT = PreferencesHandler.getRightBtnCode();
+    private static final int KEY_CODE_ROTATE_RIGHT = PreferencesHandler.getRotateRightBtnCode();
+    private static final int KEY_CODE_PAUSE = PreferencesHandler.getPauseBtnCode();
+    private static final int KEY_CODE_HARD_DROP = PreferencesHandler.getHardDropBtnCode();
+    private static final int KEY_CODE_SOFT_DROP = PreferencesHandler.getSoftDropBtnCode();
+    private static final int KEY_CODE_EXIT = PreferencesHandler.getExitBtnCode();
+
     public TetrisPane() {
         int[] frameBorderSize = new int[2];       // frame top border
         frameBorderSize[0] = this.getInsets().left + this.getInsets().right;
         frameBorderSize[1] = this.getInsets().top + this.getInsets().bottom;
         preferredResolution = new int[2];
-        preferredResolution[0] = Const.SCREEN_RESOLUTION_X - frameBorderSize[0];
-        preferredResolution[1] = Const.SCREEN_RESOLUTION_Y - frameBorderSize[1];
+        preferredResolution[0] = Pipeline.getScreenResolutionX() - frameBorderSize[0];
+        preferredResolution[1] = Pipeline.getScreenResolutionY() - frameBorderSize[1];
 
         setComp();
         setDesign();
@@ -61,27 +66,11 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     public void setComp() {
         main = new JPanel();
         tetrisBoard = new JTextPane();
-        currBlockBoard = new JTextPane();
+        nextBlockBoard = new JTextPane();
         scoreBoard = new JTextPane();
 
         gridBagConstraints = new GridBagConstraints();
         gridBagLayout = new GridBagLayout();
-
-        tetrisBoard = new JTextPane();
-        tetrisBoard.setEditable(false);
-        tetrisBoard.setBackground(Color.BLACK);
-        CompoundBorder border = BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.GRAY, 10),
-                BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
-        tetrisBoard.setBorder(border);
-
-        //Document default style.
-        styleSet = new SimpleAttributeSet();
-        StyleConstants.setFontSize(styleSet, 18);
-        StyleConstants.setFontFamily(styleSet, "Courier");
-        StyleConstants.setBold(styleSet, true);
-        StyleConstants.setForeground(styleSet, Color.WHITE);
-        StyleConstants.setAlignment(styleSet, StyleConstants.ALIGN_CENTER);
 
         //Create first block and next block
         curr = new CurrBlock();
@@ -92,7 +81,6 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
         timer = new Timer(INIT_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("gameHandler.getScore() = " + gameHandler.getScore());
                 if (curr.isStopped(board, nextBlock)) {
                     nextTurn();
                 } else {
@@ -105,8 +93,6 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
 
         //Initialize board for the game.
         board = new GameBoard();
-        setFocusable(true);
-        requestFocus();
 
         //Draw board.
         board.placeBlock(curr);
@@ -148,6 +134,12 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     }
 
     public void drawBoard() {
+        drawGameBoard();
+        drawNextBlock();
+        drawScore();
+    }
+    
+    private void drawGameBoard() {
         StringBuffer sb = new StringBuffer();
 
         sb = drawWidthBorder(sb);
@@ -169,8 +161,53 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
 
         tetrisBoard.setText(sb.toString());
         StyledDocument doc = tetrisBoard.getStyledDocument();
-        doc.setParagraphAttributes(0, doc.getLength(), styleSet, false);
+        doc.setParagraphAttributes(0, doc.getLength(), TetrisStyle.getStyle(Color.WHITE), false);
         tetrisBoard.setStyledDocument(doc);
+
+        for (int row = 0; row < Const.HEIGHT; row++) {
+            for (int col = 0; col < Const.WIDTH; col++) {
+                int offset = col + (row + 1) * (Const.WIDTH + 3) + 1;
+                if(unitBlocks[row][col] != null)
+                    doc.setCharacterAttributes(offset, 1, TetrisStyle.getStyle(unitBlocks[row][col].getColor()), false);
+            }
+        }
+    }
+    
+    private void drawNextBlock() {
+        StringBuffer sb = new StringBuffer();
+
+        UnitBlock[][] unitBlocks = nextBlock.getShape();
+        for (UnitBlock[] unitBlock : unitBlocks) {
+            for (UnitBlock block : unitBlock) {
+                if (block != null) {
+                    sb.append("O");
+                } else {
+                    sb.append(" ");
+                }
+            }
+            sb.append("\n");
+        }
+
+        nextBlockBoard.setText(sb.toString());
+        StyledDocument doc = nextBlockBoard.getStyledDocument();
+        doc.setParagraphAttributes(0, doc.getLength(), TetrisStyle.getStyle(Color.WHITE), false);
+        nextBlockBoard.setStyledDocument(doc);
+
+        for (int row = 0; row < unitBlocks.length; row++) {
+            for (int col = 0; col < unitBlocks[row].length; col++) {
+                int offset = (unitBlocks[row].length + 1) * row + col;
+                if(unitBlocks[row][col] != null) {
+                    doc.setCharacterAttributes(offset, 1, TetrisStyle.getStyle(unitBlocks[row][col].getColor()), false);
+                }
+            }
+        }
+    }
+
+    private void drawScore() {
+        scoreBoard.setText("Score\n" + gameHandler.getScore());
+        StyledDocument doc = scoreBoard.getStyledDocument();
+        doc.setParagraphAttributes(0, doc.getLength(), TetrisStyle.getStyle(Color.WHITE), false);
+        scoreBoard.setStyledDocument(doc);
     }
 
     private StringBuffer drawWidthBorder(StringBuffer sb) {
@@ -184,15 +221,19 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     @Override
     public void setDesign() {
         tetrisBoard.setEditable(false);
-        currBlockBoard.setEditable(false);
+        nextBlockBoard.setEditable(false);
         scoreBoard.setEditable(false);
+
+        tetrisBoard.setBackground(Color.BLACK);
+        nextBlockBoard.setBackground(Color.BLACK);
+        scoreBoard.setBackground(Color.BLACK);
 
         CompoundBorder border = BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.gray, preferredResolution[1] / 60),
                 BorderFactory.createLineBorder(Color.darkGray, preferredResolution[1] / 90));
 
         tetrisBoard.setBorder(border);
-        currBlockBoard.setBorder(border);
+        nextBlockBoard.setBorder(border);
         scoreBoard.setBorder(border);
 
         main.setLayout(gridBagLayout);
@@ -205,14 +246,14 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
 
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new Insets(preferredResolution[1] / 18, preferredResolution[0] / 16, preferredResolution[1] / 180, preferredResolution[0] * 3 / 16);
-        make(currBlockBoard, 1, 0, 1, 1);
+        make(nextBlockBoard, 1, 0, 1, 1);
 
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new Insets(preferredResolution[1] / 180, preferredResolution[0] / 16, preferredResolution[1] * 3 / 5, preferredResolution[0] * 3 / 16);
         make(scoreBoard, 1, 1, 1, 1);
 
         main.add(tetrisBoard);
-        main.add(currBlockBoard);
+        main.add(nextBlockBoard);
         main.add(scoreBoard);
 
         main.setBounds(0, 0, preferredResolution[0], preferredResolution[1]);
@@ -244,11 +285,11 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
         if(e.getID() == KeyEvent.KEY_PRESSED && e.getModifiers() == 0) {
-            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            if (e.getKeyCode() == KEY_CODE_EXIT) {
                 System.exit(0);
                 return true;
             }
-            if (e.getKeyCode() == KeyEvent.VK_P) {
+            if (e.getKeyCode() == KEY_CODE_PAUSE) {
                 if (gameHandler.isPaused()) {
                     gameHandler.start();
                     timer.start();
@@ -262,34 +303,33 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
                 return true;
             }
             int cnt = 0;
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_DOWN:
-                    cnt = curr.move(board, DOWN);
-                    gameHandler.addScoreByMove(cnt);
-                    drawBoard();
-                    return true;
-                case KeyEvent.VK_RIGHT:
-                    curr.move(board, RIGHT);
-                    drawBoard();
-                    return true;
-                case KeyEvent.VK_LEFT:
-                    curr.move(board, LEFT);
-                    drawBoard();
-                    return true;
-                case KeyEvent.VK_UP:
-                    board.eraseCurr(curr);
-                    curr.rotate(board);
-                    board.placeBlock(curr);
-                    drawBoard();
-                    return true;
-                case KeyEvent.VK_SPACE:
-                    cnt = curr.moveEnd(board);
-                    gameHandler.setErasedLines(board.eraseLines());
-                    gameHandler.addScoreByMove(cnt);
-                    gameHandler.addScoreByEraseLine();
-                    nextTurn();
-                    drawBoard();
-                    return true;
+            if (e.getKeyCode() == KEY_CODE_SOFT_DROP) {
+                cnt = curr.move(board, DOWN);
+                gameHandler.addScoreByMove(cnt);
+                drawBoard();
+                return true;
+            } else if (e.getKeyCode() == KEY_CODE_RIGHT) {
+                curr.move(board, RIGHT);
+                drawBoard();
+                return true;
+            } else if (e.getKeyCode() == KEY_CODE_LEFT) {
+                curr.move(board, LEFT);
+                drawBoard();
+                return true;
+            } else if (e.getKeyCode() == KEY_CODE_ROTATE_RIGHT) {
+                board.eraseCurr(curr);
+                curr.rotate(board);
+                board.placeBlock(curr);
+                drawBoard();
+                return true;
+            } else if (e.getKeyCode() == KEY_CODE_HARD_DROP) {
+                cnt = curr.moveEnd(board);
+                gameHandler.setErasedLines(board.eraseLines());
+                gameHandler.addScoreByMove(cnt);
+                gameHandler.addScoreByEraseLine();
+                nextTurn();
+                drawBoard();
+                return true;
             }
         }
 

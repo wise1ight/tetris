@@ -10,7 +10,6 @@ import static org.teamseven.tetris.util.BoardUtil.isFilled;
 public class GameBoard {
 
     private UnitBlock[][] board;
-    public static final char BORDER_CHAR = 'X';
 
     public GameBoard() {
         board = new UnitBlock[HEIGHT][WIDTH];
