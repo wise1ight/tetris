@@ -11,6 +11,7 @@ public class GameHandler {
     private int erasedLines;
     private int totalErasedLines;
     private ScoreHandler scoreHandler = new ScoreHandler();
+    private boolean itemMode;
 
     public void speedUp(Timer timer) {
         int delay = timer.getDelay();
@@ -26,6 +27,14 @@ public class GameHandler {
             scoreHandler.addAlphaScore();
             timer.setDelay(time);
         }
+    }
+
+    public int getTotalErasedLines() {
+        return totalErasedLines;
+    }
+
+    public boolean isItemMode() {
+        return itemMode;
     }
 
     public void addScoreByMove(int cnt) {

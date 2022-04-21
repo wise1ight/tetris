@@ -6,8 +6,12 @@ import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
+import org.teamseven.tetris.block.item.WeightBlock;
 import org.teamseven.tetris.factory.BlockFactory;
+import org.teamseven.tetris.handler.BlockMovementHandler;
 import org.teamseven.tetris.handler.GameHandler;
+import org.teamseven.tetris.handler.ItemModeHandler;
+import org.teamseven.tetris.handler.WeightMovementHandler;
 import org.teamseven.tetris.handler.PreferencesHandler;
 
 import javax.swing.*;
@@ -33,6 +37,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private CurrBlock curr;
     private Block nextBlock;
     private GameHandler gameHandler = new GameHandler();
+    private ItemModeHandler itemModeHandler = new ItemModeHandler();
 
     private int[] preferredResolution;  // frame resolution - frame top border
 
@@ -77,8 +82,6 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (curr.isStopped(board, nextBlock)) {
-                    gameHandler.setErasedLines(board.eraseLines());
-                    gameHandler.addScoreByEraseLine();
                     nextTurn();
                 } else {
                     int cnt = curr.move(board, DOWN);
@@ -102,14 +105,31 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     }
 
     private void nextTurn() {
+        if (gameHandler.isItemMode() && itemModeHandler.hasItem(curr)) {
+            itemModeHandler.executeItem(board, curr, gameHandler);
+        }
+        gameHandler.setErasedLines(board.eraseLines());
+        gameHandler.addScoreByEraseLine();
+
         gameHandler.speedUp(timer);
+        if (nextBlock instanceof WeightBlock) {
+            curr.setHandler(new WeightMovementHandler());
+        } else {
+            curr.setHandler(new BlockMovementHandler());
+        }
         curr.newBlock(nextBlock);
+        gameHandler.addBlockCnt();
+
         if (isFinished()) {
             System.out.println("Finished!");
             System.exit(0);
         }
-        gameHandler.addBlockCnt();
-        nextBlock = BlockFactory.blockGenerator("random").generate();
+
+        if (gameHandler.isItemMode() && itemModeHandler.isNewItem(gameHandler.getTotalErasedLines())) {
+            nextBlock = BlockFactory.blockGenerator("item").generate();
+        } else {
+            nextBlock = BlockFactory.blockGenerator("random").generate();
+        }
         board.placeBlock(curr);
     }
 
