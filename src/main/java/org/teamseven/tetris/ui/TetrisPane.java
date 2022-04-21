@@ -10,8 +10,6 @@ import org.teamseven.tetris.handler.GameHandler;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,7 +27,6 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private GridBagLayout gridBagLayout;
 
     private GameBoard board;
-    private SimpleAttributeSet styleSet;
     private Timer timer;
     private CurrBlock curr;
     private Block nextBlock;
@@ -67,14 +64,6 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
                 BorderFactory.createLineBorder(Color.GRAY, 10),
                 BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
         tetrisBoard.setBorder(border);
-
-        //Document default style.
-        styleSet = new SimpleAttributeSet();
-        StyleConstants.setFontSize(styleSet, 18);
-        StyleConstants.setFontFamily(styleSet, "Courier");
-        StyleConstants.setBold(styleSet, true);
-        StyleConstants.setForeground(styleSet, Color.WHITE);
-        StyleConstants.setAlignment(styleSet, StyleConstants.ALIGN_CENTER);
 
         //Create first block and next block
         curr = new CurrBlock();
@@ -147,8 +136,19 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
 
         tetrisBoard.setText(sb.toString());
         StyledDocument doc = tetrisBoard.getStyledDocument();
-        doc.setParagraphAttributes(0, doc.getLength(), styleSet, false);
+        doc.setParagraphAttributes(0, doc.getLength(), TetrisStyle.DEFAULT_STYLE_SET, false);
         tetrisBoard.setStyledDocument(doc);
+
+        for (int row = 0; row < Const.HEIGHT; row++) {
+            for (int col = 0; col < Const.WIDTH; col++) {
+                int offset = col + (row + 1) * (Const.WIDTH + 3) + 1;
+                if(unitBlocks[row][col] != null) {
+                    if(unitBlocks[row][col].getColor().equals(Color.MAGENTA)) {
+                        doc.setCharacterAttributes(offset, 1, TetrisStyle.MAGENTA_STYLE_SET, false);
+                    }
+                }
+            }
+        }
     }
 
     private StringBuffer drawWidthBorder(StringBuffer sb) {
