@@ -1,7 +1,7 @@
 package org.teamseven.tetris.ui;
 
+import org.teamseven.tetris.handler.ScoreMemoryHandler;
 import org.teamseven.tetris.score.Score;
-import org.teamseven.tetris.score.ScoreHandler;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -27,7 +27,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
     private int totalPageNum = 0;
     private GridBagConstraints gridBagConstraints;
     private GridBagLayout gridBagLayout;
-    private ScoreHandler handler = new ScoreHandler();
+    private ScoreMemoryHandler handler = new ScoreMemoryHandler();
     private String fileName;
 
 

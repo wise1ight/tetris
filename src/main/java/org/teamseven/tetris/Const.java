@@ -1,6 +1,6 @@
 package org.teamseven.tetris;
 
-import org.teamseven.tetris.score.ScoreHandler;
+import org.teamseven.tetris.handler.ScoreHandler;
 
 import java.awt.*;
 
