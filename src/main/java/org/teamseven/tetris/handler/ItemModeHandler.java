@@ -15,7 +15,7 @@ public class ItemModeHandler {
         }
         for (int j = 0; j < curr.height(); j++) {
             for (int i = 0; i < curr.width(); i++) {
-                if (curr.getBlock().getUnitBlock(j, i) instanceof ItemBlock) {
+                if (curr.getBlock().getUnitBlock(i, j) instanceof ItemBlock) {
                     pos = new int[]{j, i};
                     return true;
                 }
@@ -28,7 +28,7 @@ public class ItemModeHandler {
         if (curr.getBlock() instanceof ItemBlock) {
             ((ItemBlock) curr.getBlock()).execute(board, curr);
         } else if (curr.getBlock().getUnitBlock(pos[1], pos[0]) instanceof ItemBlock) {
-            int cnt = ((ItemBlock) curr.getBlock().getUnitBlock(pos[1], pos[0])).execute(board, curr, pos);
+            int cnt = ((ItemBlock) curr.getBlock().getUnitBlock(pos[1], pos[0])).execute(board, curr, pos, handler);
             handler.setErasedLines(cnt);
             handler.addScoreByEraseLine();
         }
