@@ -17,10 +17,6 @@ public class Const {
 
     public static final char BORDER_CHAR = 'X';
 
-    public enum ScreenSize {
-        SMALL, MEDIUM, LARGE;
-    }
-
     public static int HEIGHT = 20;
     public static int WIDTH = 10;
 
