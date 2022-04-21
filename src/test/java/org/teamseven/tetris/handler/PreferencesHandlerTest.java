@@ -61,21 +61,9 @@ public class PreferencesHandlerTest {
     }
 
     @Test
-    public void testSetRedColorBlindness() {
-        PreferencesHandler.setColorBlindnessType(ColorBlindnessType.RED);
-        Assertions.assertEquals(ColorBlindnessType.RED, PreferencesHandler.getColorBlindnessType());
-    }
-
-    @Test
-    public void testSetGreenColorBlindness() {
-        PreferencesHandler.setColorBlindnessType(ColorBlindnessType.GREEN);
-        Assertions.assertEquals(ColorBlindnessType.GREEN, PreferencesHandler.getColorBlindnessType());
-    }
-
-    @Test
-    public void testSetBlueColorBlindness() {
-        PreferencesHandler.setColorBlindnessType(ColorBlindnessType.BLUE);
-        Assertions.assertEquals(ColorBlindnessType.BLUE, PreferencesHandler.getColorBlindnessType());
+    public void testSetColorBlindness() {
+        PreferencesHandler.setColorBlindnessType(ColorBlindnessType.BLINDNESS);
+        Assertions.assertEquals(ColorBlindnessType.BLINDNESS, PreferencesHandler.getColorBlindnessType());
     }
 
     @AfterAll
