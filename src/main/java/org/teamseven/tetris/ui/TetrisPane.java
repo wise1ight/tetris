@@ -67,7 +67,6 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
         timer = new Timer(INIT_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("gameHandler.getScore() = " + gameHandler.getScore());
                 if (curr.isStopped(board, nextBlock)) {
                     gameHandler.setErasedLines(board.eraseLines());
                     gameHandler.addScoreByEraseLine();
@@ -108,6 +107,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     public void drawBoard() {
         drawGameBoard();
         drawNextBlock();
+        drawScore();
     }
     
     private void drawGameBoard() {
@@ -168,11 +168,17 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
             for (int col = 0; col < unitBlocks[row].length; col++) {
                 int offset = (unitBlocks[row].length + 1) * row + col;
                 if(unitBlocks[row][col] != null) {
-                    System.out.println(offset);
                     doc.setCharacterAttributes(offset, 1, TetrisStyle.getStyle(unitBlocks[row][col].getColor()), false);
                 }
             }
         }
+    }
+
+    private void drawScore() {
+        scoreBoard.setText("Score\n" + gameHandler.getScore());
+        StyledDocument doc = scoreBoard.getStyledDocument();
+        doc.setParagraphAttributes(0, doc.getLength(), TetrisStyle.getStyle(Color.WHITE), false);
+        scoreBoard.setStyledDocument(doc);
     }
 
     private StringBuffer drawWidthBorder(StringBuffer sb) {
@@ -191,6 +197,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
 
         tetrisBoard.setBackground(Color.BLACK);
         nextBlockBoard.setBackground(Color.BLACK);
+        scoreBoard.setBackground(Color.BLACK);
 
         CompoundBorder border = BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.gray, preferredResolution[1] / 60),
