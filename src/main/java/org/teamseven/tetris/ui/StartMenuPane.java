@@ -14,6 +14,7 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
     private JPanel main;                                                                    // main panel on startMenuPane (DEFAULT_LAYER)     
     private JPanel titlePanel, buttonPannel1, buttonPannel2, buttonPannel3, buttonPannel4;  // BoardLayout, panels on main panel
     private JPanel settingBoard, scoreBoard, modeBoard;                                                // scoreBoard panel on startMenuPane (POPUP_LAYER)
+    private ScoreBoardTabbedPane scoreBoard1;
     private GridBagConstraints gridBagConstraints;
     private GridBagLayout gridBagLayout;
 
@@ -43,7 +44,7 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
         buttonPannel3 = new JPanel(new BorderLayout());
         buttonPannel4 = new JPanel(new BorderLayout());
 
-        buttonPannel1.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
+       buttonPannel1.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
         buttonPannel2.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
         buttonPannel3.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
         buttonPannel4.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
@@ -59,6 +60,7 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
         settingBoard_ExitButton = new JButton();
         scoreBoard_ExitButton = new JButton();
         scoreBoard = new JPanel();
+        scoreBoard1 = new ScoreBoardTabbedPane(preferredResolution);
         settingBoard = new JPanel();
         modeBoard = new JPanel(new GridLayout(1, 2, preferredResolution[0] / 32, 0));
 
@@ -143,6 +145,9 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
         scoreBoard.setBackground(Color.GREEN);
         scoreBoard.setBounds(preferredResolution[0] * 1 / 10, preferredResolution[1] * 1 / 10,
                 preferredResolution[0] * 8 / 10, preferredResolution[1] * 8 / 10);
+     //   scoreBoard1.setBackground(Color.GREEN);
+        scoreBoard1.setBounds(preferredResolution[0] * 1 / 10, preferredResolution[1] * 1 / 10,
+                preferredResolution[0] * 8 / 10, preferredResolution[1] * 8 / 10);
         modeBoard.setBackground(Color.white);
         modeBoard.setBounds(preferredResolution[0] * 1 / 10, preferredResolution[1] * 1 / 10,
                 preferredResolution[0] * 8 / 10, preferredResolution[1] * 8 / 10);
@@ -176,7 +181,11 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
             cardSwitcher.switchCard(Const.SCENE_SETTING);
         });
         scoreButton.addActionListener(e -> {
-            this.add(scoreBoard, JLayeredPane.POPUP_LAYER);
+            this.add(scoreBoard1, JLayeredPane.POPUP_LAYER);
+            startButton.setFocusable(false);
+            settingButton.setFocusable(false);
+            scoreButton.setFocusable(false);
+            exitButton.setFocusable(false);
         });
         exitButton.addActionListener(e -> {
             ((JFrame) this.getTopLevelAncestor()).dispose();
@@ -188,7 +197,7 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
             settingButton.requestFocus();
         });
         scoreBoard_ExitButton.addActionListener(e -> {
-            this.remove(scoreBoard);
+            this.remove(scoreBoard1);
             this.revalidate();
             this.repaint();
             scoreButton.requestFocus();
