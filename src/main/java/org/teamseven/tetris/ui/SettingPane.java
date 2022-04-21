@@ -229,7 +229,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
                             else if (ae.getSource() == btnPause)
                                 PreferencesHandler.setPauseBtnCode(e.getKeyCode());
                             else if (ae.getSource() == btnExit)
-                                PreferencesHandler.setPauseBtnCode(e.getKeyCode());
+                                PreferencesHandler.setExitBtnCode(e.getKeyCode());
 
                             dialog.dispose();
                         }
