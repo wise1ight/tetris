@@ -38,6 +38,10 @@ public class GameHandler {
         return totalErasedLines;
     }
 
+    public void setTotalErasedLines(int totalErasedLines) {
+        this.totalErasedLines = totalErasedLines;
+    }
+
     public boolean isItemMode() {
         return itemMode;
     }
