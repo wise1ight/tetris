@@ -3,7 +3,6 @@ package org.teamseven.tetris.block.item;
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.handler.GameHandler;
-import org.teamseven.tetris.util.BlockMovementHandlerUtil;
 
 import java.awt.*;
 

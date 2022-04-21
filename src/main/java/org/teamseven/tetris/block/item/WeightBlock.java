@@ -8,9 +8,6 @@ import org.teamseven.tetris.handler.GameHandler;
 
 import java.awt.*;
 
-import static org.teamseven.tetris.Const.HEIGHT;
-import static org.teamseven.tetris.Const.WIDTH;
-
 public class WeightBlock extends Block implements ItemBlock {
 
     public WeightBlock() {

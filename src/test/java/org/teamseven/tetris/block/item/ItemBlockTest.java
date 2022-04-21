@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.IBlock;
-import org.teamseven.tetris.block.UnitBlock;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
