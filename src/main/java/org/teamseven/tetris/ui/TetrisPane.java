@@ -149,6 +149,8 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
                         doc.setCharacterAttributes(offset, 1, TetrisStyle.GREEN_STYLE_SET, false);
                     } else if (unitBlocks[row][col].getColor().equals(Color.YELLOW)) {
                         doc.setCharacterAttributes(offset, 1, TetrisStyle.YELLOW_STYLE_SET, false);
+                    } else if (unitBlocks[row][col].getColor().equals(Color.ORANGE)) {
+                        doc.setCharacterAttributes(offset, 1, TetrisStyle.ORANGE_STYLE_SET, false);
                     }
                 }
             }

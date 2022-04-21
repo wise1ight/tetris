@@ -10,6 +10,7 @@ public class TetrisStyle {
     public static final SimpleAttributeSet MAGENTA_STYLE_SET;
     public static final SimpleAttributeSet GREEN_STYLE_SET;
     public static final SimpleAttributeSet YELLOW_STYLE_SET;
+    public static final SimpleAttributeSet ORANGE_STYLE_SET;
 
     static {
         DEFAULT_STYLE_SET = new SimpleAttributeSet();
@@ -39,5 +40,12 @@ public class TetrisStyle {
         StyleConstants.setBold(YELLOW_STYLE_SET, true);
         StyleConstants.setForeground(YELLOW_STYLE_SET, Color.YELLOW);
         StyleConstants.setAlignment(YELLOW_STYLE_SET, StyleConstants.ALIGN_CENTER);
+
+        ORANGE_STYLE_SET = new SimpleAttributeSet();
+        StyleConstants.setFontSize(ORANGE_STYLE_SET, 18);
+        StyleConstants.setFontFamily(ORANGE_STYLE_SET, "Courier");
+        StyleConstants.setBold(ORANGE_STYLE_SET, true);
+        StyleConstants.setForeground(ORANGE_STYLE_SET, Color.ORANGE);
+        StyleConstants.setAlignment(ORANGE_STYLE_SET, StyleConstants.ALIGN_CENTER);
     }
 }
