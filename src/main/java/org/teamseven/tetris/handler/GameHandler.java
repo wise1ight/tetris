@@ -29,6 +29,10 @@ public class GameHandler {
         }
     }
 
+    public int getTotalErasedLines() {
+        return totalErasedLines;
+    }
+
     public boolean isItemMode() {
         return itemMode;
     }
