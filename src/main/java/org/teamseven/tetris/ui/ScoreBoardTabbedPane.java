@@ -72,7 +72,7 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
     public void setAction() {
 
         this.setFocusable(false);
-        Score score3 = new Score(500, "AAB");
+        Score score3 = new Score(222, "AABB");
         noItem.addScore(score3);
 
 
