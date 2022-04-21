@@ -70,6 +70,14 @@ public class PreferencesHandler {
         prefs.putInt(Const.PREF_BTN_HARD_DROP_KEY, keyCode);
     }
 
+    public static int getSoftDropBtnCode() {
+        return prefs.getInt(Const.PREF_BTN_SOFT_DROP_KEY, KeyEvent.VK_DOWN);
+    }
+
+    public static void setSoftDropBtnCode(int keyCode) {
+        prefs.putInt(Const.PREF_BTN_SOFT_DROP_KEY, keyCode);
+    }
+
     public static int getPauseBtnCode() {
         return prefs.getInt(Const.PREF_BTN_PAUSE_KEY, KeyEvent.VK_ESCAPE);
     }

@@ -55,6 +55,12 @@ public class PreferencesHandlerTest {
     }
 
     @Test
+    public void testSetSoftDropBtn() {
+        PreferencesHandler.setSoftDropBtnCode(KeyEvent.VK_DOWN);
+        Assertions.assertEquals(KeyEvent.VK_DOWN, PreferencesHandler.getSoftDropBtnCode());
+    }
+
+    @Test
     public void testSetPauseBtn() {
         PreferencesHandler.setPauseBtnCode(KeyEvent.VK_3);
         Assertions.assertEquals(KeyEvent.VK_3, PreferencesHandler.getPauseBtnCode());

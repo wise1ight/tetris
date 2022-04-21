@@ -24,6 +24,7 @@ public class Const {
     public static final String PREF_BTN_RIGHT_KEY = "BTN_RIGHT";
     public static final String PREF_BTN_ROTATE_RIGHT_KEY = "BTN_ROTATE_RIGHT";
     public static final String PREF_BTN_HARD_DROP_KEY = "BTN_HARD_DROP";
+    public static final String PREF_BTN_SOFT_DROP_KEY = "BTN_SOFT_DROP";
     public static final String PREF_BTN_PAUSE_KEY = "BTN_PAUSE";
     public static final String PREF_COLOR_BLINDNESS_KEY = "COLOR_BLINDNESS";
     public static final String PREF_MODE_KEY = "MODE";
