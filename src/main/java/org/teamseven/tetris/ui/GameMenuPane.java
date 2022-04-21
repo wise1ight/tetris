@@ -176,7 +176,7 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
             Pipeline.replacePane(new ScoreBoardTabbedPane());
         });
         exitButton.addActionListener(e -> {
-            ((JFrame) this.getTopLevelAncestor()).dispose();
+            System.exit(0);
         });
         settingBoard_ExitButton.addActionListener(e -> {
             this.remove(settingBoard);
