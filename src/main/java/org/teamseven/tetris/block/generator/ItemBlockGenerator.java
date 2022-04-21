@@ -17,13 +17,13 @@ public class ItemBlockGenerator extends RouletteWheelGenerator {
 
         switch (index) {
             case 0:
-                return new ItemBlock(block, new BoomBlock(Color.LIGHT_GRAY));
+                return new ItemBlock(block, new BoomBlock());
             case 1:
                 return new WeightBlock();
             case 2:
-                return new ItemBlock(block, new ClearBlock(Color.DARK_GRAY));
+                return new ItemBlock(block, new ClearBlock());
             case 3:
-                return new ItemBlock(block, new LineRemoveBlock(Color.lightGray));
+                return new ItemBlock(block, new LineRemoveBlock());
             case 4:
                 return new SBlock();
         }

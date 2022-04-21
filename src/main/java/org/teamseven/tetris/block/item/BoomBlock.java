@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class BoomBlock extends ItemUnitBlock {
 
-    public BoomBlock(Color color) {
-        super(color);
+    public BoomBlock() {
+        super(Color.LIGHT_GRAY);
     }
 }

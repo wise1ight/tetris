@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class LineRemoveBlock extends ItemUnitBlock {
 
-    public LineRemoveBlock(Color color) {
-        super(color);
+    public LineRemoveBlock() {
+        super(Color.lightGray);
     }
 }

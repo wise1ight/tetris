@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class ClearBlock extends ItemUnitBlock{
 
-    public ClearBlock(Color color) {
-        super(color);
+    public ClearBlock() {
+        super(Color.DARK_GRAY);
     }
 }
