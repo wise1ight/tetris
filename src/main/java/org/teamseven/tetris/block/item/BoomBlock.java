@@ -24,8 +24,8 @@ public class BoomBlock extends ItemUnitBlock {
     public int execute(GameBoard board, CurrBlock curr, int[] pos, GameHandler handler) {
         for (int j = pos[0] - 3; j < pos[0] + 3; j++) {
             for (int i = pos[1] - 3; i < pos[1] + 3; i++) {
-                if (i >= 0 && i < WIDTH && j >= 0 && j < HEIGHT) {
-                    board.getBoard()[j][i] = null;
+                if (curr.x + i >= 0 && curr.x + i < WIDTH && curr.y + j >= 0 && curr.y +  j < HEIGHT) {
+                    board.getBoard()[curr.y + j][curr.x + i] = null;
                 }
             }
         }
