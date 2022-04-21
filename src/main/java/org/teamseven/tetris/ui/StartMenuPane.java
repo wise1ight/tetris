@@ -19,15 +19,13 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
     private GridBagLayout gridBagLayout;
 
     private int[] preferredResolution;  // frame resolution - frame top border
-    private CardSwitcher cardSwitcher;
 
-    public StartMenuPane(CardSwitcher cardSwitcher, int[] preferredResolution) {
+    public StartMenuPane(int[] preferredResolution) {
         // for test
         this.setOpaque(true);
         this.setBackground(Color.orange);
 
         this.preferredResolution = preferredResolution;
-        this.cardSwitcher = cardSwitcher;
 
         setComp();
         setDesign();
@@ -178,7 +176,7 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
 
         });
         settingButton.addActionListener(e -> {
-            cardSwitcher.switchCard(Const.SCENE_SETTING);
+            //TODO show tetris game screen
         });
         scoreButton.addActionListener(e -> {
             this.add(scoreBoard1, JLayeredPane.POPUP_LAYER);
@@ -203,7 +201,7 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
             scoreButton.requestFocus();
         });
         noItemModeButton.addActionListener(e -> {
-            cardSwitcher.switchCard("tetris");
+            //TODO show tetris game screen
         });
 
     }

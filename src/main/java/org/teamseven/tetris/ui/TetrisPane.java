@@ -12,11 +12,9 @@ public class TetrisPane extends JLayeredPane implements IDesign {
     private GridBagLayout gridBagLayout;
 
     private int[] preferredResolution;  // frame resolution - frame top border
-    private CardSwitcher cardSwitcher;
 
-    public TetrisPane(CardSwitcher cardSwitcher, int[] preferredResolution) {
+    public TetrisPane(int[] preferredResolution) {
         this.preferredResolution = preferredResolution;
-        this.cardSwitcher = cardSwitcher;
 
         setComp();
         setDesign();
