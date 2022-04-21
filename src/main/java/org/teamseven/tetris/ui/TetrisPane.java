@@ -1,5 +1,7 @@
 package org.teamseven.tetris.ui;
 
+import org.teamseven.tetris.Const;
+
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import java.awt.*;
@@ -12,11 +14,14 @@ public class TetrisPane extends JLayeredPane implements IDesign {
     private GridBagLayout gridBagLayout;
 
     private int[] preferredResolution;  // frame resolution - frame top border
-    private CardSwitcher cardSwitcher;
 
-    public TetrisPane(CardSwitcher cardSwitcher, int[] preferredResolution) {
-        this.preferredResolution = preferredResolution;
-        this.cardSwitcher = cardSwitcher;
+    public TetrisPane() {
+        int[] frameBorderSize = new int[2];       // frame top border
+        frameBorderSize[0] = this.getInsets().left + this.getInsets().right;
+        frameBorderSize[1] = this.getInsets().top + this.getInsets().bottom;
+        preferredResolution = new int[2];
+        preferredResolution[0] = Const.SCREEN_RESOLUTION_X - frameBorderSize[0];
+        preferredResolution[1] = Const.SCREEN_RESOLUTION_Y - frameBorderSize[1];
 
         setComp();
         setDesign();
