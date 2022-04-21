@@ -62,6 +62,14 @@ public class PreferencesHandler {
         prefs.putInt(Const.PREF_BTN_ROTATE_RIGHT_KEY, keyCode);
     }
 
+    public static int getHardDropBtnCode() {
+        return prefs.getInt(Const.PREF_BTN_HARD_DROP_KEY, KeyEvent.VK_SPACE);
+    }
+
+    public static void setHardDropBtnCode(int keyCode) {
+        prefs.putInt(Const.PREF_BTN_HARD_DROP_KEY, keyCode);
+    }
+
     public static int getPauseBtnCode() {
         return prefs.getInt(Const.PREF_BTN_PAUSE_KEY, KeyEvent.VK_ESCAPE);
     }

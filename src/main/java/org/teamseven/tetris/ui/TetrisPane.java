@@ -40,6 +40,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private static final int KEY_CODE_RIGHT = PreferencesHandler.getRightBtnCode();
     private static final int KEY_CODE_ROTATE_RIGHT = PreferencesHandler.getRotateRightBtnCode();
     private static final int KEY_CODE_PAUSE = PreferencesHandler.getPauseBtnCode();
+    private static final int KEY_CODE_HARD_DROP = PreferencesHandler.getHardDropBtnCode();
 
     public TetrisPane() {
         int[] frameBorderSize = new int[2];       // frame top border
@@ -299,7 +300,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
                 board.placeBlock(curr);
                 drawBoard();
                 return true;
-            } else if (e.getKeyCode() == e.getKeyCode()) {
+            } else if (e.getKeyCode() == KEY_CODE_HARD_DROP) {
                 cnt = curr.moveEnd(board);
                 gameHandler.setErasedLines(board.eraseLines());
                 gameHandler.addScoreByMove(cnt);

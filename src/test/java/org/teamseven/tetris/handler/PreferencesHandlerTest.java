@@ -49,6 +49,12 @@ public class PreferencesHandlerTest {
     }
 
     @Test
+    public void testSetHardDropBtn() {
+        PreferencesHandler.setHardDropBtnCode(KeyEvent.VK_SPACE);
+        Assertions.assertEquals(KeyEvent.VK_SPACE, PreferencesHandler.getHardDropBtnCode());
+    }
+
+    @Test
     public void testSetPauseBtn() {
         PreferencesHandler.setPauseBtnCode(KeyEvent.VK_3);
         Assertions.assertEquals(KeyEvent.VK_3, PreferencesHandler.getPauseBtnCode());
