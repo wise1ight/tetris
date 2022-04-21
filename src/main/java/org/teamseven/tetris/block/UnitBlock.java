@@ -14,6 +14,10 @@ public class UnitBlock {
         return color;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     /**
      * Black은 테스트용 색
      */
