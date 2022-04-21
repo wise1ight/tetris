@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InnerItemBlock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tetris</a> &gt; <a href="index.source.html" class="el_package">org.teamseven.tetris.block.item</a> &gt; <span class="el_source">InnerItemBlock.java</span></div><h1>InnerItemBlock.java</h1><pre class="source lang-java linenums">package org.teamseven.tetris.block.item;
+
+import org.teamseven.tetris.block.Block;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class InnerItemBlock extends Block {
+
+    List&lt;int[]&gt; blockLoc;
+
+<span class="fc" id="L13">    public InnerItemBlock(Block block, ItemUnitBlock unitBlock) {</span>
+<span class="fc" id="L14">        this.shape = block.getShape();</span>
+<span class="fc" id="L15">        this.color = block.getColor();</span>
+<span class="fc" id="L16">        blockLoc = getBlockLoc();</span>
+<span class="fc" id="L17">        Random random = new Random();</span>
+<span class="fc" id="L18">        int num = random.nextInt(blockLoc.size());</span>
+
+<span class="fc" id="L20">        int[] pos = blockLoc.get(num);</span>
+<span class="fc" id="L21">        this.shape[pos[0]][pos[1]] = unitBlock;</span>
+<span class="fc" id="L22">    }</span>
+
+    private List&lt;int[]&gt; getBlockLoc() {
+<span class="fc" id="L25">        List&lt;int[]&gt; blockLoc = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        for (int j = 0; j &lt; shape.length; j++) {</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">            for (int i = 0; i &lt; shape[0].length; i++) {</span>
+<span class="pc bpc" id="L29" title="1 of 2 branches missed.">                if (shape[j][i] != null) {</span>
+<span class="fc" id="L30">                    blockLoc.add(new int[]{j, i});</span>
+                }
+            }
+        }
+<span class="fc" id="L34">        return blockLoc;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

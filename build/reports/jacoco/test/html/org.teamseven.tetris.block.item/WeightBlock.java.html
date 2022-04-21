@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WeightBlock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tetris</a> &gt; <a href="index.source.html" class="el_package">org.teamseven.tetris.block.item</a> &gt; <span class="el_source">WeightBlock.java</span></div><h1>WeightBlock.java</h1><pre class="source lang-java linenums">package org.teamseven.tetris.block.item;
+
+import org.teamseven.tetris.Board.GameBoard;
+import org.teamseven.tetris.block.Block;
+import org.teamseven.tetris.block.CurrBlock;
+import org.teamseven.tetris.block.UnitBlock;
+import org.teamseven.tetris.handler.GameHandler;
+
+import java.awt.*;
+
+public class WeightBlock extends Block implements ItemBlock {
+
+<span class="fc" id="L13">    public WeightBlock() {</span>
+<span class="fc" id="L14">        color = Color.PINK;</span>
+<span class="fc" id="L15">        shape = new UnitBlock[][] {</span>
+                {null                , new UnitBlock(color), new UnitBlock(color), null},
+                {new UnitBlock(color), new UnitBlock(color), new UnitBlock(color), new UnitBlock(color)}
+        };
+
+<span class="fc" id="L20">    }</span>
+
+    @Override
+    public void execute(GameBoard board, CurrBlock curr) {
+<span class="fc" id="L24">        board.eraseCurr(curr);</span>
+<span class="fc" id="L25">    }</span>
+
+    @Override
+    public int execute(GameBoard board, CurrBlock curr, int[] pos, GameHandler handler) {
+<span class="nc" id="L29">        return 0;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

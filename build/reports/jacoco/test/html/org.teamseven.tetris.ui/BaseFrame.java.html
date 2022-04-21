@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BaseFrame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tetris</a> &gt; <a href="index.source.html" class="el_package">org.teamseven.tetris.ui</a> &gt; <span class="el_source">BaseFrame.java</span></div><h1>BaseFrame.java</h1><pre class="source lang-java linenums">package org.teamseven.tetris.ui;
+
+import javax.swing.JFrame;
+
+<span class="nc" id="L5">public abstract class BaseFrame extends JFrame implements IDesign {</span>
+    public void setFrame(String title) {
+<span class="nc" id="L7">        this.setTitle(title);                                //set title</span>
+<span class="nc" id="L8">        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Exit the application using the System exit method</span>
+<span class="nc" id="L9">        this.pack();                                         // set window size to fit layouts</span>
+<span class="nc" id="L10">        this.setLocationRelativeTo(null);                    // set window pos middle</span>
+<span class="nc" id="L11">        this.setResizable(false);                            // is resize by user</span>
+
+<span class="nc" id="L13">        setComp();</span>
+<span class="nc" id="L14">        setDesign();</span>
+<span class="nc" id="L15">        setAction();</span>
+
+<span class="nc" id="L17">        this.setVisible(true);                               // is visible</span>
+<span class="nc" id="L18">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

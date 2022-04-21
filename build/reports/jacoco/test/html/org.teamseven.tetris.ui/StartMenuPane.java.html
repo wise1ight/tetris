@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StartMenuPane.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tetris</a> &gt; <a href="index.source.html" class="el_package">org.teamseven.tetris.ui</a> &gt; <span class="el_source">StartMenuPane.java</span></div><h1>StartMenuPane.java</h1><pre class="source lang-java linenums">package org.teamseven.tetris.ui;
+
+import org.teamseven.tetris.Const;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.HashSet;
+import java.util.Set;
+
+public class StartMenuPane extends JLayeredPane implements IDesign {
+    private JLabel title;
+    private CustomButton startButton, settingButton, scoreButton, exitButton, noItemModeButton, ItemModeButton;
+    private JButton settingBoard_ExitButton, scoreBoard_ExitButton;                         // exit button on popup panel
+    private JPanel main;                                                                    // main panel on startMenuPane (DEFAULT_LAYER)     
+    private JPanel titlePanel, buttonPannel1, buttonPannel2, buttonPannel3, buttonPannel4;  // BoardLayout, panels on main panel
+    private JPanel settingBoard, scoreBoard, modeBoard;                                                // scoreBoard panel on startMenuPane (POPUP_LAYER)
+    private GridBagConstraints gridBagConstraints;
+    private GridBagLayout gridBagLayout;
+
+    private int[] preferredResolution;  // frame resolution - frame top border
+    private CardSwitcher cardSwitcher;
+
+<span class="nc" id="L23">    public StartMenuPane(CardSwitcher cardSwitcher, int[] preferredResolution) {</span>
+        // for test
+<span class="nc" id="L25">        this.setOpaque(true);</span>
+<span class="nc" id="L26">        this.setBackground(Color.orange);</span>
+
+<span class="nc" id="L28">        this.preferredResolution = preferredResolution;</span>
+<span class="nc" id="L29">        this.cardSwitcher = cardSwitcher;</span>
+
+<span class="nc" id="L31">        setComp();</span>
+<span class="nc" id="L32">        setDesign();</span>
+<span class="nc" id="L33">        setAction();</span>
+<span class="nc" id="L34">    }</span>
+
+    @Override
+    public void setComp() {
+<span class="nc" id="L38">        main = new JPanel();</span>
+
+<span class="nc" id="L40">        titlePanel = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L41">        buttonPannel1 = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L42">        buttonPannel2 = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L43">        buttonPannel3 = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L44">        buttonPannel4 = new JPanel(new BorderLayout());</span>
+
+<span class="nc" id="L46">        buttonPannel1.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));</span>
+<span class="nc" id="L47">        buttonPannel2.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));</span>
+<span class="nc" id="L48">        buttonPannel3.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));</span>
+<span class="nc" id="L49">        buttonPannel4.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));</span>
+
+<span class="nc" id="L51">        title = new JLabel(&quot;TETRIS&quot;);</span>
+<span class="nc" id="L52">        startButton = new CustomButton();</span>
+<span class="nc" id="L53">        settingButton = new CustomButton();</span>
+<span class="nc" id="L54">        scoreButton = new CustomButton();</span>
+<span class="nc" id="L55">        exitButton = new CustomButton();</span>
+<span class="nc" id="L56">        noItemModeButton = new CustomButton();</span>
+<span class="nc" id="L57">        ItemModeButton = new CustomButton();</span>
+
+<span class="nc" id="L59">        settingBoard_ExitButton = new JButton();</span>
+<span class="nc" id="L60">        scoreBoard_ExitButton = new JButton();</span>
+<span class="nc" id="L61">        scoreBoard = new JPanel();</span>
+<span class="nc" id="L62">        settingBoard = new JPanel();</span>
+<span class="nc" id="L63">        modeBoard = new JPanel(new GridLayout(1, 2, preferredResolution[0] / 32, 0));</span>
+
+<span class="nc" id="L65">        gridBagConstraints = new GridBagConstraints();</span>
+<span class="nc" id="L66">        gridBagLayout = new GridBagLayout();</span>
+<span class="nc" id="L67">    }</span>
+
+    @Override
+    public void setDesign() {
+        // set pannels in gridBagLayout on main panel
+<span class="nc" id="L72">        main.setLayout(gridBagLayout);</span>
+<span class="nc" id="L73">        gridBagConstraints.fill = GridBagConstraints.BOTH;</span>
+
+<span class="nc" id="L75">        gridBagConstraints.weightx = 4.0;</span>
+<span class="nc" id="L76">        gridBagConstraints.weighty = 4.0;</span>
+
+<span class="nc" id="L78">        gridBagConstraints.insets = new Insets(preferredResolution[1] / 40, 0, preferredResolution[1] / 40, 0);</span>
+<span class="nc" id="L79">        make(titlePanel, 1, 0, 1, 1);</span>
+
+<span class="nc" id="L81">        gridBagConstraints.weighty = 0.1;</span>
+
+<span class="nc" id="L83">        gridBagConstraints.insets = new Insets(preferredResolution[1] / 40, 0, preferredResolution[1] / 40, 0);</span>
+<span class="nc" id="L84">        make(buttonPannel1, 1, 2, 1, 1);</span>
+
+<span class="nc" id="L86">        gridBagConstraints.insets = new Insets(preferredResolution[1] / 40, 0, preferredResolution[1] / 40, 0);</span>
+<span class="nc" id="L87">        make(buttonPannel2, 1, 4, 1, 1);</span>
+
+<span class="nc" id="L89">        gridBagConstraints.insets = new Insets(preferredResolution[1] / 40, 0, preferredResolution[1] / 40, 0);</span>
+<span class="nc" id="L90">        make(buttonPannel3, 1, 6, 1, 1);</span>
+
+<span class="nc" id="L92">        gridBagConstraints.insets = new Insets(preferredResolution[1] / 40, 0, preferredResolution[1] / 20, 0);</span>
+<span class="nc" id="L93">        make(buttonPannel4, 1, 8, 1, 1);</span>
+
+
+        // set Label, Button
+<span class="nc" id="L97">        title.setFont(new Font(title.getFont().getName(), title.getFont().getStyle(), preferredResolution[0] * 1 / 10));</span>
+<span class="nc" id="L98">        title.setHorizontalAlignment(JLabel.CENTER);</span>
+
+
+<span class="nc" id="L101">        startButton.setText(&quot;시작&quot;);</span>
+
+<span class="nc" id="L103">        settingButton.setText(&quot;설정&quot;);</span>
+<span class="nc" id="L104">        scoreButton.setText(&quot;스코어보드&quot;);</span>
+<span class="nc" id="L105">        exitButton.setText(&quot;게임 종료 메뉴&quot;);</span>
+<span class="nc" id="L106">        exitButton.setText(&quot;끄기&quot;);</span>
+<span class="nc" id="L107">        noItemModeButton.setText(&quot;no Item Mode&quot;);</span>
+<span class="nc" id="L108">        noItemModeButton.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, preferredResolution[1] / 90));</span>
+<span class="nc" id="L109">        noItemModeButton.setBorderPainted(true);</span>
+
+
+<span class="nc" id="L112">        ItemModeButton.setText(&quot;Item Mode&quot;);</span>
+<span class="nc" id="L113">        ItemModeButton.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, preferredResolution[1] / 90));</span>
+<span class="nc" id="L114">        ItemModeButton.setBorderPainted(true);</span>
+
+
+<span class="nc" id="L117">        settingBoard_ExitButton.setPreferredSize(new Dimension(50, 50));</span>
+<span class="nc" id="L118">        scoreBoard_ExitButton.setPreferredSize(new Dimension(50, 50));</span>
+
+
+        // add components
+<span class="nc" id="L122">        titlePanel.add(title);</span>
+<span class="nc" id="L123">        buttonPannel1.add(startButton);</span>
+<span class="nc" id="L124">        buttonPannel2.add(settingButton);</span>
+<span class="nc" id="L125">        buttonPannel3.add(scoreButton);</span>
+<span class="nc" id="L126">        buttonPannel4.add(exitButton);</span>
+
+<span class="nc" id="L128">        scoreBoard.add(scoreBoard_ExitButton);</span>
+<span class="nc" id="L129">        settingBoard.add(settingBoard_ExitButton);</span>
+<span class="nc" id="L130">        modeBoard.add(noItemModeButton);</span>
+<span class="nc" id="L131">        modeBoard.add(ItemModeButton);</span>
+
+<span class="nc" id="L133">        main.add(titlePanel);</span>
+<span class="nc" id="L134">        main.add(buttonPannel1);</span>
+<span class="nc" id="L135">        main.add(buttonPannel2);</span>
+<span class="nc" id="L136">        main.add(buttonPannel3);</span>
+<span class="nc" id="L137">        main.add(buttonPannel4);</span>
+
+        // set popUpPannel
+<span class="nc" id="L140">        settingBoard.setBackground(Color.CYAN);</span>
+<span class="nc" id="L141">        settingBoard.setBounds(preferredResolution[0] * 1 / 10, preferredResolution[1] * 1 / 10,</span>
+                preferredResolution[0] * 8 / 10, preferredResolution[1] * 8 / 10);
+<span class="nc" id="L143">        scoreBoard.setBackground(Color.GREEN);</span>
+<span class="nc" id="L144">        scoreBoard.setBounds(preferredResolution[0] * 1 / 10, preferredResolution[1] * 1 / 10,</span>
+                preferredResolution[0] * 8 / 10, preferredResolution[1] * 8 / 10);
+<span class="nc" id="L146">        modeBoard.setBackground(Color.white);</span>
+<span class="nc" id="L147">        modeBoard.setBounds(preferredResolution[0] * 1 / 10, preferredResolution[1] * 1 / 10,</span>
+                preferredResolution[0] * 8 / 10, preferredResolution[1] * 8 / 10);
+<span class="nc" id="L149">        modeBoard.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.lightGray, preferredResolution[1] / 180),</span>
+<span class="nc" id="L150">                BorderFactory.createEmptyBorder(preferredResolution[1] / 15, preferredResolution[1] / 15,</span>
+                        preferredResolution[1] / 15, preferredResolution[1] / 15)));
+
+        // set main pannel on StartMenuPane
+<span class="nc" id="L154">        main.setBounds(0, 0, preferredResolution[0], preferredResolution[1]);</span>
+<span class="nc" id="L155">        this.add(main, JLayeredPane.DEFAULT_LAYER);</span>
+<span class="nc" id="L156">    }</span>
+
+    @Override
+    public void setAction() {
+        // set focusTraversal
+<span class="nc" id="L161">        setFocusTraversal();</span>
+
+        // set ButtonAction
+<span class="nc" id="L164">        startButton.addActionListener(e -&gt; {</span>
+            //System.out.println(e.getActionCommand());
+            //cardSwitcher.switchCard(&quot;jl1&quot;);
+<span class="nc" id="L167">            this.add(modeBoard, JLayeredPane.POPUP_LAYER);</span>
+<span class="nc" id="L168">            noItemModeButton.requestFocus();</span>
+<span class="nc" id="L169">            startButton.setFocusable(false);</span>
+<span class="nc" id="L170">            settingButton.setFocusable(false);</span>
+<span class="nc" id="L171">            scoreButton.setFocusable(false);</span>
+<span class="nc" id="L172">            exitButton.setFocusable(false);</span>
+
+<span class="nc" id="L174">        });</span>
+<span class="nc" id="L175">        settingButton.addActionListener(e -&gt; {</span>
+<span class="nc" id="L176">            cardSwitcher.switchCard(Const.SCENE_SETTING);</span>
+<span class="nc" id="L177">        });</span>
+<span class="nc" id="L178">        scoreButton.addActionListener(e -&gt; {</span>
+<span class="nc" id="L179">            this.add(scoreBoard, JLayeredPane.POPUP_LAYER);</span>
+<span class="nc" id="L180">        });</span>
+<span class="nc" id="L181">        exitButton.addActionListener(e -&gt; {</span>
+<span class="nc" id="L182">            ((JFrame) this.getTopLevelAncestor()).dispose();</span>
+<span class="nc" id="L183">        });</span>
+<span class="nc" id="L184">        settingBoard_ExitButton.addActionListener(e -&gt; {</span>
+<span class="nc" id="L185">            this.remove(settingBoard);</span>
+<span class="nc" id="L186">            this.revalidate();</span>
+<span class="nc" id="L187">            this.repaint();</span>
+<span class="nc" id="L188">            settingButton.requestFocus();</span>
+<span class="nc" id="L189">        });</span>
+<span class="nc" id="L190">        scoreBoard_ExitButton.addActionListener(e -&gt; {</span>
+<span class="nc" id="L191">            this.remove(scoreBoard);</span>
+<span class="nc" id="L192">            this.revalidate();</span>
+<span class="nc" id="L193">            this.repaint();</span>
+<span class="nc" id="L194">            scoreButton.requestFocus();</span>
+<span class="nc" id="L195">        });</span>
+<span class="nc" id="L196">        noItemModeButton.addActionListener(e -&gt; {</span>
+<span class="nc" id="L197">            cardSwitcher.switchCard(&quot;tetris&quot;);</span>
+<span class="nc" id="L198">        });</span>
+
+<span class="nc" id="L200">    }</span>
+
+    public void make(JComponent c, int x, int y, int w, int h) {
+<span class="nc" id="L203">        gridBagConstraints.gridx = x;</span>
+<span class="nc" id="L204">        gridBagConstraints.gridy = y;</span>
+<span class="nc" id="L205">        gridBagConstraints.gridwidth = w;</span>
+<span class="nc" id="L206">        gridBagConstraints.gridheight = h;</span>
+<span class="nc" id="L207">        gridBagLayout.setConstraints(c, gridBagConstraints);</span>
+
+        // for test
+
+
+        //c.setBackground(Color.getHSBColor((y-1)/9f,0.75f,0.95f));
+        //  gridBagConstraints.insets = new Insets(15,10,15,10);
+
+<span class="nc" id="L215">    }</span>
+
+    // TAB -&gt; up,down key
+    public void setFocusTraversal() {
+<span class="nc" id="L219">        KeyStroke DownKeyStroke = KeyStroke.getKeyStroke(&quot;DOWN&quot;);</span>
+<span class="nc" id="L220">        KeyStroke UpKeyStroke = KeyStroke.getKeyStroke(&quot;UP&quot;);</span>
+
+<span class="nc" id="L222">        Set&lt;AWTKeyStroke&gt; ForwardKey = new HashSet&lt;AWTKeyStroke&gt;(KeyboardFocusManager.getCurrentKeyboardFocusManager().</span>
+<span class="nc" id="L223">                getDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));</span>
+<span class="nc" id="L224">        ForwardKey.clear();</span>
+<span class="nc" id="L225">        ForwardKey.add(DownKeyStroke);</span>
+<span class="nc" id="L226">        KeyboardFocusManager.getCurrentKeyboardFocusManager().setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, ForwardKey);</span>
+
+<span class="nc" id="L228">        Set&lt;AWTKeyStroke&gt; BackwardKey = new HashSet&lt;AWTKeyStroke&gt;(KeyboardFocusManager.getCurrentKeyboardFocusManager().</span>
+<span class="nc" id="L229">                getDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS));</span>
+<span class="nc" id="L230">        BackwardKey.clear();</span>
+<span class="nc" id="L231">        BackwardKey.add(UpKeyStroke);</span>
+<span class="nc" id="L232">        KeyboardFocusManager.getCurrentKeyboardFocusManager().setDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, BackwardKey);</span>
+<span class="nc" id="L233">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

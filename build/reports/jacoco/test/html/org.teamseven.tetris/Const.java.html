@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Const.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tetris</a> &gt; <a href="index.source.html" class="el_package">org.teamseven.tetris</a> &gt; <span class="el_source">Const.java</span></div><h1>Const.java</h1><pre class="source lang-java linenums">package org.teamseven.tetris;
+
+import java.awt.*;
+
+<span class="nc" id="L5">public class Const {</span>
+
+    public static final String APPLICATION_TITLE = &quot;Tetris&quot;;
+
+    public static final int SCREEN_SMALL_RESOLUTION_X = 1024;
+    public static final int SCREEN_SMALL_RESOLUTION_Y = 768;
+    public static final int SCREEN_MEDIUM_RESOLUTION_X = 1280;
+    public static final int SCREEN_MEDIUM_RESOLUTION_Y = 1024;
+    public static final int SCREEN_LARGE_RESOLUTION_X = 1600;
+    public static final int SCREEN_LARGE_RESOLUTION_Y = 1200;
+
+    public static final int SCREEN_SMALL_BLOCK_FONT_SIZE = 24;
+    public static final int SCREEN_MEDIUM_BLOCK_FONT_SIZE = 33;
+    public static final int SCREEN_LARGE_BLOCK_FONT_SIZE = 38;
+
+<span class="fc" id="L20">    public static final Color[] COLORS = {Color.WHITE, Color.MAGENTA, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.BLUE, Color.CYAN, Color.RED};</span>
+
+    public static final String PREF_SCREEN_SIZE_KEY = &quot;SCREEN_SIZE&quot;;
+    public static final String PREF_BTN_LEFT_KEY = &quot;BTN_LEFT&quot;;
+    public static final String PREF_BTN_RIGHT_KEY = &quot;BTN_RIGHT&quot;;
+    public static final String PREF_BTN_ROTATE_RIGHT_KEY = &quot;BTN_ROTATE_RIGHT&quot;;
+    public static final String PREF_BTN_HARD_DROP_KEY = &quot;BTN_HARD_DROP&quot;;
+    public static final String PREF_BTN_SOFT_DROP_KEY = &quot;BTN_SOFT_DROP&quot;;
+    public static final String PREF_BTN_PAUSE_KEY = &quot;BTN_PAUSE&quot;;
+    public static final String PREF_BTN_EXIT_KEY = &quot;BTN_EXIT&quot;;
+    public static final String PREF_COLOR_BLINDNESS_KEY = &quot;COLOR_BLINDNESS&quot;;
+    public static final String PREF_MODE_KEY = &quot;MODE&quot;;
+
+    public static final char BORDER_CHAR = 'X';
+
+<span class="fc" id="L35">    public static int HEIGHT = 20;</span>
+<span class="fc" id="L36">    public static int WIDTH = 10;</span>
+
+<span class="fc" id="L38">    public static final String CURRENT_DIR = System.getProperty(&quot;user.dir&quot;);</span>
+<span class="fc" id="L39">    public static final String SCORE_ROOT = CURRENT_DIR + &quot;/&quot;;</span>
+    public static final String SCORE_NORMAL_FILE = &quot;normal.csv&quot;;
+    public static final String SCORE_ITEM_FILE = &quot;item.csv&quot;;
+    public static final String DEFAULT_NAME = &quot;AAA&quot;;
+
+<span class="fc" id="L44">    public static int[] DOWN = new int[]{1, 0};</span>
+<span class="fc" id="L45">    public static int[] RIGHT = new int[]{0, 1};</span>
+<span class="fc" id="L46">    public static int[] LEFT = new int[]{0, -1};</span>
+<span class="fc" id="L47">    public static int[] PLACE = new int[]{0, 0};</span>
+
+
+    public final static int ONE_LINE = 1;
+    public final static int TWO_LINES = 2;
+    public final static int THREE_LINES = 3;
+    public final static int FOUR_LINES = 4;
+
+<span class="fc" id="L55">    public static int DEFAULT_SCORE = 100;</span>
+
+    public static final int INIT_DELAY = 1000;
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

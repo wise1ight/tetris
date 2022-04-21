@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScoreBoardTabbedPane.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tetris</a> &gt; <a href="index.source.html" class="el_package">org.teamseven.tetris.ui</a> &gt; <span class="el_source">ScoreBoardTabbedPane.java</span></div><h1>ScoreBoardTabbedPane.java</h1><pre class="source lang-java linenums">package org.teamseven.tetris.ui;
+
+import org.teamseven.tetris.Pipeline;
+
+import javax.swing.*;
+
+public class ScoreBoardTabbedPane extends JTabbedPane implements IDesign {
+    private ScoreBoardPanelTab noItem, item;
+    private int[] preferredResolution;  // frame resolution - frame top border
+
+<span class="nc" id="L11">    public ScoreBoardTabbedPane() {</span>
+<span class="nc" id="L12">        int[] frameBorderSize = new int[2];       // frame top border</span>
+<span class="nc" id="L13">        frameBorderSize[0] = this.getInsets().left + this.getInsets().right;</span>
+<span class="nc" id="L14">        frameBorderSize[1] = this.getInsets().top + this.getInsets().bottom;</span>
+<span class="nc" id="L15">        preferredResolution = new int[2];</span>
+<span class="nc" id="L16">        preferredResolution[0] = Pipeline.getScreenResolutionX() - frameBorderSize[0];</span>
+<span class="nc" id="L17">        preferredResolution[1] = Pipeline.getScreenResolutionY() - frameBorderSize[1];</span>
+
+<span class="nc" id="L19">        setComp();</span>
+<span class="nc" id="L20">        setDesign();</span>
+<span class="nc" id="L21">        setAction();</span>
+<span class="nc" id="L22">    }</span>
+
+    @Override
+    public void setComp() {
+<span class="nc" id="L26">        noItem = new ScoreBoardPanelTab(preferredResolution, false,-1);</span>
+<span class="nc" id="L27">        item = new ScoreBoardPanelTab(preferredResolution, true,-1);</span>
+<span class="nc" id="L28">    }</span>
+
+    @Override
+    public void setDesign() {
+<span class="nc" id="L32">        this.addTab(&quot;일반 게임 모드&quot;,noItem);</span>
+<span class="nc" id="L33">        this.addTab(&quot;아이템 모드&quot;,item);</span>
+<span class="nc" id="L34">    }</span>
+
+    @Override
+    public void setAction() {
+
+<span class="nc" id="L39">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
