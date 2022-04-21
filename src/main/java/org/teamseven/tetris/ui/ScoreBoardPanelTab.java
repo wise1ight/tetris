@@ -47,7 +47,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
 
         if(newScore >= 0 && (scores.size() < 10 || newScore > scores.stream().map(Score::getScore).map(Integer::valueOf).mapToInt(k -> k).min().getAsInt())) {
             String name = showInputDialog("이름을 입력하세요.");
-            Score score = new Score(newScore, name == null ? "Unknown" : name);
+            Score score = new Score(newScore, name);
             addScore(score);
             clear();
             draw(pageNum);
