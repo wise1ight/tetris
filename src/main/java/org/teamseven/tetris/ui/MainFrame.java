@@ -1,57 +1,21 @@
 package org.teamseven.tetris.ui;
 
-import org.teamseven.tetris.Const;
-
-import javax.swing.*;
-import java.awt.*;
+import static org.teamseven.tetris.Const.*;
 
 public class MainFrame extends BaseFrame {
-    private JPanel scenes;
-    private CardLayout cardLayout;
-    private StartMenuPane startMenu;
-    private TetrisPane tetris;
-    private SettingPane settingPane;
-    private CardSwitcher cardSwitcher;
-
-    private int[] resolution = new int[2];           // frame resolution
-    private int[] preferredResolution = new int[2];  // frame resolution - frame top border
 
     public MainFrame() {
-        resolution[0] = 1600;
-        resolution[1] = 900;
-        int[] frameBorderSize = new int[2];       // frame top border
-        frameBorderSize[0] = this.getInsets().left + this.getInsets().right;
-        frameBorderSize[1] = this.getInsets().top + this.getInsets().bottom;
-        preferredResolution[0] = resolution[0] - frameBorderSize[0];
-        preferredResolution[1] = resolution[1] - frameBorderSize[1];
-
-        this.setFrame("Tetris");
+        this.setFrame(APPLICATION_TITLE);
     }
 
     @Override
     public void setComp() {
-        cardLayout = new CardLayout();
-        scenes = new JPanel(cardLayout);
-        cardSwitcher = new CardSwitcher(scenes, cardLayout);
-        startMenu = new StartMenuPane(cardSwitcher, preferredResolution);
-        tetris = new TetrisPane(cardSwitcher, preferredResolution);
-        settingPane = new SettingPane(cardSwitcher, preferredResolution);
+        getContentPane().add(new GameMenuPane());
     }
 
     @Override
     public void setDesign() {
-
-        //set scenes
-        scenes.setPreferredSize(new Dimension(preferredResolution[0], preferredResolution[1]));
-        scenes.add(startMenu, "startMenu");
-        scenes.add(tetris, "tetris");
-        scenes.add(settingPane, Const.SCENE_SETTING);
-        cardSwitcher.switchCard("startMenu");
-
-        //set MainFrame
-        this.add(scenes);
-        this.pack();
-        this.setLocationRelativeTo(null);
+        setSize(SCREEN_RESOLUTION_X, SCREEN_RESOLUTION_Y);
     }
 
     @Override

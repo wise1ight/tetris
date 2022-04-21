@@ -2,8 +2,10 @@ package org.teamseven.tetris;
 
 public class Const {
 
-    public static final String SCENE_START_MENU = "startMenu";
-    public static final String SCENE_SETTING = "SCENE_SETTING";
+    public static final String APPLICATION_TITLE = "Tetris";
+
+    public static final int SCREEN_RESOLUTION_X = 1600;
+    public static final int SCREEN_RESOLUTION_Y = 900;
 
     public static final String PREF_SCREEN_SIZE_KEY = "SCREEN_SIZE";
     public static final String PREF_BTN_LEFT_KEY = "BTN_LEFT";
@@ -20,7 +22,8 @@ public class Const {
     public static int HEIGHT = 20;
     public static int WIDTH = 10;
 
-    public static String SCORE_ROOT = "score/";
+    public static String currentDir = System.getProperty("user.dir");
+    public static String SCORE_ROOT = currentDir + "./";
     public static String SCORE_FILE = "score.csv";
     public static String DEFAULT_NAME = "AAA";
 

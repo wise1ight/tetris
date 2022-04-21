@@ -3,6 +3,7 @@ package org.teamseven.tetris;
 import org.teamseven.tetris.ui.MainFrame;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Pipeline {
 
@@ -14,5 +15,14 @@ public class Pipeline {
 
     public static JFrame getMainFrame() {
         return Pipeline.mainFrame;
+    }
+
+    public static void replacePane(Component component) {
+        Container container = getMainFrame().getContentPane();
+        container.removeAll();
+        container.add(component);
+        container.revalidate();
+        container.repaint();
+        container.requestFocus();
     }
 }

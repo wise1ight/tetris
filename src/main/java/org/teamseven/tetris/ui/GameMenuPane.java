@@ -1,32 +1,36 @@
 package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Const;
+import org.teamseven.tetris.Pipeline;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class StartMenuPane extends JLayeredPane implements IDesign {
+public class GameMenuPane extends JLayeredPane implements IDesign {
     private JLabel title;
     private CustomButton startButton, settingButton, scoreButton, exitButton, noItemModeButton, ItemModeButton;
     private JButton settingBoard_ExitButton, scoreBoard_ExitButton;                         // exit button on popup panel
     private JPanel main;                                                                    // main panel on startMenuPane (DEFAULT_LAYER)     
     private JPanel titlePanel, buttonPannel1, buttonPannel2, buttonPannel3, buttonPannel4;  // BoardLayout, panels on main panel
-    private JPanel settingBoard, scoreBoard, modeBoard;                                                // scoreBoard panel on startMenuPane (POPUP_LAYER)
+    private JPanel settingBoard, modeBoard;                                                // scoreBoard panel on startMenuPane (POPUP_LAYER)
     private GridBagConstraints gridBagConstraints;
     private GridBagLayout gridBagLayout;
 
     private int[] preferredResolution;  // frame resolution - frame top border
-    private CardSwitcher cardSwitcher;
 
-    public StartMenuPane(CardSwitcher cardSwitcher, int[] preferredResolution) {
+    public GameMenuPane() {
         // for test
         this.setOpaque(true);
         this.setBackground(Color.orange);
 
-        this.preferredResolution = preferredResolution;
-        this.cardSwitcher = cardSwitcher;
+        int[] frameBorderSize = new int[2];       // frame top border
+        frameBorderSize[0] = this.getInsets().left + this.getInsets().right;
+        frameBorderSize[1] = this.getInsets().top + this.getInsets().bottom;
+        preferredResolution = new int[2];
+        preferredResolution[0] = Const.SCREEN_RESOLUTION_X - frameBorderSize[0];
+        preferredResolution[1] = Const.SCREEN_RESOLUTION_Y - frameBorderSize[1];
 
         setComp();
         setDesign();
@@ -43,7 +47,7 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
         buttonPannel3 = new JPanel(new BorderLayout());
         buttonPannel4 = new JPanel(new BorderLayout());
 
-        buttonPannel1.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
+       buttonPannel1.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
         buttonPannel2.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
         buttonPannel3.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
         buttonPannel4.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
@@ -57,8 +61,6 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
         ItemModeButton = new CustomButton();
 
         settingBoard_ExitButton = new JButton();
-        scoreBoard_ExitButton = new JButton();
-        scoreBoard = new JPanel();
         settingBoard = new JPanel();
         modeBoard = new JPanel(new GridLayout(1, 2, preferredResolution[0] / 32, 0));
 
@@ -115,7 +117,6 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
 
 
         settingBoard_ExitButton.setPreferredSize(new Dimension(50, 50));
-        scoreBoard_ExitButton.setPreferredSize(new Dimension(50, 50));
 
 
         // add components
@@ -125,7 +126,6 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
         buttonPannel3.add(scoreButton);
         buttonPannel4.add(exitButton);
 
-        scoreBoard.add(scoreBoard_ExitButton);
         settingBoard.add(settingBoard_ExitButton);
         modeBoard.add(noItemModeButton);
         modeBoard.add(ItemModeButton);
@@ -139,9 +139,6 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
         // set popUpPannel
         settingBoard.setBackground(Color.CYAN);
         settingBoard.setBounds(preferredResolution[0] * 1 / 10, preferredResolution[1] * 1 / 10,
-                preferredResolution[0] * 8 / 10, preferredResolution[1] * 8 / 10);
-        scoreBoard.setBackground(Color.GREEN);
-        scoreBoard.setBounds(preferredResolution[0] * 1 / 10, preferredResolution[1] * 1 / 10,
                 preferredResolution[0] * 8 / 10, preferredResolution[1] * 8 / 10);
         modeBoard.setBackground(Color.white);
         modeBoard.setBounds(preferredResolution[0] * 1 / 10, preferredResolution[1] * 1 / 10,
@@ -173,13 +170,13 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
 
         });
         settingButton.addActionListener(e -> {
-            cardSwitcher.switchCard(Const.SCENE_SETTING);
+            Pipeline.replacePane(new SettingPane());
         });
         scoreButton.addActionListener(e -> {
-            this.add(scoreBoard, JLayeredPane.POPUP_LAYER);
+            Pipeline.replacePane(new ScoreBoardTabbedPane());
         });
         exitButton.addActionListener(e -> {
-            ((JFrame) this.getTopLevelAncestor()).dispose();
+            System.exit(0);
         });
         settingBoard_ExitButton.addActionListener(e -> {
             this.remove(settingBoard);
@@ -187,14 +184,8 @@ public class StartMenuPane extends JLayeredPane implements IDesign {
             this.repaint();
             settingButton.requestFocus();
         });
-        scoreBoard_ExitButton.addActionListener(e -> {
-            this.remove(scoreBoard);
-            this.revalidate();
-            this.repaint();
-            scoreButton.requestFocus();
-        });
         noItemModeButton.addActionListener(e -> {
-            cardSwitcher.switchCard("tetris");
+            Pipeline.replacePane(new TetrisPane());
         });
 
     }

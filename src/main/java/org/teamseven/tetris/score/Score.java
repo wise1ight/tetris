@@ -35,6 +35,18 @@ public class Score implements Comparable<Score> {
         return new String[]{name, score.toString(), date.toString(), uuid};
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getScore() {
+        return score.toString();
+    }
+
+    public String getDate() {
+        return date.toString();
+    }
+
     @Override
     public int compareTo(Score s) {
         if (this.score.compareTo(s.score) < 0) {

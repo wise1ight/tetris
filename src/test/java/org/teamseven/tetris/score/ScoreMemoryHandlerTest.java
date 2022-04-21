@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.teamseven.tetris.handler.ScoreMemoryHandler;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -48,6 +49,8 @@ class ScoreMemoryHandlerTest {
         handler.saveScoreFile(score2, fileName);
         handler.saveScoreFile(score3, fileName);
         List<Score> scores = handler.getScores(fileName);
+
+        System.out.println(Arrays.toString(scores.get(0).toRow()));
 
         assertThat(scores.get(0)).isEqualTo(score2);
         assertThat(scores.get(1)).isEqualTo(score1);

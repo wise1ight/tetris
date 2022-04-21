@@ -7,6 +7,7 @@ import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.factory.BlockFactory;
 import org.teamseven.tetris.handler.GameHandler;
+import org.teamseven.tetris.handler.ScoreHandler;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -33,6 +34,7 @@ public class TetrisFrame extends JFrame implements KeyListener {
     private Block nextBlock;
     private GameHandler gameHandler = new GameHandler();
 
+    private static final int initInterval = 1000;
 
     public TetrisFrame() {
         super("SeoulTech SE Tetris");
@@ -66,7 +68,7 @@ public class TetrisFrame extends JFrame implements KeyListener {
         gameHandler.addBlockCnt();
 
         //Set timer for block drops.
-        timer = new Timer(INIT_DELAY, new ActionListener() {
+        timer = new Timer(initInterval, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("gameHandler.getScore() = " + gameHandler.getScore());
@@ -169,8 +171,7 @@ public class TetrisFrame extends JFrame implements KeyListener {
         }
         switch(e.getKeyCode()) {
             case KeyEvent.VK_DOWN:
-                int cnt = curr.move(board, DOWN);
-                gameHandler.addScoreByMove(cnt);
+                curr.move(board, DOWN);
                 drawBoard();
                 break;
             case KeyEvent.VK_RIGHT:
@@ -188,8 +189,9 @@ public class TetrisFrame extends JFrame implements KeyListener {
                 drawBoard();
                 break;
             case KeyEvent.VK_SPACE:
-                curr.moveEnd(board);
+                int cnt = curr.moveEnd(board);
                 gameHandler.setErasedLines(board.eraseLines());
+                gameHandler.addScoreByMove(cnt);
                 gameHandler.addScoreByEraseLine();
                 nextTurn();
                 drawBoard();
