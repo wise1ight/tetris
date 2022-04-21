@@ -1,4 +1,4 @@
-package org.teamseven.tetris.util;
+package org.teamseven.tetris.handler;
 
 import org.teamseven.tetris.Const;
 import org.teamseven.tetris.enums.Mode;
@@ -10,9 +10,9 @@ import java.util.prefs.Preferences;
 import static org.teamseven.tetris.Const.PREF_MODE_KEY;
 import static org.teamseven.tetris.enums.Mode.NORMAL;
 
-public class PreferencesUtil {
+public class PreferencesHandler {
 
-    private static final Preferences prefs = Preferences.userNodeForPackage(PreferencesUtil.class);
+    private static final Preferences prefs = Preferences.userNodeForPackage(PreferencesHandler.class);
 
     public static void setMode(Mode mode) {
         prefs.put(PREF_MODE_KEY, mode.name());
@@ -21,7 +21,7 @@ public class PreferencesUtil {
     public static Mode getMode() {
         return Mode.valueOf(prefs.get(PREF_MODE_KEY, NORMAL.name()));
     }
-    
+
     public static Const.ScreenSize getScreenSize() {
         return Const.ScreenSize.toEnum(prefs.get(Const.PREF_SCREEN_SIZE_KEY, Const.ScreenSize.MEDIUM.name()));
     }
