@@ -2,7 +2,9 @@ package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Const;
 import org.teamseven.tetris.Pipeline;
-import org.teamseven.tetris.util.PreferencesUtil;
+import org.teamseven.tetris.enums.ColorBlindnessType;
+import org.teamseven.tetris.enums.ScreenSize;
+import org.teamseven.tetris.handler.PreferencesHandler;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -130,11 +132,11 @@ public class SettingPane extends JLayeredPane implements IDesign {
             public void actionPerformed(ActionEvent actionEvent) {
                 //AbstractButton aButton = (AbstractButton) actionEvent.getSource();
                 if(rbSmallSize.isSelected()) {
-                    PreferencesUtil.setScreenSize(Const.ScreenSize.SMALL);
+                    PreferencesHandler.setScreenSize(ScreenSize.SMALL);
                 } else if (rbMediumSize.isSelected()) {
-                    PreferencesUtil.setScreenSize(Const.ScreenSize.MEDIUM);
+                    PreferencesHandler.setScreenSize(ScreenSize.MEDIUM);
                 } else if (rbLargeSize.isSelected()) {
-                    PreferencesUtil.setScreenSize(Const.ScreenSize.LARGE);
+                    PreferencesHandler.setScreenSize(ScreenSize.LARGE);
                 }
             }
         };
@@ -172,13 +174,13 @@ public class SettingPane extends JLayeredPane implements IDesign {
                         public void keyPressed(KeyEvent e) {
                             System.out.println(e.getKeyCode());
                             if (ae.getSource() == btnLeft)
-                                PreferencesUtil.setLeftBtnCode(e.getKeyCode());
+                                PreferencesHandler.setLeftBtnCode(e.getKeyCode());
                             else if (ae.getSource() == btnRight)
-                                PreferencesUtil.setRightBtnCode(e.getKeyCode());
+                                PreferencesHandler.setRightBtnCode(e.getKeyCode());
                             else if (ae.getSource() == btnRotateRight)
-                                PreferencesUtil.setRotateRightBtnCode(e.getKeyCode());
+                                PreferencesHandler.setRotateRightBtnCode(e.getKeyCode());
                             else if (ae.getSource() == btnPause)
-                                PreferencesUtil.setPauseBtnCode(e.getKeyCode());
+                                PreferencesHandler.setPauseBtnCode(e.getKeyCode());
 
                             dialog.dispose();
                         }
@@ -202,13 +204,13 @@ public class SettingPane extends JLayeredPane implements IDesign {
         ActionListener colorBlindnessActionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 if(rbNone.isSelected()) {
-                    PreferencesUtil.setColorBlindnessType(Const.ColorBlindnessType.NONE);
+                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.NONE);
                 } else if (rbRedBlindess.isSelected()) {
-                    PreferencesUtil.setColorBlindnessType(Const.ColorBlindnessType.RED);
+                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.RED);
                 } else if (rbGreenBlindess.isSelected()) {
-                    PreferencesUtil.setColorBlindnessType(Const.ColorBlindnessType.GREEN);
+                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.GREEN);
                 } else if (rbBlueBlindess.isSelected()) {
-                    PreferencesUtil.setColorBlindnessType(Const.ColorBlindnessType.BLUE);
+                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.BLUE);
                 }
             }
         };
@@ -228,7 +230,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
         btnInit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PreferencesUtil.clear();
+                PreferencesHandler.clear();
                 refreshPref();
             }
         });
@@ -247,7 +249,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
 
     private void refreshPref() {
         // Screen Size
-        switch (PreferencesUtil.getScreenSize()) {
+        switch (PreferencesHandler.getScreenSize()) {
             case SMALL:
                 rbSmallSize.setSelected(true);
                 break;
@@ -260,13 +262,13 @@ public class SettingPane extends JLayeredPane implements IDesign {
         }
 
         // Keyboard
-        btnLeft.setText(KeyEvent.getKeyText(PreferencesUtil.getLeftBtnCode()));
-        btnRight.setText(KeyEvent.getKeyText(PreferencesUtil.getRightBtnCode()));
-        btnRotateRight.setText(KeyEvent.getKeyText(PreferencesUtil.getRotateRightBtnCode()));
-        btnPause.setText(KeyEvent.getKeyText(PreferencesUtil.getPauseBtnCode()));
+        btnLeft.setText(KeyEvent.getKeyText(PreferencesHandler.getLeftBtnCode()));
+        btnRight.setText(KeyEvent.getKeyText(PreferencesHandler.getRightBtnCode()));
+        btnRotateRight.setText(KeyEvent.getKeyText(PreferencesHandler.getRotateRightBtnCode()));
+        btnPause.setText(KeyEvent.getKeyText(PreferencesHandler.getPauseBtnCode()));
 
         // Color Blindness
-        switch (PreferencesUtil.getColorBlindnessType()) {
+        switch (PreferencesHandler.getColorBlindnessType()) {
             case NONE:
                 rbNone.setSelected(true);
                 break;

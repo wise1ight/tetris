@@ -13,30 +13,11 @@ public class Const {
     public static final String PREF_BTN_ROTATE_RIGHT_KEY = "BTN_ROTATE_RIGHT";
     public static final String PREF_BTN_PAUSE_KEY = "BTN_PAUSE";
     public static final String PREF_COLOR_BLINDNESS_KEY = "COLOR_BLINDNESS";
+    public static final String PREF_MODE_KEY = "MODE";
 
-    public enum ScreenSize {
-        SMALL, MEDIUM, LARGE;
 
-        public static ScreenSize toEnum (String str) {
-            try {
-                return valueOf(str);
-            } catch (Exception e) {
-                return MEDIUM;
-            }
-        }
-    }
 
-    public enum ColorBlindnessType {
-        NONE, RED, GREEN, BLUE;
 
-        public static ColorBlindnessType toEnum(String str) {
-            try {
-                return valueOf(str);
-            } catch (Exception e) {
-                return NONE;
-            }
-        }
-    }
 
     public static int HEIGHT = 20;
     public static int WIDTH = 10;
@@ -58,4 +39,7 @@ public class Const {
     public final static int FOUR_LINES = 4;
 
     public static int DEFAULT_SCORE = 100;
+
+    public static final int INIT_DELAY = 1000;
+
 }

@@ -2,7 +2,6 @@ package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.Const;
-import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
@@ -18,7 +17,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import static org.teamseven.tetris.Const.*;
 
@@ -38,8 +36,6 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private CurrBlock curr;
     private Block nextBlock;
     private GameHandler gameHandler = new GameHandler();
-
-    private static final int initInterval = 1000;
 
     private int[] preferredResolution;  // frame resolution - frame top border
 
@@ -88,7 +84,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
         gameHandler.addBlockCnt();
 
         //Set timer for block drops.
-        timer = new Timer(initInterval, new ActionListener() {
+        timer = new Timer(INIT_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("gameHandler.getScore() = " + gameHandler.getScore());
@@ -245,9 +241,11 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
             if (gameHandler.isPaused()) {
                 return true;
             }
+            int cnt = 0;
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_DOWN:
-                    curr.move(board, DOWN);
+                    cnt = curr.move(board, DOWN);
+                    gameHandler.addScoreByMove(cnt);
                     drawBoard();
                     return true;
                 case KeyEvent.VK_RIGHT:
@@ -265,7 +263,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
                     drawBoard();
                     return true;
                 case KeyEvent.VK_SPACE:
-                    int cnt = curr.moveEnd(board);
+                    cnt = curr.moveEnd(board);
                     gameHandler.setErasedLines(board.eraseLines());
                     gameHandler.addScoreByMove(cnt);
                     gameHandler.addScoreByEraseLine();
