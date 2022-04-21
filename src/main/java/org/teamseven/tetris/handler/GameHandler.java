@@ -19,15 +19,16 @@ public class GameHandler {
 
     public void speedUp(Timer timer) {
         int delay = timer.getDelay();
-        double nextDelay = basicTetrisSpeedRule(blockCnt + totalErasedLines * WIDTH);
+        double nextDelay = basicTetrisSpeedRule(blockCnt);
         double alpha = PreferencesHandler.getMode().speedProb();
-        int time = (int) ((1 - alpha) * delay + alpha * nextDelay);
 
         if (checkErasedLines(erasedLines)) {
+            int time = (int) (timer.getDelay() * (0.98 * erasedLines));
             timer.setDelay(time);
             erasedLines = 0;
         }
         if (checkBlockCnt(blockCnt)) {
+            int time = (int) ((1 - alpha) * delay + alpha * nextDelay);
             scoreHandler.addAlphaScore();
             timer.setDelay(time);
         }

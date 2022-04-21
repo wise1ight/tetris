@@ -1,4 +1,4 @@
-package org.teamseven.tetris.block.handler;
+package org.teamseven.tetris.handler;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
