@@ -5,6 +5,10 @@ import org.teamseven.tetris.score.ScoreHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.font.TextAttribute;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
@@ -18,7 +22,7 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
     private JLabel lTime;
 
     private int[] preferredResolution;  // frame resolution - frame top border
-    private JLabel title, title2;
+    private JLabel title;
 
     private JPanel noItemScorePanelTab, itemScorePanelTab;
     private JPanel titlePanel, buttonPanel;
@@ -32,9 +36,9 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
     private int pageNum = 0;
     private int totalPageNum = 0;
     private GridBagConstraints gridBagConstraints;
-    private GridBagLayout gridBagLayout, gridBagLayout2;
-    ScoreHandler handler = new ScoreHandler();
-    String fileName = "test.csv";
+    private GridBagLayout gridBagLayout;
+    private ScoreHandler handler = new ScoreHandler();
+    private String fileName = "test.csv";
 
 
     public ScoreBoardTabbedPane(int[] preferredResolution) {
@@ -52,7 +56,6 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
 
         gridBagConstraints = new GridBagConstraints();
         gridBagLayout = new GridBagLayout();
-        gridBagLayout2 = new GridBagLayout();
 
         noItemScorePanelTab = new JPanel();
         itemScorePanelTab = new JPanel();
@@ -99,23 +102,12 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
 
         gridBagConstraints.fill = GridBagConstraints.BOTH;
 
-        itemScorePanelTab.setLayout(gridBagLayout);
+        noItemScorePanelTab.setLayout(gridBagLayout);
 
         titlePanel.add(title);
         titlePanel.setPreferredSize(new Dimension(preferredResolution[1] * 8 / 130,preferredResolution[1] * 8 / 130));
         title.setFont(new Font("ss",Font.CENTER_BASELINE,preferredResolution[1] * 10 / 130));
         title.setForeground(Color.orange);
-
-        line1st.setBackground(Color.orange);
-        line2st.setBackground(Color.orange);
-        line3st.setBackground(Color.orange);
-        line4st.setBackground(Color.orange);
-        line5st.setBackground(Color.orange);
-        line6st.setBackground(Color.orange);
-        line7st.setBackground(Color.orange);
-        line8st.setBackground(Color.orange);
-        line9st.setBackground(Color.orange);
-        line10st.setBackground(Color.orange);
 
         draw(pageNum);
 
@@ -123,75 +115,75 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
         gridBagConstraints.weighty = 4.0;
 
         gridBagConstraints.insets = new Insets(preferredResolution[1] * 4 / 130, 0, 0, 0);
-        make(itemScorePanelTab, titlePanel,1,0,1,1);
+        make(noItemScorePanelTab, titlePanel,1,0,1,1);
         gridBagConstraints.weighty = 2.0;
         gridBagConstraints.insets = new Insets(preferredResolution[1] * 4 / 130, preferredResolution[0] / 6, 0, preferredResolution[0] / 8);
 
-        make(itemScorePanelTab, scorePanel1st,1,1,1,1);
+        make(noItemScorePanelTab, scorePanel1st,1,1,1,1);
 
         gridBagConstraints.insets = new Insets(0, preferredResolution[0] / 6, 0, preferredResolution[0] / 8);
         gridBagConstraints.weighty = 0.1;
-        make(itemScorePanelTab, line1st,1,2,1,1);
+        make(noItemScorePanelTab, line1st,1,2,1,1);
         gridBagConstraints.weighty = 2.0;
 
-        make(itemScorePanelTab, scorePanel2st,1,3,1,1);
+        make(noItemScorePanelTab, scorePanel2st,1,3,1,1);
 
         gridBagConstraints.weighty = 0.1;
-        make(itemScorePanelTab, line2st,1,4,1,1);
+        make(noItemScorePanelTab, line2st,1,4,1,1);
         gridBagConstraints.weighty = 2.0;
 
-        make(itemScorePanelTab, scorePanel3st,1,5,1,1);
+        make(noItemScorePanelTab, scorePanel3st,1,5,1,1);
 
         gridBagConstraints.weighty = 0.1;
-        make(itemScorePanelTab, line3st,1,6,1,1);
+        make(noItemScorePanelTab, line3st,1,6,1,1);
         gridBagConstraints.weighty = 2.0;
 
-        make(itemScorePanelTab, scorePanel4st,1,7,1,1);
+        make(noItemScorePanelTab, scorePanel4st,1,7,1,1);
 
         gridBagConstraints.weighty = 0.1;
-        make(itemScorePanelTab, line4st,1,8,1,1);
+        make(noItemScorePanelTab, line4st,1,8,1,1);
         gridBagConstraints.weighty = 2.0;
 
-        make(itemScorePanelTab, scorePanel5st,1,9,1,1);
+        make(noItemScorePanelTab, scorePanel5st,1,9,1,1);
 
         gridBagConstraints.weighty = 0.1;
-        make(itemScorePanelTab, line5st,1,10,1,1);
+        make(noItemScorePanelTab, line5st,1,10,1,1);
         gridBagConstraints.weighty = 2.0;
 
-        make(itemScorePanelTab, scorePanel6st,1,11,1,1);
+        make(noItemScorePanelTab, scorePanel6st,1,11,1,1);
 
         gridBagConstraints.weighty = 0.1;
-        make(itemScorePanelTab, line6st,1,12,1,1);
+        make(noItemScorePanelTab, line6st,1,12,1,1);
         gridBagConstraints.weighty = 2.0;
 
-        make(itemScorePanelTab, scorePanel7st,1,13,1,1);
+        make(noItemScorePanelTab, scorePanel7st,1,13,1,1);
 
         gridBagConstraints.weighty = 0.1;
-        make(itemScorePanelTab, line7st,1,14,1,1);
+        make(noItemScorePanelTab, line7st,1,14,1,1);
         gridBagConstraints.weighty = 2.0;
 
-        make(itemScorePanelTab, scorePanel8st,1,15,1,1);
+        make(noItemScorePanelTab, scorePanel8st,1,15,1,1);
 
         gridBagConstraints.weighty = 0.1;
-        make(itemScorePanelTab, line8st,1,16,1,1);
+        make(noItemScorePanelTab, line8st,1,16,1,1);
         gridBagConstraints.weighty = 2.0;
 
-        make(itemScorePanelTab, scorePanel9st,1,17,1,1);
+        make(noItemScorePanelTab, scorePanel9st,1,17,1,1);
 
         gridBagConstraints.weighty = 0.1;
-        make(itemScorePanelTab, line9st,1,18,1,1);
+        make(noItemScorePanelTab, line9st,1,18,1,1);
         gridBagConstraints.weighty = 2.0;
 
-        make(itemScorePanelTab, scorePanel10st,1,19,1,1);
+        make(noItemScorePanelTab, scorePanel10st,1,19,1,1);
 
         gridBagConstraints.weighty = 0.1;
-        make(itemScorePanelTab, line10st,1,20,1,1);
+        make(noItemScorePanelTab, line10st,1,20,1,1);
         gridBagConstraints.weighty = 2.0;
 
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
-        make(itemScorePanelTab, buttonPanel,1,21,1,1);
+        make(noItemScorePanelTab, buttonPanel,1,21,1,1);
 
-        itemScorePanelTab.setBackground(Color.white);
+        noItemScorePanelTab.setBackground(Color.white);
 
         this.addTab("noitem",noItemScorePanelTab);
         this.addTab("item",itemScorePanelTab);
@@ -201,11 +193,7 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
         leftButton.setForeground(Color.gray);
         rightButton.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 8 / 130));
         rightButton.setForeground(Color.gray);
-        leftButton.removeFocusListener(leftButton.getFocusListeners()[1]);
-        leftButton.removeFocusListener(leftButton.getFocusListeners()[0]);
 
-        rightButton.removeFocusListener(rightButton.getFocusListeners()[1]);
-        rightButton.removeFocusListener(rightButton.getFocusListeners()[0]);
 
         rightButton.requestFocus();
         leftButton.setText("<");
@@ -213,30 +201,68 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
         buttonPanel.add(leftButton);
         buttonPanel.add(rightButton);
 
+        noItemScorePanelTab.setFocusCycleRoot(true);
+
+
+
+
 
     }
 
     @Override
     public void setAction() {
-        leftButton.addActionListener(e -> {
-            if(pageNum > 0) {
-                pageNum--;
-                clear();
-                draw(pageNum);
-                this.revalidate();
-                this.repaint();
-           }
+        leftButton.removeFocusListener(leftButton.getFocusListeners()[1]);
+        leftButton.removeFocusListener(leftButton.getFocusListeners()[0]);
+
+        rightButton.removeFocusListener(rightButton.getFocusListeners()[1]);
+        rightButton.removeFocusListener(rightButton.getFocusListeners()[0]);
+
+        leftButton.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                leftButton.setForeground(Color.darkGray);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                leftButton.setForeground(Color.gray);
+
+            }
         });
+        rightButton.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                rightButton.setForeground(Color.darkGray);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                rightButton.setForeground(Color.gray);
+
+            }
+        });
+
+
+                leftButton.addActionListener(e -> {
+                    if (pageNum > 0) {
+                        pageNum--;
+                        clear();
+                        draw(pageNum);
+                        this.revalidate();
+                        this.repaint();
+                    }
+                });
 
         rightButton.addActionListener(e -> {
             if(pageNum < totalPageNum) {
                 pageNum++;
                 clear();
                 draw(pageNum);
-                this.revalidate();
-                this.repaint();
+
             }
         });
+
+
     }
 
     public void make(JPanel p, JComponent c, int x, int y, int w, int h) {
@@ -283,11 +309,12 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
             scorePanels[i].add(tempLabel4);
 
             scorePanels[i].setPreferredSize(new Dimension(preferredResolution[1] * 8 / 130,preferredResolution[1] * 3 / 130));
+            this.revalidate();
+            this.repaint();
         }
     }
 
     public  void clear(){
-        List<Score> scores = handler.getScores(fileName);
         for(int i = 0; i<10; i++) {
             scorePanels[i].removeAll();
 

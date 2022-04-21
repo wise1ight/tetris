@@ -24,19 +24,19 @@ public class CustomButton extends JButton {
         this.removeMouseListener(this.getMouseListeners()[0]);
         this.addFocusListener(focusListener);
 
-        CustomButton.super.setFont(new Font(font.getName(), font.getStyle(), font.getSize() + 5));
+        CustomButton.this.setFont(new Font(font.getName(), font.getStyle(), font.getSize() + 5));
     }
 
     //focus animation
     private FocusListener focusListener = new FocusListener() {
         @Override
         public void focusGained(FocusEvent e) {
-            CustomButton.super.setFont(new Font(font.getName(), font.getStyle(), font.getSize() + 15));
+            CustomButton.this.setFont(new Font(font.getName(), font.getStyle(), font.getSize() + 15));
         }
 
         @Override
         public void focusLost(FocusEvent e) {
-            CustomButton.super.setFont(new Font(font.getName(), font.getStyle(), font.getSize() + 5));
+            CustomButton.this.setFont(new Font(font.getName(), font.getStyle(), font.getSize() + 5));
         }
     };
 
