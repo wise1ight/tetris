@@ -25,6 +25,17 @@ public class WeightMovementHandler extends BlockMovementHandler {
     }
 
     @Override
+    public int moveEnd(GameBoard board, CurrBlock curr) {
+        int cnt = super.moveEnd(board, curr);
+        for (int j = 0; j < HEIGHT; j++) {
+            for (int i = curr.x; i < curr.x + curr.width(); i++) {
+                board.getBoard()[j][i] = null;
+            }
+        }
+        return cnt;
+    }
+
+    @Override
     public boolean canMove(GameBoard board, CurrBlock curr, int[] vec) {
         int x = curr.x + vec[1];
         int y = curr.y + vec[0];
