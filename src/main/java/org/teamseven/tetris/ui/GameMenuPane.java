@@ -204,7 +204,7 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
             System.exit(0);
         });
         noItemModeButton.addActionListener(e -> {
-            //TODO show tetris game screen
+            Pipeline.replacePane(new TetrisPane());
         });
 
     }
