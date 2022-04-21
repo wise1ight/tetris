@@ -182,8 +182,7 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
 
         });
         settingButton.addActionListener(e -> {
-            Pipeline.replacePane(new SettingPane(preferredResolution));
-            //TODO show tetris game screen
+            Pipeline.replacePane(new SettingPane());
         });
         scoreButton.addActionListener(e -> {
             this.add(scoreBoard1, JLayeredPane.POPUP_LAYER);

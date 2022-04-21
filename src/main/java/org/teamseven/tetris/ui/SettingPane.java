@@ -11,8 +11,6 @@ import java.awt.event.*;
 
 public class SettingPane extends JLayeredPane implements IDesign {
 
-    private int[] preferredResolution;  // frame resolution - frame top border
-
     JRadioButton rbSmallSize, rbMediumSize, rbLargeSize, rbNone, rbGreenBlindess, rbRedBlindess, rbBlueBlindess;
     JButton btnInitScoreboard, btnLeft, btnRight, btnRotateRight, btnPause, btnInit, btnConfirm;
     JLabel lScreenSize, lScoreboard, lBlindess;
@@ -20,9 +18,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
     GridBagLayout gb;
     GridBagConstraints gbc;
 
-    public SettingPane(int[] preferredResolution) {
-        this.preferredResolution = preferredResolution;
-
+    public SettingPane() {
         setComp();
         setDesign();
         setAction();
@@ -225,7 +221,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
         btnConfirm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Change START MENU
+                Pipeline.replacePane(new GameMenuPane());
             }
         });
 
