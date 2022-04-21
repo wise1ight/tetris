@@ -4,10 +4,9 @@ import org.teamseven.tetris.block.UnitBlock;
 
 import java.awt.*;
 
-public class ItemUnitBlock extends UnitBlock {
+public abstract class ItemUnitBlock extends UnitBlock implements ItemBlock {
 
     public ItemUnitBlock(Color color) {
         super(color);
     }
-
 }

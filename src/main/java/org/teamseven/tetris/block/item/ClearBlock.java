@@ -1,5 +1,6 @@
 package org.teamseven.tetris.block.item;
 
+import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.UnitBlock;
 
@@ -12,5 +13,10 @@ public class ClearBlock extends Block implements ItemBlock {
         shape = new UnitBlock[][]{
                 {new UnitBlock(color)}
         };
+    }
+
+    @Override
+    public void execute(GameBoard board) {
+
     }
 }

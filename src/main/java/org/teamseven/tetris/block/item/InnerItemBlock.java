@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class InnerItemBlock extends Block implements ItemBlock {
+public class InnerItemBlock extends Block {
 
     List<int[]> blockLoc;
 
-    public InnerItemBlock(UnitBlock[][] shape, UnitBlock unitBlock) {
+    public InnerItemBlock(UnitBlock[][] shape, ItemUnitBlock unitBlock) {
         this.shape = shape;
         blockLoc = getBlockLoc();
         Random random = new Random();

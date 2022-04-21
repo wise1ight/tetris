@@ -14,7 +14,7 @@ class ItemBlockTest {
     @DisplayName("폭탄 블럭 생성 테스트")
     void boom_block_test() {
         Block Iblock = new IBlock();
-        UnitBlock boomBlock = new BoomBlock();
+        ItemUnitBlock boomBlock = new BoomBlock();
         InnerItemBlock itemBlock = new InnerItemBlock(Iblock.getShape(), boomBlock);
         boolean flag = false;
 
@@ -32,7 +32,7 @@ class ItemBlockTest {
     @DisplayName("라인 삭제 블럭 생성 테스트")
     void line_remove_block_test() {
         Block Iblock = new IBlock();
-        UnitBlock lineRemoveBlock = new LineRemoveBlock();
+        ItemUnitBlock lineRemoveBlock = new LineRemoveBlock();
         InnerItemBlock itemBlock = new InnerItemBlock(Iblock.getShape(), lineRemoveBlock);
         boolean flag = false;
 
