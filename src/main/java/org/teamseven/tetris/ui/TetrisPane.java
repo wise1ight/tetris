@@ -324,7 +324,6 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
                 return true;
             } else if (e.getKeyCode() == KEY_CODE_HARD_DROP) {
                 cnt = curr.moveEnd(board);
-                gameHandler.setErasedLines(board.eraseLines());
                 gameHandler.addScoreByMove(cnt);
                 gameHandler.addScoreByEraseLine();
                 nextTurn();
