@@ -1,11 +1,10 @@
 package org.teamseven.tetris.block.item;
 
-import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.UnitBlock;
 
 import java.awt.*;
 
-public class WeightBlock extends Block {
+public class WeightBlock extends ItemBlock {
 
     public WeightBlock() {
         color = Color.PINK;
