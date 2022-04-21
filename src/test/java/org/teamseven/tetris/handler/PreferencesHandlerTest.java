@@ -1,9 +1,11 @@
-package org.teamseven.tetris.util;
+package org.teamseven.tetris.handler;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.teamseven.tetris.Const;
+import org.teamseven.tetris.enums.ColorBlindnessType;
+import org.teamseven.tetris.enums.ScreenSize;
 import org.teamseven.tetris.handler.PreferencesHandler;
 
 import java.awt.event.KeyEvent;
@@ -12,20 +14,20 @@ public class PreferencesHandlerTest {
 
     @Test
     public void testSetSmallScreen() {
-        PreferencesHandler.setScreenSize(Const.ScreenSize.SMALL);
-        Assertions.assertEquals(Const.ScreenSize.SMALL, PreferencesHandler.getScreenSize());
+        PreferencesHandler.setScreenSize(ScreenSize.SMALL);
+        Assertions.assertEquals(ScreenSize.SMALL, PreferencesHandler.getScreenSize());
     }
 
     @Test
     public void testSetMediumScreen() {
-        PreferencesHandler.setScreenSize(Const.ScreenSize.MEDIUM);
-        Assertions.assertEquals(Const.ScreenSize.MEDIUM, PreferencesHandler.getScreenSize());
+        PreferencesHandler.setScreenSize(ScreenSize.MEDIUM);
+        Assertions.assertEquals(ScreenSize.MEDIUM, PreferencesHandler.getScreenSize());
     }
 
     @Test
     public void testSetLargeScreen() {
-        PreferencesHandler.setScreenSize(Const.ScreenSize.LARGE);
-        Assertions.assertEquals(Const.ScreenSize.LARGE, PreferencesHandler.getScreenSize());
+        PreferencesHandler.setScreenSize(ScreenSize.LARGE);
+        Assertions.assertEquals(ScreenSize.LARGE, PreferencesHandler.getScreenSize());
     }
 
     @Test
@@ -54,26 +56,26 @@ public class PreferencesHandlerTest {
 
     @Test
     public void testSetNoneColorBlindness() {
-        PreferencesHandler.setColorBlindnessType(Const.ColorBlindnessType.NONE);
-        Assertions.assertEquals(Const.ColorBlindnessType.NONE, PreferencesHandler.getColorBlindnessType());
+        PreferencesHandler.setColorBlindnessType(ColorBlindnessType.NONE);
+        Assertions.assertEquals(ColorBlindnessType.NONE, PreferencesHandler.getColorBlindnessType());
     }
 
     @Test
     public void testSetRedColorBlindness() {
-        PreferencesHandler.setColorBlindnessType(Const.ColorBlindnessType.RED);
-        Assertions.assertEquals(Const.ColorBlindnessType.RED, PreferencesHandler.getColorBlindnessType());
+        PreferencesHandler.setColorBlindnessType(ColorBlindnessType.RED);
+        Assertions.assertEquals(ColorBlindnessType.RED, PreferencesHandler.getColorBlindnessType());
     }
 
     @Test
     public void testSetGreenColorBlindness() {
-        PreferencesHandler.setColorBlindnessType(Const.ColorBlindnessType.GREEN);
-        Assertions.assertEquals(Const.ColorBlindnessType.GREEN, PreferencesHandler.getColorBlindnessType());
+        PreferencesHandler.setColorBlindnessType(ColorBlindnessType.GREEN);
+        Assertions.assertEquals(ColorBlindnessType.GREEN, PreferencesHandler.getColorBlindnessType());
     }
 
     @Test
     public void testSetBlueColorBlindness() {
-        PreferencesHandler.setColorBlindnessType(Const.ColorBlindnessType.BLUE);
-        Assertions.assertEquals(Const.ColorBlindnessType.BLUE, PreferencesHandler.getColorBlindnessType());
+        PreferencesHandler.setColorBlindnessType(ColorBlindnessType.BLUE);
+        Assertions.assertEquals(ColorBlindnessType.BLUE, PreferencesHandler.getColorBlindnessType());
     }
 
     @AfterAll

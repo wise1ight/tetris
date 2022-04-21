@@ -1,13 +1,16 @@
 package org.teamseven.tetris.handler;
 
 import org.teamseven.tetris.Const;
+import org.teamseven.tetris.enums.ColorBlindnessType;
 import org.teamseven.tetris.enums.Mode;
+import org.teamseven.tetris.enums.ScreenSize;
 
 import java.awt.event.KeyEvent;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import static org.teamseven.tetris.Const.PREF_MODE_KEY;
+import static org.teamseven.tetris.Const.PREF_SCREEN_SIZE_KEY;
 import static org.teamseven.tetris.enums.Mode.NORMAL;
 
 public class PreferencesHandler {
@@ -22,12 +25,12 @@ public class PreferencesHandler {
         return Mode.valueOf(prefs.get(PREF_MODE_KEY, NORMAL.name()));
     }
 
-    public static Const.ScreenSize getScreenSize() {
-        return Const.ScreenSize.toEnum(prefs.get(Const.PREF_SCREEN_SIZE_KEY, Const.ScreenSize.MEDIUM.name()));
+    public static ScreenSize getScreenSize() {
+        return ScreenSize.toEnum(prefs.get(PREF_SCREEN_SIZE_KEY, ScreenSize.MEDIUM.name()));
     }
 
-    public static void setScreenSize(Const.ScreenSize screenSize) {
-        prefs.put(Const.PREF_SCREEN_SIZE_KEY, screenSize.name());
+    public static void setScreenSize(ScreenSize screenSize) {
+        prefs.put(PREF_SCREEN_SIZE_KEY, screenSize.name());
         try {
             prefs.flush();
         } catch (BackingStoreException e) {
@@ -67,12 +70,12 @@ public class PreferencesHandler {
         prefs.putInt(Const.PREF_BTN_PAUSE_KEY, keyCode);
     }
 
-    public static Const.ColorBlindnessType getColorBlindnessType() {
-        return Const.ColorBlindnessType.toEnum(
-                prefs.get(Const.PREF_COLOR_BLINDNESS_KEY, Const.ColorBlindnessType.NONE.name()));
+    public static ColorBlindnessType getColorBlindnessType() {
+        return ColorBlindnessType.toEnum(
+                prefs.get(Const.PREF_COLOR_BLINDNESS_KEY, ColorBlindnessType.NONE.name()));
     }
 
-    public static void setColorBlindnessType(Const.ColorBlindnessType colorBlindnessType) {
+    public static void setColorBlindnessType(ColorBlindnessType colorBlindnessType) {
         prefs.put(Const.PREF_COLOR_BLINDNESS_KEY, colorBlindnessType.name());
         try {
             prefs.flush();

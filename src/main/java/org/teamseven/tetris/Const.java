@@ -13,29 +13,9 @@ public class Const {
     public static final String PREF_COLOR_BLINDNESS_KEY = "COLOR_BLINDNESS";
     public static final String PREF_MODE_KEY = "MODE";
 
-    public enum ScreenSize {
-        SMALL, MEDIUM, LARGE;
 
-        public static ScreenSize toEnum (String str) {
-            try {
-                return valueOf(str);
-            } catch (Exception e) {
-                return MEDIUM;
-            }
-        }
-    }
 
-    public enum ColorBlindnessType {
-        NONE, RED, GREEN, BLUE;
 
-        public static ColorBlindnessType toEnum(String str) {
-            try {
-                return valueOf(str);
-            } catch (Exception e) {
-                return NONE;
-            }
-        }
-    }
 
     public static int HEIGHT = 20;
     public static int WIDTH = 10;

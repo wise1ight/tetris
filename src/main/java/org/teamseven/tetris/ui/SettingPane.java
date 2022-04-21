@@ -2,6 +2,7 @@ package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Const;
 import org.teamseven.tetris.Pipeline;
+import org.teamseven.tetris.enums.ColorBlindnessType;
 import org.teamseven.tetris.handler.PreferencesHandler;
 
 import javax.swing.*;
@@ -208,13 +209,13 @@ public class SettingPane extends JLayeredPane implements IDesign {
         ActionListener colorBlindnessActionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 if(rbNone.isSelected()) {
-                    PreferencesHandler.setColorBlindnessType(Const.ColorBlindnessType.NONE);
+                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.NONE);
                 } else if (rbRedBlindess.isSelected()) {
-                    PreferencesHandler.setColorBlindnessType(Const.ColorBlindnessType.RED);
+                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.RED);
                 } else if (rbGreenBlindess.isSelected()) {
-                    PreferencesHandler.setColorBlindnessType(Const.ColorBlindnessType.GREEN);
+                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.GREEN);
                 } else if (rbBlueBlindess.isSelected()) {
-                    PreferencesHandler.setColorBlindnessType(Const.ColorBlindnessType.BLUE);
+                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.BLUE);
                 }
             }
         };
