@@ -2,6 +2,7 @@ package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.Const;
+import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
@@ -39,8 +40,8 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
         frameBorderSize[0] = this.getInsets().left + this.getInsets().right;
         frameBorderSize[1] = this.getInsets().top + this.getInsets().bottom;
         preferredResolution = new int[2];
-        preferredResolution[0] = Const.SCREEN_RESOLUTION_X - frameBorderSize[0];
-        preferredResolution[1] = Const.SCREEN_RESOLUTION_Y - frameBorderSize[1];
+        preferredResolution[0] = Pipeline.getScreenResolutionX() - frameBorderSize[0];
+        preferredResolution[1] = Pipeline.getScreenResolutionY() - frameBorderSize[1];
 
         setComp();
         setDesign();

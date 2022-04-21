@@ -133,10 +133,13 @@ public class SettingPane extends JLayeredPane implements IDesign {
                 //AbstractButton aButton = (AbstractButton) actionEvent.getSource();
                 if(rbSmallSize.isSelected()) {
                     PreferencesHandler.setScreenSize(ScreenSize.SMALL);
+                    Pipeline.changeScreenSize(ScreenSize.SMALL);
                 } else if (rbMediumSize.isSelected()) {
                     PreferencesHandler.setScreenSize(ScreenSize.MEDIUM);
+                    Pipeline.changeScreenSize(ScreenSize.MEDIUM);
                 } else if (rbLargeSize.isSelected()) {
                     PreferencesHandler.setScreenSize(ScreenSize.LARGE);
+                    Pipeline.changeScreenSize(ScreenSize.LARGE);
                 }
             }
         };

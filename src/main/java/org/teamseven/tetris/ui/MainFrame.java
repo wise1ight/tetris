@@ -1,5 +1,7 @@
 package org.teamseven.tetris.ui;
 
+import org.teamseven.tetris.Pipeline;
+
 import static org.teamseven.tetris.Const.*;
 
 public class MainFrame extends BaseFrame {
@@ -15,7 +17,7 @@ public class MainFrame extends BaseFrame {
 
     @Override
     public void setDesign() {
-        setSize(SCREEN_RESOLUTION_X, SCREEN_RESOLUTION_Y);
+        setSize(Pipeline.getScreenResolutionX(), Pipeline.getScreenResolutionY());
     }
 
     @Override
