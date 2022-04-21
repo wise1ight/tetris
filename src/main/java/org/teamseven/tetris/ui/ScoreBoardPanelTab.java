@@ -4,6 +4,8 @@ import org.teamseven.tetris.score.Score;
 import org.teamseven.tetris.score.ScoreHandler;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -264,7 +266,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
 
     public  void draw(int pageNum){
         List<Score> scores = handler.getScores(fileName);
-        totalPageNum = scores.size() % 10;
+        totalPageNum = scores.size() / 10;
         for(int i = 0; i<10; i++){
             if(scores.size() == pageNum*10 + i){break;};
             JLabel tempLabel = new JLabel();
@@ -276,7 +278,6 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
             JLabel tempLabel2 = new JLabel();
             tempLabel2.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
             tempLabel2.setForeground(Color.gray);
-            System.out.println(this.pageNum);
             tempLabel2.setText(scores.get(pageNum*10+i).getName());
             scorePanels[i].add(tempLabel2);
 
@@ -290,6 +291,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
             tempLabel4.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
             tempLabel4.setForeground(Color.gray);
             tempLabel4.setText(scores.get(pageNum*10+i).getDate());
+            tempLabel4.setHorizontalAlignment(JLabel.RIGHT);
             scorePanels[i].add(tempLabel4);
 
             scorePanels[i].setPreferredSize(new Dimension(preferredResolution[1] * 8 / 130,preferredResolution[1] * 3 / 130));
@@ -304,5 +306,28 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
 
         }
 
+
+    }
+    public void addScore( Score score){
+        List<Score> scores = handler.getScores(this.fileName);
+        int index=0;
+        for(Score s : scores)
+        {
+            if(score.compareTo(s) == -1){break;}
+
+            index++;
+            System.out.println(index);
+
+        }
+        int pageNum = index / 10;
+        index = index - pageNum*10;
+        System.out.println(index);
+
+        handler.saveScoreFile(score, this.fileName);
+
+        clear();
+        Border border = BorderFactory.createLineBorder(Color.orange, 3);
+        scorePanels[index].setBorder(border);
+        draw(pageNum);
     }
 }
