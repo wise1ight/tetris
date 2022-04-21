@@ -16,6 +16,7 @@ import org.teamseven.tetris.handler.PreferencesHandler;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -174,8 +175,46 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
         for (int row = 0; row < Const.HEIGHT; row++) {
             for (int col = 0; col < Const.WIDTH; col++) {
                 int offset = col + (row + 1) * (Const.WIDTH + 3) + 1;
-                if(unitBlocks[row][col] != null)
-                    doc.setCharacterAttributes(offset, 1, TetrisStyle.getStyle(unitBlocks[row][col].getColor()), false);
+                if(unitBlocks[row][col] != null) {
+                    if(unitBlocks[row][col].getColor().equals(Color.LIGHT_GRAY)) { // Boom
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "B", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (unitBlocks[row][col].getColor().equals(Color.DARK_GRAY)) { // Clear
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "C", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (unitBlocks[row][col].getColor().equals(Color.GRAY)) { // ColorScore
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "S", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (unitBlocks[row][col].getColor().equals(Color.BLACK)) { // Line Remove
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "L", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (unitBlocks[row][col].getColor().equals(Color.PINK)) { // Weight Block
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "W", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        doc.setCharacterAttributes(offset, 1, TetrisStyle.getStyle(unitBlocks[row][col].getColor()), false);
+                    }
+                }
             }
         }
     }
@@ -204,7 +243,44 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
             for (int col = 0; col < unitBlocks[row].length; col++) {
                 int offset = (unitBlocks[row].length + 1) * row + col;
                 if(unitBlocks[row][col] != null) {
-                    doc.setCharacterAttributes(offset, 1, TetrisStyle.getStyle(unitBlocks[row][col].getColor()), false);
+                    if(unitBlocks[row][col].getColor().equals(Color.LIGHT_GRAY)) { // Boom
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "B", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (unitBlocks[row][col].getColor().equals(Color.DARK_GRAY)) { // Clear
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "C", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (unitBlocks[row][col].getColor().equals(Color.GRAY)) { // ColorScore
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "S", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (unitBlocks[row][col].getColor().equals(Color.BLACK)) { // Line Remove
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "L", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (unitBlocks[row][col].getColor().equals(Color.PINK)) { // Weight Block
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "W", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        doc.setCharacterAttributes(offset, 1, TetrisStyle.getStyle(unitBlocks[row][col].getColor()), false);
+                    }
                 }
             }
         }

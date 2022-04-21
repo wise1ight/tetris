@@ -12,7 +12,7 @@ import static org.teamseven.tetris.Const.WIDTH;
 public class ColorScoreBlock extends ItemUnitBlock{
 
     public ColorScoreBlock() {
-        super(Color.WHITE);
+        super(Color.GRAY);
     }
 
     @Override
