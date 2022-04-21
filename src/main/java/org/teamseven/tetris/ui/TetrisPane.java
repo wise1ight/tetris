@@ -125,11 +125,9 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
 
         if (isFinished()) {
             timer.stop();
-            main.removeAll();
-            main.setLayout(new BorderLayout());
-            main.add(new ScoreBoardPanelTab(preferredResolution, gameHandler.isItemMode(), gameHandler.getScore()));
-            main.revalidate();
-            main.repaint();
+            KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+            manager.removeKeyEventDispatcher(this);
+            Pipeline.replacePane(new ScoreBoardPanelTab(preferredResolution, gameHandler.isItemMode(), gameHandler.getScore()));
             return;
         }
 
