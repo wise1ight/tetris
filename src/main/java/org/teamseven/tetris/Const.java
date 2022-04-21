@@ -19,9 +19,7 @@ public class Const {
 
     public enum ScreenSize {
         SMALL, MEDIUM, LARGE;
-
-
-
+    }
 
     public static int HEIGHT = 20;
     public static int WIDTH = 10;
