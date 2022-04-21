@@ -35,10 +35,11 @@ public class Const {
     public static int HEIGHT = 20;
     public static int WIDTH = 10;
 
-    public static String currentDir = System.getProperty("user.dir");
-    public static String SCORE_ROOT = currentDir + "./";
-    public static String SCORE_FILE = "score.csv";
-    public static String DEFAULT_NAME = "AAA";
+    public static final String CURRENT_DIR = System.getProperty("user.dir");
+    public static final String SCORE_ROOT = CURRENT_DIR + "/";
+    public static final String SCORE_NORMAL_FILE = "normal.csv";
+    public static final String SCORE_ITEM_FILE = "item.csv";
+    public static final String DEFAULT_NAME = "AAA";
 
     public static int[] DOWN = new int[]{1, 0};
     public static int[] RIGHT = new int[]{0, 1};

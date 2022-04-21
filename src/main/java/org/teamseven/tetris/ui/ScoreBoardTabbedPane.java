@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.teamseven.tetris.Const.SCORE_ITEM_FILE;
+import static org.teamseven.tetris.Const.SCORE_NORMAL_FILE;
+
 public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
     private JLabel lTime;
     private ScoreBoardPanelTab noItem, item;
@@ -40,9 +43,6 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
     private GridBagConstraints gridBagConstraints;
     private GridBagLayout gridBagLayout;
     private ScoreHandler handler = new ScoreHandler();
-    private String noItemCvs = "test.csv";
-    private String itemCvs = "test2.csv";
-
 
     public ScoreBoardTabbedPane() {
         int[] frameBorderSize = new int[2];       // frame top border
@@ -60,8 +60,8 @@ public class ScoreBoardTabbedPane extends JTabbedPane implements  IDesign {
     @Override
     public void setComp() {
 
-        noItem = new ScoreBoardPanelTab(preferredResolution,noItemCvs);
-        item = new ScoreBoardPanelTab(preferredResolution,itemCvs);
+        noItem = new ScoreBoardPanelTab(preferredResolution,SCORE_NORMAL_FILE);
+        item = new ScoreBoardPanelTab(preferredResolution,SCORE_ITEM_FILE);
 
     }
 
