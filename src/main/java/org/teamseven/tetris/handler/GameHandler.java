@@ -13,6 +13,10 @@ public class GameHandler {
     private ScoreHandler scoreHandler = new ScoreHandler();
     private boolean itemMode;
 
+    public GameHandler(boolean itemMode) {
+        this.itemMode = itemMode;
+    }
+
     public void speedUp(Timer timer) {
         int delay = timer.getDelay();
         double nextDelay = basicTetrisSpeedRule(blockCnt + totalErasedLines * WIDTH);
