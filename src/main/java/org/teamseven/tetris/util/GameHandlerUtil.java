@@ -29,4 +29,8 @@ public class GameHandlerUtil {
     public static int getLevel(int blockCnt) {
         return blockCnt / 10;
     }
+
+    public static double basicTetrisSpeedRule(int blockCnt) {
+        return Math.pow(0.8 - ((getLevel(blockCnt) - 1) * 0.007), getLevel(blockCnt) - 1) * 1000;
+    }
 }

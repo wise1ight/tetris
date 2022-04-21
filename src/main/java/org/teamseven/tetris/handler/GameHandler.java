@@ -14,7 +14,7 @@ public class GameHandler {
     public void speedUp(Timer timer) {
         if (checkBlockCnt(blockCnt)) {
             scoreHandler.addAlphaScore();
-            int time = (int) (Math.pow(0.8 - ((getLevel(blockCnt) - 1) * 0.007), getLevel(blockCnt) - 1) * 1000 * Math.pow(0.99, totalErasedLines));
+            int time = (int) (basicTetrisSpeedRule(blockCnt) * Math.pow(0.99, totalErasedLines) * PreferencesHandler.getMode().speedProb());
             System.out.println("time1 = " + time);
             timer.setDelay(time);
         }

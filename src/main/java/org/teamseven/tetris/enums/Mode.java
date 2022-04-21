@@ -7,12 +7,12 @@ public enum Mode {
 
     private final int code;
     private final double blockProb;
-    private final double speedProb;
+    private final double additionalSpeed;
 
-    Mode(int code, double blockProb, double speedProb) {
+    Mode(int code, double blockProb, double additionalSpeed) {
         this.code = code;
         this.blockProb = blockProb;
-        this.speedProb = speedProb;
+        this.additionalSpeed = additionalSpeed;
     }
 
     public int code() {
@@ -24,6 +24,6 @@ public enum Mode {
     }
 
     public double speedProb() {
-        return speedProb;
+        return additionalSpeed;
     }
 }

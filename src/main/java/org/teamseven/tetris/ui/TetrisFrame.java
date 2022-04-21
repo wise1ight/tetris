@@ -171,7 +171,8 @@ public class TetrisFrame extends JFrame implements KeyListener {
         }
         switch(e.getKeyCode()) {
             case KeyEvent.VK_DOWN:
-                curr.move(board, DOWN);
+                int cnt = curr.move(board, DOWN);
+                gameHandler.addScoreByMove(cnt);
                 drawBoard();
                 break;
             case KeyEvent.VK_RIGHT:
@@ -189,9 +190,8 @@ public class TetrisFrame extends JFrame implements KeyListener {
                 drawBoard();
                 break;
             case KeyEvent.VK_SPACE:
-                int cnt = curr.moveEnd(board);
+                curr.moveEnd(board);
                 gameHandler.setErasedLines(board.eraseLines());
-                gameHandler.addScoreByMove(cnt);
                 gameHandler.addScoreByEraseLine();
                 nextTurn();
                 drawBoard();
