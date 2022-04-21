@@ -3,7 +3,6 @@ package org.teamseven.tetris.block.generator;
 import org.teamseven.tetris.block.*;
 import org.teamseven.tetris.block.item.*;
 
-import java.awt.*;
 import java.util.Random;
 
 public class ItemBlockGenerator extends RouletteWheelGenerator {
@@ -17,13 +16,13 @@ public class ItemBlockGenerator extends RouletteWheelGenerator {
 
         switch (index) {
             case 0:
-                return new ItemBlock(block, new BoomBlock());
+                return new InnerItemBlock(block.getShape(), new BoomBlock());
             case 1:
                 return new WeightBlock();
             case 2:
-                return new ItemBlock(block, new ClearBlock());
+                return new ClearBlock();
             case 3:
-                return new ItemBlock(block, new LineRemoveBlock());
+                return new InnerItemBlock(block.getShape(), new LineRemoveBlock());
             case 4:
                 return new SBlock();
         }

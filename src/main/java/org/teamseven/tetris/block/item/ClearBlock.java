@@ -1,10 +1,16 @@
 package org.teamseven.tetris.block.item;
 
+import org.teamseven.tetris.block.Block;
+import org.teamseven.tetris.block.UnitBlock;
+
 import java.awt.*;
 
-public class ClearBlock extends ItemUnitBlock{
+public class ClearBlock extends Block implements ItemBlock {
 
     public ClearBlock() {
-        super(Color.DARK_GRAY);
+        color = Color.DARK_GRAY;
+        shape = new UnitBlock[][]{
+                {new UnitBlock(color)}
+        };
     }
 }

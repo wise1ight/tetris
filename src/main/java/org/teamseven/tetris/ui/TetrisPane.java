@@ -7,6 +7,7 @@ import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.factory.BlockFactory;
 import org.teamseven.tetris.handler.GameHandler;
+import org.teamseven.tetris.handler.ItemModeHandler;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -36,6 +37,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private CurrBlock curr;
     private Block nextBlock;
     private GameHandler gameHandler = new GameHandler();
+    private ItemModeHandler itemModeHandler = new ItemModeHandler();
 
     private int[] preferredResolution;  // frame resolution - frame top border
 
@@ -89,8 +91,6 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
             public void actionPerformed(ActionEvent e) {
                 System.out.println("gameHandler.getScore() = " + gameHandler.getScore());
                 if (curr.isStopped(board, nextBlock)) {
-                    gameHandler.setErasedLines(board.eraseLines());
-                    gameHandler.addScoreByEraseLine();
                     nextTurn();
                 } else {
                     int cnt = curr.move(board, DOWN);
@@ -116,14 +116,20 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     }
 
     private void nextTurn() {
+        gameHandler.setErasedLines(board.eraseLines());
+        gameHandler.addScoreByEraseLine();
         gameHandler.speedUp(timer);
         curr.newBlock(nextBlock);
+        gameHandler.addBlockCnt();
         if (isFinished()) {
             System.out.println("Finished!");
             System.exit(0);
         }
-        gameHandler.addBlockCnt();
-        nextBlock = BlockFactory.blockGenerator("random").generate();
+        if (gameHandler.isItemMode() && itemModeHandler.isNewItem(gameHandler.getTotalErasedLines())) {
+            nextBlock = BlockFactory.blockGenerator("item").generate();
+        } else {
+            nextBlock = BlockFactory.blockGenerator("random").generate();
+        }
         board.placeBlock(curr);
     }
 
