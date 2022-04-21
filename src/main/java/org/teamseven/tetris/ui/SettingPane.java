@@ -5,6 +5,7 @@ import org.teamseven.tetris.enums.ColorBlindnessType;
 import org.teamseven.tetris.enums.Mode;
 import org.teamseven.tetris.enums.ScreenSize;
 import org.teamseven.tetris.handler.PreferencesHandler;
+import org.teamseven.tetris.handler.ScoreMemoryHandler;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -272,11 +273,29 @@ public class SettingPane extends JLayeredPane implements IDesign {
             }
         });
 
+        btnInitScoreboard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int result = JOptionPane.showConfirmDialog((Component) null, "정말 스코어보드를 초기화 하시겠습니까?",
+                        "확인", JOptionPane.OK_CANCEL_OPTION);
+                if(result == 0) {
+                    ScoreMemoryHandler scoreMemoryHandler = new ScoreMemoryHandler();
+                    scoreMemoryHandler.clear();
+                }
+            }
+        });
+
         btnInit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PreferencesHandler.clear();
-                refreshPref();
+                int result = JOptionPane.showConfirmDialog((Component) null, "정말 스코어보드와 게임 설정을 초기화 하시겠습니까?",
+                        "확인", JOptionPane.OK_CANCEL_OPTION);
+                if(result == 0) {
+                    ScoreMemoryHandler scoreMemoryHandler = new ScoreMemoryHandler();
+                    scoreMemoryHandler.clear();
+                    PreferencesHandler.clear();
+                    refreshPref();
+                }
             }
         });
 

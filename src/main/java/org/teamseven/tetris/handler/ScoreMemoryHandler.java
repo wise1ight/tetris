@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.teamseven.tetris.Const.SCORE_ROOT;
+import static org.teamseven.tetris.Const.*;
 
 public class ScoreMemoryHandler {
 
@@ -51,5 +51,12 @@ public class ScoreMemoryHandler {
             e.printStackTrace();
         }
         return list.stream().sorted().collect(Collectors.toList());
+    }
+
+    public void clear() {
+        File normal = new File(SCORE_ROOT + SCORE_NORMAL_FILE);
+        normal.delete();
+        File item = new File(SCORE_ROOT + SCORE_ITEM_FILE);
+        item.delete();
     }
 }

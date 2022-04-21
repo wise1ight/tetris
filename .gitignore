@@ -141,3 +141,6 @@ gradle-app.setting
 # End of https://www.toptal.com/developers/gitignore/api/intellij+iml,gradle,java
 
 checkstyle-idea.xml
+item.csv
+
+normal.csv
