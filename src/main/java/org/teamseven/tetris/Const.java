@@ -1,9 +1,5 @@
 package org.teamseven.tetris;
 
-import org.teamseven.tetris.handler.ScoreHandler;
-
-import java.awt.*;
-
 public class Const {
 
     public static final String PREF_SCREEN_SIZE_KEY = "SCREEN_SIZE";
