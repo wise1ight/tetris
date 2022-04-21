@@ -1,5 +1,8 @@
 package org.teamseven.tetris.ui;
 
+import org.teamseven.tetris.Const;
+import org.teamseven.tetris.Pipeline;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashSet;
@@ -18,12 +21,17 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
 
     private int[] preferredResolution;  // frame resolution - frame top border
 
-    public GameMenuPane(int[] preferredResolution) {
+    public GameMenuPane() {
         // for test
         this.setOpaque(true);
         this.setBackground(Color.orange);
 
-        this.preferredResolution = preferredResolution;
+        int[] frameBorderSize = new int[2];       // frame top border
+        frameBorderSize[0] = this.getInsets().left + this.getInsets().right;
+        frameBorderSize[1] = this.getInsets().top + this.getInsets().bottom;
+        preferredResolution = new int[2];
+        preferredResolution[0] = Const.SCREEN_RESOLUTION_X - frameBorderSize[0];
+        preferredResolution[1] = Const.SCREEN_RESOLUTION_Y - frameBorderSize[1];
 
         setComp();
         setDesign();
@@ -174,6 +182,7 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
 
         });
         settingButton.addActionListener(e -> {
+            Pipeline.replacePane(new SettingPane(preferredResolution));
             //TODO show tetris game screen
         });
         scoreButton.addActionListener(e -> {
