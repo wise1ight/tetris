@@ -39,8 +39,8 @@ class ScoreMemoryHandlerTest {
     }
 
     @Test
-    @DisplayName("점수 내림차순 이름 오름차순 정렬 테스트")
-    void score_descending_name_ascending_test() {
+    @DisplayName("점수 내림차순 정렬 테스트")
+    void score_descending_name() {
         Score score1 = new Score(100, "AAA");
         Score score2 = new Score(200, "AAA");
         Score score3 = new Score(100, "AAB");
@@ -53,8 +53,8 @@ class ScoreMemoryHandlerTest {
         System.out.println(Arrays.toString(scores.get(0).toRow()));
 
         assertThat(scores.get(0)).isEqualTo(score2);
-        assertThat(scores.get(1)).isEqualTo(score1);
-        assertThat(scores.get(2)).isEqualTo(score3);
+        assertThat(scores.get(1)).isEqualTo(score3);
+        assertThat(scores.get(2)).isEqualTo(score1);
     }
 
     @Test

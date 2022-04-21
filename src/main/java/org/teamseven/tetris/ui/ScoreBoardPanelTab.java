@@ -1,14 +1,18 @@
 package org.teamseven.tetris.ui;
 
+import org.teamseven.tetris.Pipeline;
+import org.teamseven.tetris.handler.PreferencesHandler;
 import org.teamseven.tetris.handler.ScoreMemoryHandler;
 import org.teamseven.tetris.score.Score;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.List;
+
+import static javax.swing.JOptionPane.showInputDialog;
+import static org.teamseven.tetris.Const.SCORE_ITEM_FILE;
+import static org.teamseven.tetris.Const.SCORE_NORMAL_FILE;
 
 public class ScoreBoardPanelTab extends JPanel implements  IDesign {
 
@@ -21,7 +25,7 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
     private  JPanel[] scorePanels;
     private JPanel line1st, line2st, line3st, line4st, line5st, line6st, line7st, line8st, line9st, line10st;
 
-    private CustomButton leftButton, rightButton;
+    private CustomButton homeBtn;
 
     private int pageNum = 0;
     private int totalPageNum = 0;
@@ -29,35 +33,49 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
     private GridBagLayout gridBagLayout;
     private ScoreMemoryHandler handler = new ScoreMemoryHandler();
     private String fileName;
+    private String highlightUUID = null;
+    List<Score> scores;
 
-
-    public ScoreBoardPanelTab(int[] preferredResolution, String fileName) {
-        this.fileName = fileName;
+    public ScoreBoardPanelTab(int[] preferredResolution, boolean itemMode, int newScore) {
         this.preferredResolution = preferredResolution;
 
+        fileName = itemMode ? SCORE_ITEM_FILE : SCORE_NORMAL_FILE;
+        scores = handler.getScores(fileName);
 
         setComp();
         setDesign();
         setAction();
+
+        if(newScore >= 0 && (scores.size() < 10 || newScore > scores.stream().map(Score::getScore).map(Integer::valueOf).mapToInt(k -> k).min().getAsInt())) {
+            this.revalidate();
+            this.repaint();
+            String name = showInputDialog("이름을 입력하세요.");
+            Score score = new Score(newScore, name, itemMode ? "ITEM" : PreferencesHandler.getMode().name());
+            highlightUUID = score.getUuid();
+            addScore(score);
+
+            scores = handler.getScores(fileName);
+            clear();
+            draw(pageNum);
+        }
     }
 
     @Override
     public void setComp() {
-
         gridBagConstraints = new GridBagConstraints();
         gridBagLayout = new GridBagLayout();
 
         titlePanel = new JPanel();
-        scorePanel1st = new JPanel(new GridLayout(0,4,0,0));
-        scorePanel2st = new JPanel(new GridLayout(0,4,0,0));
-        scorePanel3st = new JPanel(new GridLayout(0,4,0,0));
-        scorePanel4st = new JPanel(new GridLayout(0,4,0,0));
-        scorePanel5st = new JPanel(new GridLayout(0,4,0,0));
-        scorePanel6st = new JPanel(new GridLayout(0,4,0,0));
-        scorePanel7st = new JPanel(new GridLayout(0,4,0,0));
-        scorePanel8st = new JPanel(new GridLayout(0,4,0,0));
-        scorePanel9st = new JPanel(new GridLayout(0,4,0,0));
-        scorePanel10st = new JPanel(new GridLayout(0,4,0,0));
+        scorePanel1st = new JPanel(new GridLayout(0,5,0,0));
+        scorePanel2st = new JPanel(new GridLayout(0,5,0,0));
+        scorePanel3st = new JPanel(new GridLayout(0,5,0,0));
+        scorePanel4st = new JPanel(new GridLayout(0,5,0,0));
+        scorePanel5st = new JPanel(new GridLayout(0,5,0,0));
+        scorePanel6st = new JPanel(new GridLayout(0,5,0,0));
+        scorePanel7st = new JPanel(new GridLayout(0,5,0,0));
+        scorePanel8st = new JPanel(new GridLayout(0,5,0,0));
+        scorePanel9st = new JPanel(new GridLayout(0,5,0,0));
+        scorePanel10st = new JPanel(new GridLayout(0,5,0,0));
 
         scorePanels = new JPanel[]{scorePanel1st, scorePanel2st, scorePanel3st, scorePanel4st, scorePanel5st,
                 scorePanel6st, scorePanel7st, scorePanel8st, scorePanel9st, scorePanel10st};
@@ -77,20 +95,13 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
 
         title = new JLabel("SCORE");
 
-        leftButton = new CustomButton();
-        rightButton = new CustomButton();
-
-
-
+        homeBtn = new CustomButton();
     }
 
     @Override
     public void setDesign() {
-
         this.setLayout(gridBagLayout);
         this.setBackground(Color.white);
-
-
 
         gridBagConstraints.fill = GridBagConstraints.BOTH;
 
@@ -171,73 +182,21 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
         make(this, buttonPanel,1,21,1,1);
 
-        leftButton.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 8 / 130));
-        leftButton.setForeground(Color.gray);
-        rightButton.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 8 / 130));
-        rightButton.setForeground(Color.gray);
+        homeBtn.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 8 / 130));
+        homeBtn.setForeground(Color.gray);
 
 
-        leftButton.setText("<");
-        rightButton.setText(">");
-        buttonPanel.add(leftButton);
-        buttonPanel.add(rightButton);
-
-
+        homeBtn.setText("홈");
+        buttonPanel.add(homeBtn);
     }
 
     @Override
     public void setAction() {
         draw(pageNum);
-        leftButton.removeFocusListener(leftButton.getFocusListeners()[1]);
-        leftButton.removeFocusListener(leftButton.getFocusListeners()[0]);
 
-        rightButton.removeFocusListener(rightButton.getFocusListeners()[1]);
-        rightButton.removeFocusListener(rightButton.getFocusListeners()[0]);
-
-        leftButton.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                leftButton.setForeground(Color.darkGray);
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                leftButton.setForeground(Color.gray);
-
-            }
+        homeBtn.addActionListener(e -> {
+            Pipeline.replacePane(new GameMenuPane());
         });
-        rightButton.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                rightButton.setForeground(Color.darkGray);
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                rightButton.setForeground(Color.gray);
-
-            }
-        });
-
-
-        leftButton.addActionListener(e -> {
-            if (this.pageNum > 0) {
-                pageNum--;
-                clear();
-                draw(pageNum);
-
-            }
-        });
-
-        rightButton.addActionListener(e -> {
-            if(this.pageNum < this.totalPageNum) {
-                pageNum++;
-                clear();
-                draw(pageNum);
-
-            }
-        });
-
     }
 
     public void make(JPanel p, JComponent c, int x, int y, int w, int h) {
@@ -255,7 +214,6 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
     }
 
     public  void draw(int pageNum){
-        List<Score> scores = handler.getScores(fileName);
         totalPageNum = scores.size() / 10;
         for(int i = 0; i<10; i++){
             if(scores.size() == pageNum*10 + i){break;};
@@ -265,24 +223,36 @@ public class ScoreBoardPanelTab extends JPanel implements  IDesign {
             tempLabel.setText(String.valueOf(pageNum*10+i+1));
             scorePanels[i].add(tempLabel);
 
+            Score score = scores.get(pageNum*10+i);
+
             JLabel tempLabel2 = new JLabel();
             tempLabel2.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
-            tempLabel2.setForeground(Color.gray);
-            tempLabel2.setText(scores.get(pageNum*10+i).getName());
+            if(score.getUuid().equals(highlightUUID))
+                tempLabel2.setForeground(Color.YELLOW);
+            else
+                tempLabel2.setForeground(Color.gray);
+            tempLabel2.setText(score.getName());
             scorePanels[i].add(tempLabel2);
 
             JLabel tempLabel3 = new JLabel();
             tempLabel3.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
             tempLabel3.setForeground(Color.gray);
-            tempLabel3.setText(scores.get(pageNum*10+i).getScore());
+            tempLabel3.setText(score.getScore());
             scorePanels[i].add(tempLabel3);
 
             JLabel tempLabel4 = new JLabel();
             tempLabel4.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
             tempLabel4.setForeground(Color.gray);
-            tempLabel4.setText(scores.get(pageNum*10+i).getDate());
+            tempLabel4.setText(score.getDate().substring(5));
             tempLabel4.setHorizontalAlignment(JLabel.RIGHT);
             scorePanels[i].add(tempLabel4);
+
+            JLabel tempLabel5 = new JLabel();
+            tempLabel5.setFont(new Font("ss",Font.BOLD,preferredResolution[1] * 4 / 130));
+            tempLabel5.setForeground(Color.gray);
+            tempLabel5.setText(score.getMode());
+            tempLabel5.setHorizontalAlignment(JLabel.RIGHT);
+            scorePanels[i].add(tempLabel5);
 
             scorePanels[i].setPreferredSize(new Dimension(preferredResolution[1] * 8 / 130,preferredResolution[1] * 3 / 130));
             this.revalidate();

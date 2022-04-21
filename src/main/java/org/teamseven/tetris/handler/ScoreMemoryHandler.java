@@ -45,7 +45,8 @@ public class ScoreMemoryHandler {
                 Integer score = new Integer(nextLine[1]);
                 LocalDate date = LocalDate.parse(nextLine[2]);
                 String uuid = nextLine[3];
-                list.add(new Score(score, name, date, uuid));
+                String mode = nextLine[4];
+                list.add(new Score(score, name, mode, date, uuid));
             }
         } catch (CsvValidationException | IOException e) {
             e.printStackTrace();

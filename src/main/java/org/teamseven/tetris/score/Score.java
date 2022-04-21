@@ -14,25 +14,30 @@ public class Score implements Comparable<Score> {
     private final String name;
     @CsvDate("yyyy-MM-dd")
     private final LocalDate date;
+
+    private final String mode;
+
     private final String uuid;
 //    private final Level level;
 
-    public Score(int score, String name) {
+    public Score(int score, String name, String mode) {
         this.score = score;
         this.name = Optional.ofNullable(name).orElse(DEFAULT_NAME);
         this.date = LocalDate.now();
         this.uuid = UUID.randomUUID().toString();
+        this.mode = mode;
     }
 
-    public Score(int score, String name, LocalDate date, String uuid) {
+    public Score(int score, String name, String mode, LocalDate date, String uuid) {
         this.score = score;
         this.name = Optional.ofNullable(name).orElse(DEFAULT_NAME);
         this.date = date;
         this.uuid = uuid;
+        this.mode = mode;
     }
 
     public String[] toRow() {
-        return new String[]{name, score.toString(), date.toString(), uuid};
+        return new String[]{name, score.toString(), date.toString(), uuid, mode};
     }
 
     public String getName() {
@@ -47,11 +52,17 @@ public class Score implements Comparable<Score> {
         return date.toString();
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
     @Override
     public int compareTo(Score s) {
         if (this.score.compareTo(s.score) < 0) {
-            return 1;
-        } else if (this.name.compareTo(s.name) > 0) {
             return 1;
         }
         return -1;
