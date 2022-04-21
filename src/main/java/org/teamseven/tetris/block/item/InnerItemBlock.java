@@ -11,8 +11,9 @@ public class InnerItemBlock extends Block {
 
     List<int[]> blockLoc;
 
-    public InnerItemBlock(UnitBlock[][] shape, ItemUnitBlock unitBlock) {
-        this.shape = shape;
+    public InnerItemBlock(Block block, ItemUnitBlock unitBlock) {
+        this.shape = block.getShape();
+        this.color = block.getColor();
         blockLoc = getBlockLoc();
         Random random = new Random();
         int num = random.nextInt(blockLoc.size());

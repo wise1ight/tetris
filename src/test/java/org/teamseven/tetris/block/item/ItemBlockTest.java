@@ -15,7 +15,7 @@ class ItemBlockTest {
     void boom_block_test() {
         Block Iblock = new IBlock();
         ItemUnitBlock boomBlock = new BoomBlock();
-        InnerItemBlock itemBlock = new InnerItemBlock(Iblock.getShape(), boomBlock);
+        InnerItemBlock itemBlock = new InnerItemBlock(Iblock, boomBlock);
         boolean flag = false;
 
         for (int j = 0; j < itemBlock.height(); j++) {
@@ -33,7 +33,7 @@ class ItemBlockTest {
     void line_remove_block_test() {
         Block Iblock = new IBlock();
         ItemUnitBlock lineRemoveBlock = new LineRemoveBlock();
-        InnerItemBlock itemBlock = new InnerItemBlock(Iblock.getShape(), lineRemoveBlock);
+        InnerItemBlock itemBlock = new InnerItemBlock(Iblock, lineRemoveBlock);
         boolean flag = false;
 
         for (int j = 0; j < itemBlock.height(); j++) {

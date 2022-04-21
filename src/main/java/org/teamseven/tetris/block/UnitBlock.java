@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class UnitBlock {
 
-    private final Color color;
+    protected Color color;
 
     public UnitBlock(Color color) {
         this.color = color;

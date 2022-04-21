@@ -64,7 +64,7 @@ class LineRemoveBlockTest {
                 {0, 0, 1, 1, 1, 1, 1, 1, 0, 0}
         }));
 
-        new LineRemoveBlock().execute(board, curr, new int[] {19, 8});
+        new LineRemoveBlock().execute(board, curr, new int[] {19, 8}, null);
 
         assertThat(board.getBoard()).isDeepEqualTo(res);
     }

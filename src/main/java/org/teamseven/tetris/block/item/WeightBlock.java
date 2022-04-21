@@ -4,6 +4,7 @@ import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
+import org.teamseven.tetris.handler.GameHandler;
 
 import java.awt.*;
 
@@ -27,7 +28,7 @@ public class WeightBlock extends Block implements ItemBlock {
     }
 
     @Override
-    public int execute(GameBoard board, CurrBlock curr, int[] pos) {
+    public int execute(GameBoard board, CurrBlock curr, int[] pos, GameHandler handler) {
         return 0;
     }
 }

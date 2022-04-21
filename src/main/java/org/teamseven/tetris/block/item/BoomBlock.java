@@ -2,6 +2,7 @@ package org.teamseven.tetris.block.item;
 
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.CurrBlock;
+import org.teamseven.tetris.handler.GameHandler;
 import org.teamseven.tetris.util.BlockMovementHandlerUtil;
 
 import java.awt.*;
@@ -21,7 +22,7 @@ public class BoomBlock extends ItemUnitBlock {
     }
 
     @Override
-    public int execute(GameBoard board, CurrBlock curr, int[] pos) {
+    public int execute(GameBoard board, CurrBlock curr, int[] pos, GameHandler handler) {
         for (int j = pos[0] - 3; j < pos[0] + 3; j++) {
             for (int i = pos[1] - 3; i < pos[1] + 3; i++) {
                 if (i >= 0 && i < WIDTH && j >= 0 && j < HEIGHT) {

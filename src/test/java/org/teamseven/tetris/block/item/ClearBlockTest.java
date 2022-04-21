@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
+import org.teamseven.tetris.handler.GameHandler;
 
 import java.awt.*;
 

@@ -16,15 +16,15 @@ public class ItemBlockGenerator extends RouletteWheelGenerator {
 
         switch (index) {
             case 0:
-                return new InnerItemBlock(block.getShape(), new BoomBlock());
+                return new InnerItemBlock(block, new BoomBlock());
             case 1:
                 return new WeightBlock();
             case 2:
                 return new ClearBlock();
             case 3:
-                return new InnerItemBlock(block.getShape(), new LineRemoveBlock());
+                return new InnerItemBlock(block, new LineRemoveBlock());
             case 4:
-                return new SBlock();
+                return new InnerItemBlock(block, new ColorScoreBlock());
         }
         return null;
     }
