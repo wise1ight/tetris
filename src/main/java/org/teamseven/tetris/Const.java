@@ -14,6 +14,8 @@ public class Const {
     public static final String PREF_BTN_PAUSE_KEY = "BTN_PAUSE";
     public static final String PREF_COLOR_BLINDNESS_KEY = "COLOR_BLINDNESS";
 
+    public static final char BORDER_CHAR = 'X';
+
     public enum ScreenSize {
         SMALL, MEDIUM, LARGE;
 
