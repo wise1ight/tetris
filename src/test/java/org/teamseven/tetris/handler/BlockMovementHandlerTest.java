@@ -67,7 +67,7 @@ class BlockMovementHandlerTest {
         }
 
         @ParameterizedTest(name = "블럭 회전")
-        @MethodSource("rotatedBlockProvider")
+        @MethodSource("blockProvider")
         @DisplayName("회전 실패한 경우")
         void not_rotate(Block block) {
             curr.setBlock(block);
@@ -81,7 +81,7 @@ class BlockMovementHandlerTest {
         }
 
 
-        private Stream<Arguments> rotatedBlockProvider() {
+        private Stream<Arguments> blockProvider() {
             return Stream.of(
                     Arguments.of(new IBlock()),
                     Arguments.of(new JBlock()),
@@ -91,7 +91,7 @@ class BlockMovementHandlerTest {
                     Arguments.of(new ZBlock()));
         }
 
-        private Stream<Arguments> blockProvider() {
+        private Stream<Arguments> rotatedBlockProvider() {
             return Stream.of(
                     Arguments.of(new IBlock(), new int[][] {{1},
                             {1},

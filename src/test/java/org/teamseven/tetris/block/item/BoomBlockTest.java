@@ -62,9 +62,11 @@ class BoomBlockTest {
                 {0, 0, 0, 1, 1, 0, 1, 1, 0, 0},
                 {0, 0, 1, 1, 1, 1, 1, 1, 0, 0}
         }));
+        curr.y = 17;
+        curr.x = 7;
 
-        new BoomBlock().execute(board, curr, new int[] {17, 7}, null);
-
+        new BoomBlock().execute(board, curr, new int[] {0, 0}, null);
+        board.printBoard();
         assertThat(board.getBoard()).isDeepEqualTo(res);
     }
 

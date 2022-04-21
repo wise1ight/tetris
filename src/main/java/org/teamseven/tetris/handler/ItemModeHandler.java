@@ -7,7 +7,6 @@ import org.teamseven.tetris.util.GameHandlerUtil;
 
 public class ItemModeHandler {
 
-    private int save;
     private int[] pos;
 
     public boolean hasItem(CurrBlock curr) {
@@ -38,7 +37,7 @@ public class ItemModeHandler {
     public boolean isNewItem(GameHandler handler) {
         int totalErasedLines = handler.getTotalErasedLines();
 
-        if (totalErasedLines != 0 && totalErasedLines / 10 > 0) {
+        if (totalErasedLines != 0 && totalErasedLines / 2 > 0) {
             handler.setTotalErasedLines(0);
             return true;
         }
