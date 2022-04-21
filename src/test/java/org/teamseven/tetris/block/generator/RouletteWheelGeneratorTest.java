@@ -1,9 +1,6 @@
 package org.teamseven.tetris.block.generator;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.teamseven.tetris.block.*;
 import org.teamseven.tetris.enums.Mode;
 import org.teamseven.tetris.handler.PreferencesHandler;
@@ -106,14 +103,15 @@ class RouletteWheelGeneratorTest {
 
     @Test
     @DisplayName("하드 모드 블럭 생성 확률 테스트")
+    @Disabled
     void roulette_wheel_hard_test() throws InvocationTargetException, IllegalAccessException {
         PreferencesHandler.setMode(Mode.HARD);
         int[] cnt = new int[7];
         double[] prob = (double[]) initProb.invoke(generator);
         double otherProbs = (double) getOtherProbs.invoke(generator, prob[0]);
-
-        System.out.println("prob[0] = " + prob[0]);
-        System.out.println("otherProbs = " + otherProbs);
+//
+//        System.out.println("prob[0] = " + prob[0]);
+//        System.out.println("otherProbs = " + otherProbs);
 
         for (int i = 0; i < iterCnt; i++) {
             Block block = generator.generate();

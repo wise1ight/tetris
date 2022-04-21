@@ -5,7 +5,7 @@ import org.teamseven.tetris.block.item.*;
 
 import java.util.Random;
 
-public class ItemBlockGenerator extends RouletteWheelGenerator {
+public class ItemBlockGenerator extends RandomBlockGenerator {
 
     @Override
     public Block generate() {
