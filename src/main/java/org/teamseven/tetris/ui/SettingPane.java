@@ -2,6 +2,7 @@ package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.enums.ColorBlindnessType;
+import org.teamseven.tetris.enums.Mode;
 import org.teamseven.tetris.enums.ScreenSize;
 import org.teamseven.tetris.handler.PreferencesHandler;
 
@@ -12,10 +13,10 @@ import java.awt.event.*;
 
 public class SettingPane extends JLayeredPane implements IDesign {
 
-    JRadioButton rbSmallSize, rbMediumSize, rbLargeSize, rbNone, rbColorBlindess;
+    JRadioButton rbSmallSize, rbMediumSize, rbLargeSize, rbEasy, rbNormal, rbHard, rbNone, rbColorBlindess;
     JButton btnInitScoreboard, btnLeft, btnRight, btnRotateRight, btnPause, btnInit, btnConfirm;
-    JLabel lScreenSize, lScoreboard, lBlindess;
-    JPanel pScreenSize, pKeyboard, pScoreboard, pBlindess, pButton;
+    JLabel lScreenSize, lGameMode, lScoreboard, lBlindess;
+    JPanel pScreenSize, pGameMode, pKeyboard, pScoreboard, pBlindess, pButton;
     GridBagLayout gb;
     GridBagConstraints gbc;
 
@@ -46,6 +47,22 @@ public class SettingPane extends JLayeredPane implements IDesign {
         pScreenSize.add(rbSmallSize);
         pScreenSize.add(rbMediumSize);
         pScreenSize.add(rbLargeSize);
+
+        /*
+            일반 게임 모드 난이도 설정
+         */
+        lGameMode = new JLabel("일반 게임모드 난이도 : ");
+        pGameMode = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        rbEasy = new JRadioButton("Easy",true);
+        rbNormal = new JRadioButton("Normal",true);
+        rbHard = new JRadioButton("Hard",true);
+        ButtonGroup groupGameMOde = new ButtonGroup();
+        groupGameMOde.add(rbEasy);
+        groupGameMOde.add(rbNormal);
+        groupGameMOde.add(rbHard);
+        pGameMode.add(rbEasy);
+        pGameMode.add(rbNormal);
+        pGameMode.add(rbHard);
 
         /*
             게임 키 설정
@@ -107,15 +124,18 @@ public class SettingPane extends JLayeredPane implements IDesign {
         gbAdd(lScreenSize,0, 1, 1, 1);
         gbAdd(pScreenSize, 1, 1, 3, 1);
 
-        gbAdd(pKeyboard, 0, 2, 4, 4);
+        gbAdd(lGameMode, 0, 2, 1, 1);
+        gbAdd(pGameMode, 1, 2, 3, 1);
 
-        gbAdd(lScoreboard, 0,6,1,1);
-        gbAdd(pScoreboard,1,6,3,1);
+        gbAdd(pKeyboard, 0, 3, 4, 4);
 
-        gbAdd(lBlindess, 0,7,1,1);
-        gbAdd(pBlindess,1,7,3,1);
+        gbAdd(lScoreboard, 0,7,1,1);
+        gbAdd(pScoreboard,1,7,3,1);
 
-        gbAdd(pButton, 0, 8, 4, 1);
+        gbAdd(lBlindess, 0,8,1,1);
+        gbAdd(pBlindess,1,8,3,1);
+
+        gbAdd(pButton, 0, 9, 4, 1);
     }
 
     @Override
@@ -140,6 +160,23 @@ public class SettingPane extends JLayeredPane implements IDesign {
         rbSmallSize.addActionListener(screenSizeActionListener);
         rbMediumSize.addActionListener(screenSizeActionListener);
         rbLargeSize.addActionListener(screenSizeActionListener);
+
+        // Game Mode
+        ActionListener gameModeActionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(rbEasy.isSelected()) {
+                    PreferencesHandler.setMode(Mode.EASY);
+                } else if (rbNormal.isSelected()) {
+                    PreferencesHandler.setMode(Mode.NORMAL);
+                } else if (rbHard.isSelected()) {
+                    PreferencesHandler.setMode(Mode.HARD);
+                }
+            }
+        };
+
+        rbEasy.addActionListener(gameModeActionListener);
+        rbNormal.addActionListener(gameModeActionListener);
+        rbHard.addActionListener(gameModeActionListener);
 
         // Keyboard
         ActionListener keyboardActionListener = new ActionListener() {
@@ -248,6 +285,19 @@ public class SettingPane extends JLayeredPane implements IDesign {
                 break;
             case LARGE:
                 rbLargeSize.setSelected(true);
+                break;
+        }
+
+        // Game Mode
+        switch (PreferencesHandler.getMode()) {
+            case EASY:
+                rbEasy.setSelected(true);
+                break;
+            case NORMAL:
+                rbNormal.setSelected(true);
+                break;
+            case HARD:
+                rbHard.setSelected(true);
                 break;
         }
 
