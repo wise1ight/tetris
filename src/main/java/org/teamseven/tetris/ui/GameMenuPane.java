@@ -9,11 +9,10 @@ import java.util.Set;
 
 public class GameMenuPane extends JLayeredPane implements IDesign {
     private JLabel title;
-    private CustomButton startButton, settingButton, scoreButton, exitButton, noItemModeButton, ItemModeButton, backButton;
-    private JButton settingBoard_ExitButton, scoreBoard_ExitButton;                         // exit button on popup panel
+    private CustomButton startButton, settingButton, scoreButton, exitButton, noItemModeButton, ItemModeButton, backButton;     // exit button on popup panel
     private JPanel main;                                                                    // main panel on startMenuPane (DEFAULT_LAYER)     
     private JPanel titlePanel, buttonPannel1, buttonPannel2, buttonPannel3, buttonPannel4;  // BoardLayout, panels on main panel
-    private JPanel settingBoard, modeBoard;                                                // scoreBoard panel on startMenuPane (POPUP_LAYER)
+    private JPanel modeBoard;                                                // scoreBoard panel on startMenuPane (POPUP_LAYER)
     private GridBagConstraints gridBagConstraints;
     private GridBagLayout gridBagLayout;
 
@@ -60,8 +59,6 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
         ItemModeButton = new CustomButton();
         backButton = new CustomButton();
 
-        settingBoard_ExitButton = new JButton();
-        settingBoard = new JPanel();
         modeBoard = new JPanel(new GridLayout(1, 2, preferredResolution[0] / 32, 0));
 
         gridBagConstraints = new GridBagConstraints();
@@ -118,9 +115,6 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
         backButton.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, preferredResolution[1] / 90));
         backButton.setBorderPainted(true);
 
-        settingBoard_ExitButton.setPreferredSize(new Dimension(50, 50));
-
-
         // add components
         titlePanel.add(title);
         buttonPannel1.add(startButton);
@@ -128,7 +122,6 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
         buttonPannel3.add(scoreButton);
         buttonPannel4.add(exitButton);
 
-        settingBoard.add(settingBoard_ExitButton);
         modeBoard.add(noItemModeButton);
         modeBoard.add(ItemModeButton);
         modeBoard.add(backButton);
@@ -140,9 +133,6 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
         main.add(buttonPannel4);
 
         // set popUpPannel
-        settingBoard.setBackground(Color.CYAN);
-        settingBoard.setBounds(preferredResolution[0] * 1 / 10, preferredResolution[1] * 1 / 10,
-                preferredResolution[0] * 8 / 10, preferredResolution[1] * 8 / 10);
         modeBoard.setBackground(Color.white);
         modeBoard.setBounds(preferredResolution[0] * 1 / 10, preferredResolution[1] * 1 / 10,
                 preferredResolution[0] * 8 / 10, preferredResolution[1] * 8 / 10);
@@ -180,12 +170,6 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
         });
         exitButton.addActionListener(e -> {
             System.exit(0);
-        });
-        settingBoard_ExitButton.addActionListener(e -> {
-            this.remove(settingBoard);
-            this.revalidate();
-            this.repaint();
-            settingButton.requestFocus();
         });
         noItemModeButton.addActionListener(e -> {
             Pipeline.replacePane(new TetrisPane(false));
