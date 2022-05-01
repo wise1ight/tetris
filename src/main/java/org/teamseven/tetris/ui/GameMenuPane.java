@@ -35,6 +35,8 @@ public class GameMenuPane extends Canvas {
 
 
     public Frame homeFrame;
+    public SettingPane settingPane;
+
     private Panel homePanel, titlePanel, buttonPanel;
     static private int sizeInt = Pipeline.getSizeInt();
 
@@ -57,6 +59,7 @@ public class GameMenuPane extends Canvas {
 
         setDesign();
         setAction();
+        settingPane = new SettingPane(homeFrame);
 
     }
 
@@ -151,8 +154,8 @@ public class GameMenuPane extends Canvas {
                 selected.setForeground(Color.black);
                 selected = setting;
                 selected.setForeground(Color.gray);
-              //  settingPane.settingFrame.setVisible(true);
-            //    homeFrame.setVisible(false);
+                settingPane.settingFrame.setVisible(true);
+                homeFrame.setVisible(false);
             }
         });
 

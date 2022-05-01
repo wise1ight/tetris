@@ -21,6 +21,7 @@ public class SettingPane extends Canvas {
 
 
     public Frame settingFrame;
+    public KeySetting keySettingGUI;
     private static Frame homeFrameIn;
     private Panel settingPanel, buttonPanel, titlePanel;
 
@@ -36,7 +37,7 @@ public class SettingPane extends Canvas {
         homeFrameIn = homeFrame;
         prepareSettingGUI(homeFrame);
         setAction();
-//        keySettingGUI = new KeySetting(settingFrame);
+        keySettingGUI = new KeySetting(settingFrame);
     }
 
     private void prepareSettingGUI(Frame homeFrame) {
@@ -119,8 +120,8 @@ public class SettingPane extends Canvas {
                 selected.setForeground(Color.black);
                 selected = keySetting;
                 selected.setForeground(Color.gray);
-               // keySettingGUI.keySettingFrame.setVisible(true);
-              //  settingFrame.setVisible(false);
+                keySettingGUI.keySettingFrame.setVisible(true);
+                settingFrame.setVisible(false);
 
             }
 
