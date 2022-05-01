@@ -1,6 +1,5 @@
 package org.teamseven.tetris.ui;
 
-import org.teamseven.tetris.Const;
 import org.teamseven.tetris.Pipeline;
 
 import javax.swing.*;
@@ -18,7 +17,7 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
     private GridBagConstraints gridBagConstraints;
     private GridBagLayout gridBagLayout;
 
-    private int[] preferredResolution;  // frame resolution - frame top border
+    private final int[] preferredResolution;  // frame resolution - frame top border
 
     public GameMenuPane() {
         // for test
@@ -47,7 +46,7 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
         buttonPannel3 = new JPanel(new BorderLayout());
         buttonPannel4 = new JPanel(new BorderLayout());
 
-       buttonPannel1.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
+        buttonPannel1.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
         buttonPannel2.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
         buttonPannel3.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
         buttonPannel4.setPreferredSize(new Dimension(0, preferredResolution[1] / 20));
