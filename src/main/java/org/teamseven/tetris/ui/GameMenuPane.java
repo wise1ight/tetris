@@ -98,7 +98,6 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
 
 
         startButton.setText("시작");
-
         settingButton.setText("설정");
         scoreButton.setText("스코어보드");
         exitButton.setText("게임 종료 메뉴");
@@ -152,8 +151,6 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
 
         // set ButtonAction
         startButton.addActionListener(e -> {
-            //System.out.println(e.getActionCommand());
-            //cardSwitcher.switchCard("jl1");
             this.add(modeBoard, JLayeredPane.POPUP_LAYER);
             noItemModeButton.requestFocus();
             startButton.setFocusable(false);
