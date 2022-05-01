@@ -7,6 +7,215 @@ import org.teamseven.tetris.enums.ScreenSize;
 import org.teamseven.tetris.handler.PreferencesHandler;
 import org.teamseven.tetris.handler.ScoreMemoryHandler;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SettingPane extends Canvas {
+    private static int sizeInt = Pipeline.getSizeInt();
+
+
+    public Frame settingFrame;
+    public KeySetting keySettingGUI;
+    private static Frame homeFrameIn;
+    private Panel settingPanel, buttonPanel, titlePanel;
+
+//    public KeySetting keySettingGUI;
+
+
+    private Button home, keySetting, scoreBoard, color, difficulty_level, size, reSetting;
+    private Button selected;
+
+    private List<Button> buttonList = new ArrayList<>();
+
+    public SettingPane(Frame homeFrame) {
+        homeFrameIn = homeFrame;
+        prepareSettingGUI(homeFrame);
+        setAction();
+        keySettingGUI = new KeySetting(settingFrame);
+    }
+
+    private void prepareSettingGUI(Frame homeFrame) {
+        settingFrame = new Frame("Seoultech SE4 Tetris");
+        settingFrame.setSize(Pipeline.getScreenResolutionX(), Pipeline.getScreenResolutionY());
+        settingFrame.setResizable(false);
+        settingFrame.setLayout(null);
+        settingFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent) {
+                System.exit(0);
+            }
+        });
+
+        settingPanel = new Panel();
+        settingPanel.setSize(Pipeline.getScreenResolutionX(), Pipeline.getScreenResolutionY());
+        settingPanel.setBackground(Color.black);
+        settingPanel.setLayout(null);
+        settingPanel.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
+
+        titlePanel = new Panel();
+        titlePanel.setBounds(0, sizeInt * 50, Pipeline.getScreenResolutionX(), sizeInt * 40);
+        titlePanel.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 25));
+        Label title = new Label("Setting");
+        title.setForeground(Color.RED);
+
+        titlePanel.add(title);
+
+        buttonPanel = new Panel();
+        buttonPanel.setBounds(sizeInt * 100, sizeInt * 110, Pipeline.getScreenResolutionX() - sizeInt * 100 *2 , sizeInt * 125);
+        buttonPanel.setLayout(new GridLayout(4, 2));
+
+        keySetting = new Button("Key");
+        scoreBoard = new Button("Reset Scoreboard");
+        color = new Button("Color Blind Mode");
+        difficulty_level = new Button("Level");
+        size = new Button("Size");
+        reSetting = new Button("Reset Setting");
+        home = new Button("Home");
+
+        selected = keySetting;
+
+        buttonPanel.add(keySetting);
+        buttonPanel.add(scoreBoard);
+        buttonPanel.add(color);
+        buttonPanel.add(difficulty_level);
+        buttonPanel.add(size);
+        buttonPanel.add(reSetting);
+        buttonPanel.add(home);
+
+        settingPanel.add(buttonPanel);
+        settingFrame.add(settingPanel);
+        settingPanel.add(titlePanel);
+
+        settingFrame.setVisible(false);
+
+        if (PreferencesHandler.getColorBlindnessType() == ColorBlindnessType.NONE) {
+            color.setLabel("Color Blind Mode : OFF");
+        } else {
+            color.setLabel("Color Blind Mode : ON");
+        }
+
+        difficulty_level.setLabel("Level : " + PreferencesHandler.getMode());
+        size.setLabel("Size : " + PreferencesHandler.getScreenSize());
+    }
+
+    private void setAction(){
+        home.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homeFrameIn.setVisible(true);
+                settingFrame.setVisible(false);
+                homeFrameIn.requestFocus();
+                scoreBoard.setLabel("Reset Scoreboard");
+            }
+        });
+
+        keySetting.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                reSetting.setLabel("Reset Setting");
+                selected.setForeground(Color.black);
+                selected = keySetting;
+                selected.setForeground(Color.gray);
+                keySettingGUI.keySettingFrame.setVisible(true);
+                settingFrame.setVisible(false);
+
+            }
+
+        });
+
+        color.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reSetting.setLabel("Reset Setting");
+                if (PreferencesHandler.getColorBlindnessType() == ColorBlindnessType.NONE) {
+                    color.setLabel("Color Blind Mode : ON");
+                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.BLINDNESS);
+                }
+                else {
+                    color.setLabel("Color Blind Mode : OFF");
+                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.NONE);
+                }
+
+            }
+
+        });
+
+        difficulty_level.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reSetting.setLabel("Reset Setting");
+                if ( PreferencesHandler.getMode() == Mode.EASY) {
+                    PreferencesHandler.setMode(Mode.NORMAL);
+                }
+                else if (PreferencesHandler.getMode() == Mode.NORMAL) {
+                    PreferencesHandler.setMode(Mode.HARD);
+                }
+                else if (PreferencesHandler.getMode() == Mode.HARD) {
+                    PreferencesHandler.setMode(Mode.EASY);
+                }
+                difficulty_level.setLabel("Level : " +PreferencesHandler.getMode());
+
+
+            }
+
+        });
+
+        size.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reSetting.setLabel("Reset Setting");
+
+                if (PreferencesHandler.getScreenSize() == ScreenSize.SMALL) {
+                    PreferencesHandler.setScreenSize(ScreenSize.MEDIUM);
+                }
+                else if (PreferencesHandler.getScreenSize() == ScreenSize.MEDIUM) {
+                    PreferencesHandler.setScreenSize(ScreenSize.LARGE);                }
+                else if (PreferencesHandler.getScreenSize() == ScreenSize.LARGE) {
+                    PreferencesHandler.setScreenSize(ScreenSize.SMALL);
+                }
+                size.setLabel("Size : " + PreferencesHandler.getScreenSize());
+            }
+
+        });
+
+        scoreBoard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ScoreMemoryHandler scoreMemoryHandler = new ScoreMemoryHandler();
+                scoreMemoryHandler.clear();
+                scoreBoard.setLabel("Reset Completed");
+
+            }
+
+        });
+        reSetting.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ScoreMemoryHandler scoreMemoryHandler = new ScoreMemoryHandler();
+                scoreMemoryHandler.clear();
+                PreferencesHandler.clear();
+
+                reSetting.setLabel("Reset Completed");
+                color.setLabel("Color Blind Mode : OFF");
+                difficulty_level.setLabel("Level : EASY" );
+                size.setLabel("Size : MIDDLE");
+
+            }
+        });
+
+    }
+
+}
+/*
+
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -35,7 +244,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
 
         /*
             게임 화면 크기
-         */
+
         lScreenSize = new JLabel("화면 크기 : ");
         pScreenSize = new JPanel(new FlowLayout(FlowLayout.LEFT));
         rbSmallSize = new JRadioButton("작게",true);
@@ -51,7 +260,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
 
         /*
             일반 게임 모드 난이도 설정
-         */
+
         lGameMode = new JLabel("일반 게임모드 난이도 : ");
         pGameMode = new JPanel(new FlowLayout(FlowLayout.LEFT));
         rbEasy = new JRadioButton("Easy",true);
@@ -67,7 +276,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
 
         /*
             게임 키 설정
-         */
+
         pKeyboard = new JPanel();
         pKeyboard.setBorder(new TitledBorder(null, "키 설정", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         GridLayout gridLayout = new GridLayout(10, 2);
@@ -96,7 +305,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
 
         /*
             스코어보드
-         */
+
         lScoreboard = new JLabel("스코어보드 : ");
         pScoreboard = new JPanel(new FlowLayout(FlowLayout.LEFT));
         btnInitScoreboard = new JButton("초기화");
@@ -104,7 +313,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
 
         /*
             색각이상 모드
-         */
+
         lBlindess = new JLabel("색각이상 모드 : ");
         pBlindess = new JPanel(new FlowLayout(FlowLayout.LEFT));
         rbNone = new JRadioButton("끄기",true);
@@ -117,12 +326,12 @@ public class SettingPane extends JLayeredPane implements IDesign {
 
         /*
             하단 버튼
-         */
+
         pButton = new JPanel();
         btnInit = new JButton("초기화");
         btnConfirm = new JButton("확인");
         pButton.add(btnInit);
-        pButton.add(btnConfirm);
+  //      pButton.add(btnConfirm);
     }
 
     @Override
@@ -358,3 +567,4 @@ public class SettingPane extends JLayeredPane implements IDesign {
         }
     }
 }
+ */

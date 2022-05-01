@@ -5,13 +5,23 @@ import java.awt.*;
 public class Const {
 
     public static final String APPLICATION_TITLE = "Tetris";
+    /*
+        Universal Values
+         */
+    public static final int BASE_FRAME_X = 450;
+    public static final int BASE_FRAME_Y = 300;
 
-    public static final int SCREEN_SMALL_RESOLUTION_X = 1024;
-    public static final int SCREEN_SMALL_RESOLUTION_Y = 768;
-    public static final int SCREEN_MEDIUM_RESOLUTION_X = 1280;
-    public static final int SCREEN_MEDIUM_RESOLUTION_Y = 1024;
-    public static final int SCREEN_LARGE_RESOLUTION_X = 1600;
-    public static final int SCREEN_LARGE_RESOLUTION_Y = 1200;
+    public static final int SMALL_INT =2;
+    public static final int MEDIUM_INT =3;
+    public static final int LARGE_INT =4;
+
+
+    public static final int SCREEN_SMALL_RESOLUTION_X = BASE_FRAME_X * SMALL_INT;
+    public static final int SCREEN_SMALL_RESOLUTION_Y = BASE_FRAME_Y * SMALL_INT;
+    public static final int SCREEN_MEDIUM_RESOLUTION_X = BASE_FRAME_X * MEDIUM_INT;
+    public static final int SCREEN_MEDIUM_RESOLUTION_Y = BASE_FRAME_Y * MEDIUM_INT;
+    public static final int SCREEN_LARGE_RESOLUTION_X = BASE_FRAME_X * LARGE_INT;
+    public static final int SCREEN_LARGE_RESOLUTION_Y = BASE_FRAME_Y * LARGE_INT;
 
     public static final int SCREEN_SMALL_BLOCK_FONT_SIZE = 24;
     public static final int SCREEN_MEDIUM_BLOCK_FONT_SIZE = 33;

@@ -17,6 +17,7 @@ public class Pipeline {
         mainFrame = new MainFrame();
     }
 
+
     public static JFrame getMainFrame() {
         return Pipeline.mainFrame;
     }
@@ -28,6 +29,10 @@ public class Pipeline {
         container.revalidate();
         container.repaint();
         container.requestFocus();
+    }
+
+    public static int getSizeInt(){
+        return PreferencesHandler.getSizeInt();
     }
 
     public static int getScreenResolutionX() {
