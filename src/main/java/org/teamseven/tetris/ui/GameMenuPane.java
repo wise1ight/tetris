@@ -85,28 +85,21 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
         // set focusTraversal
         setFocusTraversal();
 
-        /*
         // set ButtonAction
-        startButton.addActionListener(e -> {
-            //System.out.println(e.getActionCommand());
-            //cardSwitcher.switchCard("jl1");
-            this.add(modeBoard, JLayeredPane.POPUP_LAYER);
-            noItemModeButton.requestFocus();
-            startButton.setFocusable(false);
-            settingButton.setFocusable(false);
-            scoreButton.setFocusable(false);
-            exitButton.setFocusable(false);
+        start.addActionListener(e -> {
 
         });
-        settingButton.addActionListener(e -> {
+        setting.addActionListener(e -> {
             Pipeline.replacePane(new SettingPane(null));
         });
-        scoreButton.addActionListener(e -> {
+        scoreBoard.addActionListener(e -> {
             Pipeline.replacePane(new ScoreBoardTabbedPane());
         });
-        exitButton.addActionListener(e -> {
+        exit.addActionListener(e -> {
             System.exit(0);
         });
+
+        /*
         settingBoard_ExitButton.addActionListener(e -> {
             this.remove(settingBoard);
             this.revalidate();
