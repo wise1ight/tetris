@@ -36,7 +36,7 @@ public class GameMenuPane extends Canvas {
 
     public Frame homeFrame;
     public SettingPane settingPane;
-
+    public SelectGameMode SelectGameMode;
     private Panel homePanel, titlePanel, buttonPanel;
     static private int sizeInt = Pipeline.getSizeInt();
 
@@ -60,7 +60,7 @@ public class GameMenuPane extends Canvas {
         setDesign();
         setAction();
         settingPane = new SettingPane(homeFrame);
-
+        SelectGameMode = new SelectGameMode(homeFrame);
     }
 
     public void setComp() {
@@ -132,8 +132,8 @@ public class GameMenuPane extends Canvas {
                 selected.setForeground(Color.black);
                 selected = start;
                 selected.setForeground(Color.gray);
-                // gameGUI.gameFrame.setVisible(true);
-                //   homeFrame.setVisible(false);
+                SelectGameMode.selectGameModeFrame.setVisible(true);
+                homeFrame.setVisible(false);
             }
         });
         scoreBoard.addActionListener(new ActionListener() {

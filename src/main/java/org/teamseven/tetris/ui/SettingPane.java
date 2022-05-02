@@ -88,8 +88,9 @@ public class SettingPane extends Canvas {
         buttonPanel.add(home);
 
         settingPanel.add(buttonPanel);
-        settingFrame.add(settingPanel);
         settingPanel.add(titlePanel);
+
+        settingFrame.add(settingPanel);
 
         settingFrame.setVisible(false);
 
