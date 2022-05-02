@@ -12,6 +12,7 @@ import java.util.Set;
 
 public class GameMenuPane extends JLayeredPane implements IDesign {
 
+    private Label title;
     private Panel homePanel, titlePanel, buttonPanel;
     private CustomButton start, scoreBoard, setting, exit;
     private java.util.List<CustomButton> buttonList = new ArrayList<>();
@@ -33,23 +34,13 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
     @Override
     public void setComp() {
         homePanel = new Panel();
-        homePanel.setSize(preferredResolution[0], preferredResolution[1]);
-        homePanel.setBackground(Color.black);
-        homePanel.setLayout(null);
-        homePanel.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
-
         titlePanel = new Panel();
-        titlePanel.setBounds(0, sizeInt * 50, preferredResolution[0], sizeInt * 40);
-        titlePanel.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 25));
 
-        Label title = new Label("SE4 Tetris");
-        title.setForeground(Color.RED);
+        title = new Label("SE4 Tetris");
 
         titlePanel.add(title);
 
         buttonPanel = new Panel();
-        buttonPanel.setBounds(sizeInt * 110, sizeInt * 110, preferredResolution[0] - sizeInt * 110 * 2, sizeInt * 150);
-        buttonPanel.setLayout(new GridLayout(5, 1));
 
         start = new CustomButton("Start");
         scoreBoard = new CustomButton("Scoreboard");
@@ -72,7 +63,19 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
 
     @Override
     public void setDesign() {
-        // set main pannel on StartMenuPane
+        homePanel.setSize(preferredResolution[0], preferredResolution[1]);
+        homePanel.setBackground(Color.black);
+        homePanel.setLayout(null);
+        homePanel.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
+
+        titlePanel.setBounds(0, sizeInt * 50, preferredResolution[0], sizeInt * 40);
+        titlePanel.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 25));
+
+        buttonPanel.setBounds(sizeInt * 110, sizeInt * 110, preferredResolution[0] - sizeInt * 110 * 2, sizeInt * 150);
+        buttonPanel.setLayout(new GridLayout(5, 1));
+
+        title.setForeground(Color.RED);
+
         homePanel.setBounds(0, 0, preferredResolution[0], preferredResolution[1]);
         this.add(homePanel, JLayeredPane.DEFAULT_LAYER);
     }
