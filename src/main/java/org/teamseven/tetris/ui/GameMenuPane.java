@@ -90,7 +90,7 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
 
         });
         setting.addActionListener(e -> {
-            Pipeline.replacePane(new SettingPane(null));
+            Pipeline.replacePane(new SettingPane());
         });
         scoreBoard.addActionListener(e -> {
             Pipeline.replacePane(new ScoreBoardTabbedPane());
@@ -141,15 +141,7 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
         public CustomButton(String label) {
             super(label);
 
-
-            /*
             // set Inputkey(focus)
-            this.getInputMap().getParent().remove(KeyStroke.getKeyStroke("pressed SPACE"));
-            this.getInputMap().getParent().remove(KeyStroke.getKeyStroke("released SPACE"));
-            this.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("pressed ENTER"), "pressed");
-            this.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("released ENTER"), "released");
-
-             */
 
             // set Listners
             //this.removeMouseListener(this.getMouseListeners()[0]);
