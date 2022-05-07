@@ -2,15 +2,10 @@ package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.enums.ColorBlindnessType;
-import org.teamseven.tetris.enums.Mode;
-import org.teamseven.tetris.enums.ScreenSize;
 import org.teamseven.tetris.handler.PreferencesHandler;
-import org.teamseven.tetris.handler.ScoreMemoryHandler;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.*;
 
 public class SettingPane extends JLayeredPane implements IDesign {
 
