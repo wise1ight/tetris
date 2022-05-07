@@ -2,10 +2,15 @@ package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.enums.ColorBlindnessType;
+import org.teamseven.tetris.enums.Mode;
+import org.teamseven.tetris.enums.ScreenSize;
 import org.teamseven.tetris.handler.PreferencesHandler;
+import org.teamseven.tetris.handler.ScoreMemoryHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SettingPane extends JLayeredPane implements IDesign {
 
@@ -76,7 +81,103 @@ public class SettingPane extends JLayeredPane implements IDesign {
 
     @Override
     public void setAction() {
+        home.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Pipeline.replacePane(new GameMenuPane());
+            }
+        });
 
+        keySetting.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // TODO KeySettingPane
+
+            }
+
+        });
+
+        color.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reSetting.setLabel("Reset Setting");
+                if (PreferencesHandler.getColorBlindnessType() == ColorBlindnessType.NONE) {
+                    color.setLabel("Color Blind Mode : ON");
+                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.BLINDNESS);
+                }
+                else {
+                    color.setLabel("Color Blind Mode : OFF");
+                    PreferencesHandler.setColorBlindnessType(ColorBlindnessType.NONE);
+                }
+
+            }
+
+        });
+
+        difficulty_level.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reSetting.setLabel("Reset Setting");
+                if ( PreferencesHandler.getMode() == Mode.EASY) {
+                    PreferencesHandler.setMode(Mode.NORMAL);
+                }
+                else if (PreferencesHandler.getMode() == Mode.NORMAL) {
+                    PreferencesHandler.setMode(Mode.HARD);
+                }
+                else if (PreferencesHandler.getMode() == Mode.HARD) {
+                    PreferencesHandler.setMode(Mode.EASY);
+                }
+                difficulty_level.setLabel("Level : " +PreferencesHandler.getMode());
+
+
+            }
+
+        });
+
+        size.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reSetting.setLabel("Reset Setting");
+
+                if (PreferencesHandler.getScreenSize() == ScreenSize.SMALL) {
+                    PreferencesHandler.setScreenSize(ScreenSize.MEDIUM);
+                }
+                else if (PreferencesHandler.getScreenSize() == ScreenSize.MEDIUM) {
+                    PreferencesHandler.setScreenSize(ScreenSize.LARGE);                }
+                else if (PreferencesHandler.getScreenSize() == ScreenSize.LARGE) {
+                    PreferencesHandler.setScreenSize(ScreenSize.SMALL);
+                }
+                size.setLabel("Size : " + PreferencesHandler.getScreenSize());
+            }
+
+        });
+
+        scoreBoard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ScoreMemoryHandler scoreMemoryHandler = new ScoreMemoryHandler();
+                scoreMemoryHandler.clear();
+                scoreBoard.setLabel("Reset Completed");
+
+            }
+
+        });
+        reSetting.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ScoreMemoryHandler scoreMemoryHandler = new ScoreMemoryHandler();
+                scoreMemoryHandler.clear();
+                PreferencesHandler.clear();
+
+                reSetting.setLabel("Reset Completed");
+                color.setLabel("Color Blind Mode : OFF");
+                difficulty_level.setLabel("Level : EASY" );
+                size.setLabel("Size : MIDDLE");
+
+            }
+        });
     }
 
     private void refreshPref() {
