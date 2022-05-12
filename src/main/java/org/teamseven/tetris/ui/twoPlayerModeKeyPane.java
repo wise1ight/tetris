@@ -19,7 +19,7 @@ public class twoPlayerModeKeyPane extends JLayeredPane implements IDesign {
 
     private Label title;
     private Frame settingFrameIn;
-    private Panel keySettingPanel, buttonPanel, titlePanel, discriptionPanel;
+    private Panel keySettingPanel, buttonPanel, titlePanel;
 
     private Button left_one, right_one, down_one, drop_one, rotate_one, backToSetting;
     private Button left_two, right_two, down_two, drop_two, rotate_two;
@@ -47,7 +47,7 @@ public class twoPlayerModeKeyPane extends JLayeredPane implements IDesign {
 
         buttonPanel = new Panel();
 
-        left_one = new Button("Left_one : ");
+        left_one = new Button("Left_one : " + PreferencesHandler.getLeftOneBtnCode());
         left_one.setFocusTraversalKeysEnabled(false);
         right_one = new Button("Right : ");
         right_one.setFocusTraversalKeysEnabled(false);
@@ -69,6 +69,8 @@ public class twoPlayerModeKeyPane extends JLayeredPane implements IDesign {
         rotate_two.setFocusTraversalKeysEnabled(false);
         drop_two = new Button("Drop : " );
         drop_two.setFocusTraversalKeysEnabled(false);
+
+        setLabel();
 
 
         buttonPanel.add(left_one);
@@ -115,6 +117,278 @@ public class twoPlayerModeKeyPane extends JLayeredPane implements IDesign {
                 Pipeline.replacePane(new SettingPane());
             }
         });
+        left_one.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setLabel();
+                left_one.setLabel("Press Key for LEFT ONE");
+
+                left_one.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {}
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setLeftOneBtnCode(e.getKeyCode());
+                            setLabel();
+                        }
+                        setLabel();
+                    }
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                });
+            }
+        });
+
+        right_one.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setLabel();
+                right_one.setLabel("Press Key for RIGHT ONE");
+
+                right_one.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {}
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setRightOneBtnCode(e.getKeyCode());
+                            setLabel();
+                        }
+                        setLabel();
+                    }
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                });
+            }
+        });
+
+        rotate_one.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setLabel();
+                rotate_one.setLabel("Press Key for ROTATE ONE");
+
+                rotate_one.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {}
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setRotateRightOneBtnCode(e.getKeyCode());
+                            setLabel();
+                        }
+                        setLabel();
+                    }
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                });
+            }
+        });
+
+        down_one.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setLabel();
+                down_one.setLabel("Press Key for DOWN ONE");
+
+                down_one.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {}
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setSoftDropOneBtnCode(e.getKeyCode());
+                            setLabel();
+                        }
+                        setLabel();
+                    }
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                });
+            }
+        });
+
+        drop_one.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setLabel();
+                drop_one.setLabel("Press Key for DROP ONE");
+
+                drop_one.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {}
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setHardDropOneBtnCode(e.getKeyCode());
+                            setLabel();
+                        }
+                        setLabel();
+                    }
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                });
+            }
+        });
+
+
+        left_two.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setLabel();
+                left_two.setLabel("Press Key for LEFT TWO");
+
+                left_two.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {}
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setLeftTwoBtnCode(e.getKeyCode());
+                            setLabel();
+                        }
+                        setLabel();
+                    }
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                });
+            }
+        });
+
+        right_two.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setLabel();
+                right_two.setLabel("Press Key for RIGHT TWO");
+
+                right_two.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {}
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setRightTwoBtnCode(e.getKeyCode());
+                            setLabel();
+                        }
+                        setLabel();
+                    }
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                });
+            }
+        });
+
+        rotate_two.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setLabel();
+                rotate_two.setLabel("Press Key for ROTATE TWO");
+
+                rotate_two.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {}
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setRotateRightTwoBtnCode(e.getKeyCode());
+                            setLabel();
+                        }
+                        setLabel();
+                    }
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                });
+            }
+        });
+
+        down_two.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setLabel();
+                down_two.setLabel("Press Key for DOWN TWO");
+
+                down_two.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {}
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setSoftDropTwoBtnCode(e.getKeyCode());
+                            setLabel();
+                        }
+                        setLabel();
+                    }
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                });
+            }
+        });
+
+        drop_two.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setLabel();
+                drop_two.setLabel("Press Key for DROP TWO");
+
+                drop_one.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {}
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setHardDropTwoBtnCode(e.getKeyCode());
+                            setLabel();
+                        }
+                        setLabel();
+                    }
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                });
+            }
+        });
+        
+    }
+
+    private void setLabel(){
+        left_one.setLabel("Left One: " + getStringKey(PreferencesHandler.getLeftOneBtnCode()));
+        right_one.setLabel("Right One: " + getStringKey(PreferencesHandler.getRightOneBtnCode()));
+        down_one.setLabel("Down One: " + getStringKey(PreferencesHandler.getSoftDropOneBtnCode()));
+        rotate_one.setLabel("Rotate One: " + getStringKey(PreferencesHandler.getRotateRightOneBtnCode()));
+        drop_one.setLabel("Drop One: " + getStringKey(PreferencesHandler.getHardDropOneBtnCode()));
+
+        left_two.setLabel("Left Two: " + getStringKey(PreferencesHandler.getLeftTwoBtnCode()));
+        right_two.setLabel("Right Two: " + getStringKey(PreferencesHandler.getRightTwoBtnCode()));
+        down_two.setLabel("Down Two: " + getStringKey(PreferencesHandler.getSoftDropTwoBtnCode()));
+        rotate_two.setLabel("Rotate Two: " + getStringKey(PreferencesHandler.getRotateRightTwoBtnCode()));
+        drop_two.setLabel("Drop Two: " + getStringKey(PreferencesHandler.getHardDropTwoBtnCode()));
+
+    }
+
+    public boolean isOverlapped(KeyEvent e){
+        if(e.getKeyCode() == PreferencesHandler.getRightOneBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getLeftOneBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getRotateRightOneBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getSoftDropOneBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getHardDropOneBtnCode()) return false;
+
+        if(e.getKeyCode() == PreferencesHandler.getRightTwoBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getLeftTwoBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getRotateRightTwoBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getSoftDropTwoBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getHardDropTwoBtnCode()) return false;
+
+        return true;
     }
 
     public String getStringKey(int keyCode) {

@@ -527,5 +527,4 @@ public class KeySettingPane extends JLayeredPane implements IDesign {
         return true;
     }
 
-
 }
