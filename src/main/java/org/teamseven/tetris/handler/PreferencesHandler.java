@@ -9,8 +9,7 @@ import java.awt.event.KeyEvent;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-import static org.teamseven.tetris.Const.PREF_MODE_KEY;
-import static org.teamseven.tetris.Const.PREF_SCREEN_SIZE_KEY;
+import static org.teamseven.tetris.Const.*;
 import static org.teamseven.tetris.enums.Mode.NORMAL;
 
 public class PreferencesHandler {
@@ -21,6 +20,16 @@ public class PreferencesHandler {
         prefs.put(PREF_MODE_KEY, mode.name());
     }
 
+    public static int getSizeInt(){
+        switch (getScreenSize()) {
+            case SMALL:
+                return SMALL_INT;
+            case LARGE:
+                return LARGE_INT;
+            default:
+                return MEDIUM_INT;
+        }
+    }
     public static Mode getMode() {
         return Mode.valueOf(prefs.get(PREF_MODE_KEY, NORMAL.name()));
     }
