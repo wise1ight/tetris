@@ -90,10 +90,8 @@ public class SettingPane extends JLayeredPane implements IDesign {
 
         keySetting.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // TODO KeySettingPane
-
+                Pipeline.replacePane(new KeySettingPane());
             }
-
         });
 
         color.addActionListener(new ActionListener() {
