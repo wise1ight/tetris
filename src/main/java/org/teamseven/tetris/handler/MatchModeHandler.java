@@ -10,12 +10,13 @@ import static org.teamseven.tetris.Const.WIDTH;
 
 public class MatchModeHandler extends GameHandler {
     private UnitBlock[][] store;
-    private UnitBlock[][] preStatus;
+    private UnitBlock[][] enemyStore;
+    private UnitBlock[][] preBoard;
     private static final int MAXIMUM_ATTACK_LINES = 10;
 
     public MatchModeHandler() {
         store = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
-        preStatus = new UnitBlock[HEIGHT][WIDTH];
+        preBoard = new UnitBlock[HEIGHT][WIDTH];
     }
 
     @Override
@@ -29,38 +30,62 @@ public class MatchModeHandler extends GameHandler {
         curr.newBlock(nextBlock);
         addBlockCnt();
 
+//        appendAttackedLines();
+
         if (isFinished()) {
             return false;
         }
 
         speedUp();
         nextBlock = BlockFactory.blockGenerator("random").generate();
-        for (int i = 0; i < 2; i++) {
-            preStatus[i] = board.getBoard()[i].clone();
-        }
-        board.clearErasedIndex();
+
+        setPreBoard();
+
         board.placeBlock(curr);
         return true;
+    }
+
+//    private void appendAttackedLines() {
+//        UnitBlock[][] board = this.board.getBoard();
+//
+//        for (int i = 0; i < HEIGHT - erasedNum; i++) {
+//            store[i] = store[i + erasedNum];
+//        }
+//    }
+
+    private void setPreBoard() {
+        for (int i = 0; i < 2; i++) {
+            preBoard[i] = board.getBoard()[i].clone();
+        }
+        board.clearErasedIndex();
     }
 
     //공격준비할 줄 만들기
     public UnitBlock[][] readyAttack() {
         List<Integer> eraseIndex = board.getEraseIndex();
-        int erasedNum = board.eraseLines();
-        if (erasedNum < 2) {
+        if (board.eraseLines() < 2) {
             return store;
         }
-        setStore(eraseIndex, erasedNum);
+        setStore(eraseIndex);
         return store;
     }
 
-    private void setStore(List<Integer> eraseIndex, int erasedNum) {
+    private void setStore(List<Integer> eraseIndex) {
+        int erasedNum = eraseIndex.size();
         for (int i = 0; i < MAXIMUM_ATTACK_LINES - erasedNum; i++) {
             store[i] = store[i + erasedNum];
         }
         for (int i = 0; i < eraseIndex.size(); i++) {
-            store[MAXIMUM_ATTACK_LINES - i - 1] = preStatus[eraseIndex.get(i)];
+            store[MAXIMUM_ATTACK_LINES - i - 1] = preBoard[eraseIndex.get(i)];
         }
+    }
+
+    public void attacked(UnitBlock[][] enemyStore) {
+        this.enemyStore = enemyStore;
+    }
+
+    public UnitBlock[][] getStore(){
+        return store;
     }
 
     public void attack() {
