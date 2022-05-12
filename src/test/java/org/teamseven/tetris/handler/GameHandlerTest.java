@@ -18,8 +18,9 @@ class GameHandlerTest {
 
     @BeforeEach
     void init() {
-        gameHandler = new GameHandler(false);
+        gameHandler = new GameHandler();
         timer = new Timer(INIT_DELAY, null);
+        gameHandler.setTimer(timer);
     }
 
     @Nested
@@ -37,7 +38,7 @@ class GameHandlerTest {
         void speedup_easy_mode_test() {
             PreferencesHandler.setMode(Mode.EASY);
 
-            gameHandler.speedUp(timer);
+            gameHandler.speedUp();
             System.out.println("timer.getDelay() = " + timer.getDelay());
 
             assertThat(timer.getDelay()).isLessThan(INIT_DELAY);
@@ -48,7 +49,7 @@ class GameHandlerTest {
         void speedup_normal_mode_test() {
             PreferencesHandler.setMode(Mode.NORMAL);
 
-            gameHandler.speedUp(timer);
+            gameHandler.speedUp();
             System.out.println("timer.getDelay() = " + timer.getDelay());
 
             assertThat(timer.getDelay()).isLessThan(INIT_DELAY);
@@ -59,7 +60,7 @@ class GameHandlerTest {
         void speedup_hard_mode_test() {
             PreferencesHandler.setMode(Mode.HARD);
 
-            gameHandler.speedUp(timer);
+            gameHandler.speedUp();
             System.out.println("timer.getDelay() = " + timer.getDelay());
 
             assertThat(timer.getDelay()).isLessThan(INIT_DELAY);
@@ -70,17 +71,20 @@ class GameHandlerTest {
         void mode_speed_test() {
             Timer timer1 = new Timer(INIT_DELAY, null);
             PreferencesHandler.setMode(Mode.EASY);
-            gameHandler.speedUp(timer1);
+            gameHandler.setTimer(timer1);
+            gameHandler.speedUp();
             int delay1 = timer1.getDelay();
 
             Timer timer2 = new Timer(INIT_DELAY, null);
             PreferencesHandler.setMode(Mode.NORMAL);
-            gameHandler.speedUp(timer2);
+            gameHandler.setTimer(timer2);
+            gameHandler.speedUp();
             int delay2 = timer2.getDelay();
 
             Timer timer3 = new Timer(INIT_DELAY, null);
             PreferencesHandler.setMode(Mode.HARD);
-            gameHandler.speedUp(timer3);
+            gameHandler.setTimer(timer3);
+            gameHandler.speedUp();
             int delay3 = timer3.getDelay();
 
             assertThat(delay1).isGreaterThan(delay2);
@@ -98,7 +102,7 @@ class GameHandlerTest {
             gameHandler.setErasedLines(1);
             PreferencesHandler.setMode(Mode.EASY);
 
-            gameHandler.speedUp(timer);
+            gameHandler.speedUp();
 
             System.out.println("timer.getDelay() = " + timer.getDelay());
             assertThat(timer.getDelay()).isLessThan(INIT_DELAY);
@@ -110,7 +114,7 @@ class GameHandlerTest {
             gameHandler.setErasedLines(1);
             PreferencesHandler.setMode(Mode.NORMAL);
 
-            gameHandler.speedUp(timer);
+            gameHandler.speedUp();
 
             System.out.println("timer.getDelay() = " + timer.getDelay());
             assertThat(timer.getDelay()).isLessThan(INIT_DELAY);
@@ -122,7 +126,7 @@ class GameHandlerTest {
             gameHandler.setErasedLines(1);
             PreferencesHandler.setMode(Mode.HARD);
 
-            gameHandler.speedUp(timer);
+            gameHandler.speedUp();
 
             System.out.println("timer.getDelay() = " + timer.getDelay());
             assertThat(timer.getDelay()).isLessThan(INIT_DELAY);
