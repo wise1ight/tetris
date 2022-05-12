@@ -35,6 +35,7 @@ public class KeySettingPane extends JLayeredPane implements IDesign {
 
     @Override
     public void setComp() {
+
         keySettingPanel = new Panel();
 
         titlePanel = new Panel();
@@ -46,10 +47,15 @@ public class KeySettingPane extends JLayeredPane implements IDesign {
         buttonPanel = new Panel();
 
         left = new Button("Left : " + getStringKey(PreferencesHandler.getLeftBtnCode()));
+        left.setFocusTraversalKeysEnabled(false);
         right = new Button("Right : " + getStringKey(PreferencesHandler.getRightBtnCode()));
+        right.setFocusTraversalKeysEnabled(false);
         down = new Button("Down : " + getStringKey(PreferencesHandler.getSoftDropBtnCode()));
+        down.setFocusTraversalKeysEnabled(false);
         rotate = new Button("Rotate : " + getStringKey(PreferencesHandler.getRotateRightBtnCode()));
+        rotate.setFocusTraversalKeysEnabled(false);
         drop = new Button("Drop : " + getStringKey(PreferencesHandler.getHardDropBtnCode()));
+        drop.setFocusTraversalKeysEnabled(false);
         backToSetting = new Button("Back to Setting");
 
         buttonPanel.add(left);
@@ -101,21 +107,26 @@ public class KeySettingPane extends JLayeredPane implements IDesign {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setLabel();
-
                 left.setLabel("Press Key for LEFT");
+
                 left.addKeyListener(new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {}
 
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        PreferencesHandler.setLeftBtnCode(e.getKeyCode());
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setLeftBtnCode(e.getKeyCode());
+                            setLabel();
+                        }
                         setLabel();
                     }
                     @Override
                     public void keyReleased(KeyEvent e) {}
                 });
+
             }
+
         });
         right.addActionListener(new ActionListener() {
             @Override
@@ -129,7 +140,10 @@ public class KeySettingPane extends JLayeredPane implements IDesign {
 
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        PreferencesHandler.setRightBtnCode(e.getKeyCode());
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setRightBtnCode(e.getKeyCode());
+                            setLabel();
+                        }
                         setLabel();
                     }
                     @Override
@@ -141,15 +155,17 @@ public class KeySettingPane extends JLayeredPane implements IDesign {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setLabel();
-
                 rotate.setLabel("Press Key for ROTATE");
+
                 rotate.addKeyListener(new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {}
 
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        PreferencesHandler.setRotateRightBtnCode(e.getKeyCode());
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setRotateRightBtnCode(e.getKeyCode());
+                        }
                         setLabel();
                     }
                     @Override
@@ -169,8 +185,12 @@ public class KeySettingPane extends JLayeredPane implements IDesign {
 
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        PreferencesHandler.setSoftDropBtnCode(e.getKeyCode());
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setSoftDropBtnCode(e.getKeyCode());
+                            setLabel();
+                        }
                         setLabel();
+
                     }
                     @Override
                     public void keyReleased(KeyEvent e) {}
@@ -189,7 +209,9 @@ public class KeySettingPane extends JLayeredPane implements IDesign {
 
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        PreferencesHandler.setHardDropBtnCode(e.getKeyCode());
+                        if(isOverlapped(e)){
+                            PreferencesHandler.setHardDropBtnCode(e.getKeyCode());
+                        }
                         setLabel();
                     }
                     @Override
@@ -197,7 +219,6 @@ public class KeySettingPane extends JLayeredPane implements IDesign {
                 });
             }
         });
-
     }
 
     public String getStringKey(int keyCode) {
@@ -494,6 +515,16 @@ public class KeySettingPane extends JLayeredPane implements IDesign {
         }
 
         return "unknown(0x" + Integer.toString(keyCode, 16) + ")";
+    }
+
+    public boolean isOverlapped(KeyEvent e){
+        if(e.getKeyCode() == PreferencesHandler.getRightBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getLeftBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getRotateRightBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getSoftDropBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getHardDropBtnCode()) return false;
+
+        return true;
     }
 
 
