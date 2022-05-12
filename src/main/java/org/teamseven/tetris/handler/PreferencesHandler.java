@@ -104,7 +104,7 @@ public class PreferencesHandler {
     }
 //new : two player key
     public static int getLeftOneBtnCode() { return prefs.getInt(Const.PREF_BTN_LEFT_ONE_KEY, KeyEvent.VK_A);}
-    public static void setLeftOneBtnCode(int keyCode) { prefs.putInt(Const.PREF_BTN_EXIT_KEY, keyCode);}
+    public static void setLeftOneBtnCode(int keyCode) { prefs.putInt(Const.PREF_BTN_LEFT_ONE_KEY, keyCode);}
     public static int getLeftTwoBtnCode() { return prefs.getInt(Const.PREF_BTN_LEFT_TWO_KEY, KeyEvent.VK_LEFT);}
     public static void setLeftTwoBtnCode(int keyCode) { prefs.putInt(Const.PREF_BTN_LEFT_TWO_KEY, keyCode);}
 
