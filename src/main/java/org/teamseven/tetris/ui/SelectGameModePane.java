@@ -1,6 +1,8 @@
 package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Pipeline;
+import org.teamseven.tetris.handler.GameHandler;
+import org.teamseven.tetris.handler.ItemModeHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -74,7 +76,7 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
                 selected = normalMode;
                 selected.setForeground(Color.gray);
 
-                Pipeline.replacePane(new TetrisPane(false));
+                Pipeline.replacePane(new TetrisPane(new GameHandler()));
             }
         });
 
@@ -85,7 +87,7 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
                 selected = normalMode;
                 selected.setForeground(Color.gray);
 
-                Pipeline.replacePane(new TetrisPane(true));
+                Pipeline.replacePane(new TetrisPane(new ItemModeHandler()));
             }
         });
 

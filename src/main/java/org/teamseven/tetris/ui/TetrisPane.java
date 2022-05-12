@@ -41,7 +41,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private static final int KEY_CODE_SOFT_DROP = PreferencesHandler.getSoftDropBtnCode();
     private static final int KEY_CODE_EXIT = PreferencesHandler.getExitBtnCode();
 
-    public TetrisPane(boolean itemMode) {
+    public TetrisPane(GameHandler gameHandler) {
         int[] frameBorderSize = new int[2];       // frame top border
         frameBorderSize[0] = this.getInsets().left + this.getInsets().right;
         frameBorderSize[1] = this.getInsets().top + this.getInsets().bottom;
@@ -49,12 +49,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
         preferredResolution[0] = Pipeline.getScreenResolutionX() - frameBorderSize[0];
         preferredResolution[1] = Pipeline.getScreenResolutionY() - frameBorderSize[1];
 
-        if (itemMode) {
-            this.itemMode = true;
-            gameHandler = new ItemModeHandler();
-        } else {
-            gameHandler = new GameHandler();
-        }
+        this.gameHandler = gameHandler;
 
         setComp();
         setDesign();
