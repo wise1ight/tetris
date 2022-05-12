@@ -13,7 +13,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class KeySetting extends Canvas {
+public class KeySettingPane extends Canvas {
     private static int sizeInt = Pipeline.getSizeInt();
 
 
@@ -26,7 +26,7 @@ public class KeySetting extends Canvas {
     private Button selected;
 
 
-    public KeySetting(Frame settingFrame) {
+    public KeySettingPane(Frame settingFrame) {
         settingFrameIn = settingFrame;
         prepareKeySettingGUI(settingFrame);
     }
