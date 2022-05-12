@@ -14,7 +14,7 @@ import java.awt.event.WindowEvent;
 public class SelectGameModePane extends JLayeredPane implements IDesign {
     private Label title;
     private Panel gameModePanel, buttonPanel, titlePanel;
-    private Button normalMode, itemMode, twoPlayerMode_Normal, twoPlayerMode_Item, twoPlayerMode_Time;
+    private Button normalMode, itemMode, twoPlayerMode_Normal, twoPlayerMode_Item, twoPlayerMode_Time, home;
     private Button selected;
     private static int sizeInt = Pipeline.getSizeInt();
 
@@ -41,6 +41,7 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
         twoPlayerMode_Normal = new Button("Two Player Mode : Normal");
         twoPlayerMode_Item = new Button("Two Player Mode : Item");
         twoPlayerMode_Time = new Button("Two Player Mode : Time");
+        home = new Button("Back to Menu");
 
         selected = normalMode;
 
@@ -49,6 +50,7 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
         buttonPanel.add(twoPlayerMode_Normal);
         buttonPanel.add(twoPlayerMode_Item);
         buttonPanel.add(twoPlayerMode_Time);
+        buttonPanel.add(home);
 
         gameModePanel.add(buttonPanel);
         gameModePanel.add(titlePanel);
@@ -73,6 +75,13 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
     }
 
     public void setAction(){
+        home.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Pipeline.replacePane(new GameMenuPane());
+            }
+        });
+
         normalMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
