@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 public class SettingPane extends JLayeredPane implements IDesign {
 
     private Panel settingPanel, buttonPanel, titlePanel;
-    private Button home, keySetting, scoreBoard, color, difficulty_level, size, reSetting;
+    private Button home, keySetting, scoreBoard, color, difficulty_level, size, reSetting, twoPlayerModeKey;
     private Button selected;
     private Label title;
     private int sizeInt;
@@ -46,10 +46,12 @@ public class SettingPane extends JLayeredPane implements IDesign {
         size = new Button("Size");
         reSetting = new Button("Reset Setting");
         home = new Button("Home");
+        twoPlayerModeKey = new Button("Two Player Mode Key");
 
         selected = keySetting;
 
         buttonPanel.add(keySetting);
+        buttonPanel.add(twoPlayerModeKey);
         buttonPanel.add(scoreBoard);
         buttonPanel.add(color);
         buttonPanel.add(difficulty_level);
@@ -91,6 +93,13 @@ public class SettingPane extends JLayeredPane implements IDesign {
         keySetting.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Pipeline.replacePane(new KeySettingPane());
+            }
+        });
+
+        twoPlayerModeKey.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Pipeline.replacePane(new twoPlayerModeKeyPane());
             }
         });
 
