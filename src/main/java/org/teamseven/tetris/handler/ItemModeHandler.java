@@ -3,13 +3,52 @@ package org.teamseven.tetris.handler;
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.item.ItemBlock;
-import org.teamseven.tetris.util.GameHandlerUtil;
+import org.teamseven.tetris.block.item.WeightBlock;
+import org.teamseven.tetris.factory.BlockFactory;
 
-public class ItemModeHandler {
+public class ItemModeHandler extends GameHandler {
 
     private int[] pos;
 
-    public boolean hasItem(CurrBlock curr) {
+
+    public ItemModeHandler() {
+        super();
+    }
+
+    @Override
+    protected boolean nextTurn() {
+        if (hasItem(curr)) {
+            executeItem(board, curr, this);
+        }
+        if (animating()) {
+            return true;
+        }
+
+        setErasedLines(board.eraseLines());
+        addScoreByEraseLine();
+
+        if (nextBlock instanceof WeightBlock) {
+            curr.setHandler(new WeightMovementHandler());
+        } else {
+            curr.setHandler(new BlockMovementHandler());
+        }
+        curr.newBlock(nextBlock);
+        addBlockCnt();
+
+        if (isFinished()) {
+            return false;
+        }
+
+        if (isNewItem()) {
+            nextBlock = BlockFactory.blockGenerator("item").generate();
+        } else {
+            nextBlock = BlockFactory.blockGenerator("random").generate();
+        }
+        board.placeBlock(curr);
+        return true;
+    }
+
+    private boolean hasItem(CurrBlock curr) {
         if (curr.getBlock() instanceof ItemBlock) {
             return true;
         }
@@ -24,7 +63,7 @@ public class ItemModeHandler {
         return false;
     }
 
-    public void executeItem(GameBoard board, CurrBlock curr, GameHandler handler) {
+    private void executeItem(GameBoard board, CurrBlock curr, GameHandler handler) {
         if (curr.getBlock() instanceof ItemBlock) {
             ((ItemBlock) curr.getBlock()).execute(board, curr);
         } else if (curr.getBlock().getUnitBlock(pos[1], pos[0]) instanceof ItemBlock) {
@@ -34,11 +73,9 @@ public class ItemModeHandler {
         }
     }
 
-    public boolean isNewItem(GameHandler handler) {
-        int totalErasedLines = handler.getTotalErasedLines();
-
+    private boolean isNewItem() {
         if (totalErasedLines != 0 && totalErasedLines / 10 > 0) {
-            handler.setTotalErasedLines(0);
+            setTotalErasedLines(0);
             return true;
         }
         return false;
