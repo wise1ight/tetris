@@ -148,6 +148,9 @@ public class SettingPane extends JLayeredPane implements IDesign {
                     PreferencesHandler.setScreenSize(ScreenSize.SMALL);
                 }
                 size.setLabel("Size : " + PreferencesHandler.getScreenSize());
+
+                Pipeline.applyScreenSize();
+                Pipeline.replacePane(new SettingPane());
             }
 
         });
