@@ -57,7 +57,7 @@ public class Pipeline {
         }
     }
 
-    public static void changeScreenSize(ScreenSize screenSize) {
+    public static void applyScreenSize() {
         getMainFrame().setSize(getScreenResolutionX(), getScreenResolutionY());
     }
 }
