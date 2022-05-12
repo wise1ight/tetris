@@ -87,7 +87,7 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
 
         // set ButtonAction
         start.addActionListener(e -> {
-
+            Pipeline.replacePane(new SelectGameModePane());
         });
         setting.addActionListener(e -> {
             Pipeline.replacePane(new SettingPane());
