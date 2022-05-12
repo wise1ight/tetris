@@ -340,7 +340,7 @@ public class twoPlayerModeKeyPane extends JLayeredPane implements IDesign {
                 setLabel();
                 drop_two.setLabel("Press Key for DROP TWO");
 
-                drop_one.addKeyListener(new KeyListener() {
+                drop_two.addKeyListener(new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {}
 
@@ -357,7 +357,7 @@ public class twoPlayerModeKeyPane extends JLayeredPane implements IDesign {
                 });
             }
         });
-        
+
     }
 
     private void setLabel(){
