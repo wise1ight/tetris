@@ -3,6 +3,9 @@ package org.teamseven.tetris.Board;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.teamseven.tetris.Const.HEIGHT;
 import static org.teamseven.tetris.Const.WIDTH;
 import static org.teamseven.tetris.util.BoardUtil.isFilled;
@@ -10,6 +13,8 @@ import static org.teamseven.tetris.util.BoardUtil.isFilled;
 public class GameBoard {
 
     private UnitBlock[][] board;
+
+    private List<Integer> eraseIndex = new ArrayList<>();
 
     public GameBoard() {
         board = new UnitBlock[HEIGHT][WIDTH];
@@ -21,6 +26,14 @@ public class GameBoard {
 
     public void setBoard(UnitBlock[][] board) {
         this.board = board;
+    }
+
+    public void appendEraseIndex(int y) {
+        eraseIndex.add(y);
+    }
+
+    public List<Integer> getEraseIndex() {
+        return eraseIndex;
     }
 
     public void eraseCurr(CurrBlock curr) {
@@ -57,10 +70,15 @@ public class GameBoard {
         UnitBlock[] blankLine = new UnitBlock[WIDTH];
 
         for (int i = j; i >= 1; i--) {
+            appendEraseIndex(i);
             board[i] = board[i - 1].clone();
         }
         board[0] = blankLine;
         return 1;
+    }
+
+    public void clearErasedIndex() {
+        eraseIndex = new ArrayList<>();
     }
 
     /*
