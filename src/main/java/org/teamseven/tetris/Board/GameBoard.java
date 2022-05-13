@@ -1,5 +1,7 @@
 package org.teamseven.tetris.Board;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.teamseven.tetris.block.CurrBlock;
 import org.teamseven.tetris.block.UnitBlock;
 
@@ -10,6 +12,8 @@ import static org.teamseven.tetris.Const.HEIGHT;
 import static org.teamseven.tetris.Const.WIDTH;
 import static org.teamseven.tetris.util.BoardUtil.isFilled;
 
+@Getter
+@Setter
 public class GameBoard {
 
     private UnitBlock[][] board;
@@ -20,20 +24,8 @@ public class GameBoard {
         board = new UnitBlock[HEIGHT][WIDTH];
     }
 
-    public UnitBlock[][] getBoard() {
-        return board;
-    }
-
-    public void setBoard(UnitBlock[][] board) {
-        this.board = board;
-    }
-
     public void appendEraseIndex(int y) {
         eraseIndex.add(y);
-    }
-
-    public List<Integer> getEraseIndex() {
-        return eraseIndex;
     }
 
     public void eraseCurr(CurrBlock curr) {
