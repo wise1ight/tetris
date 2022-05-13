@@ -1,21 +1,26 @@
 package org.teamseven.tetris.handler;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.factory.BlockFactory;
 
-import java.util.List;
+import java.util.*;
 
 import static org.teamseven.tetris.Const.HEIGHT;
 import static org.teamseven.tetris.Const.WIDTH;
 
+
+@Getter
+@Setter
 public class MatchModeHandler extends GameHandler {
-    private UnitBlock[][] store;
-    private UnitBlock[][] enemyStore;
+    private UnitBlock[][] attackLines;
+    private UnitBlock[][] attackedLines;
     private UnitBlock[][] preBoard;
     private static final int MAXIMUM_ATTACK_LINES = 10;
 
     public MatchModeHandler() {
-        store = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
+        attackLines = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
         preBoard = new UnitBlock[HEIGHT][WIDTH];
     }
 
@@ -24,13 +29,14 @@ public class MatchModeHandler extends GameHandler {
         if (animating()) {
             return true;
         }
+        readyAttack();
         setErasedLines(board.eraseLines());
         addScoreByEraseLine();
 
         curr.newBlock(nextBlock);
         addBlockCnt();
 
-//        appendAttackedLines();
+        appendAttackedLines();
 
         if (isFinished()) {
             return false;
@@ -39,56 +45,66 @@ public class MatchModeHandler extends GameHandler {
         speedUp();
         nextBlock = BlockFactory.blockGenerator("random").generate();
 
-        setPreBoard();
+        initPreBoard();
 
         board.placeBlock(curr);
         return true;
     }
 
-//    private void appendAttackedLines() {
-//        UnitBlock[][] board = this.board.getBoard();
-//
-//        for (int i = 0; i < HEIGHT - erasedNum; i++) {
-//            store[i] = store[i + erasedNum];
-//        }
-//    }
+    private UnitBlock[][] appendAttackedLines() {
+        UnitBlock[][] board = new UnitBlock[HEIGHT][WIDTH];
+        int attackedLinesNum = 0;
 
-    private void setPreBoard() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < MAXIMUM_ATTACK_LINES; i++) {
+            for (int j = 0; j < MAXIMUM_ATTACK_LINES; j++) {
+                if (attackLines[i][j] != null) {
+                    attackedLinesNum++;
+                    break;
+                }
+            }
+            board[i + MAXIMUM_ATTACK_LINES] = attackLines[i];
+        }
+        for (int i = 0; i < HEIGHT - attackedLinesNum; i++) {
+            board[i] = preBoard[i + attackedLinesNum];
+        }
+        return board;
+    }
+
+    private void initPreBoard() {
+        for (int i = 0; i < HEIGHT; i++) {
             preBoard[i] = board.getBoard()[i].clone();
         }
         board.clearErasedIndex();
     }
 
     //공격준비할 줄 만들기
-    public UnitBlock[][] readyAttack() {
+    private void readyAttack() {
         List<Integer> eraseIndex = board.getEraseIndex();
-        if (board.eraseLines() < 2) {
-            return store;
+        if (eraseIndex.size() < 2) {
+            return;
         }
-        setStore(eraseIndex);
-        return store;
+        saveAttackLines(eraseIndex);
     }
 
-    private void setStore(List<Integer> eraseIndex) {
+    private void saveAttackLines(List<Integer> eraseIndex) {
         int erasedNum = eraseIndex.size();
         for (int i = 0; i < MAXIMUM_ATTACK_LINES - erasedNum; i++) {
-            store[i] = store[i + erasedNum];
+            attackLines[i] = attackLines[i + erasedNum];
         }
         for (int i = 0; i < eraseIndex.size(); i++) {
-            store[MAXIMUM_ATTACK_LINES - i - 1] = preBoard[eraseIndex.get(i)];
+            attackLines[MAXIMUM_ATTACK_LINES - i - 1] = preBoard[eraseIndex.get(i)].clone();
         }
     }
 
     public void attacked(UnitBlock[][] enemyStore) {
-        this.enemyStore = enemyStore;
+        this.attackedLines = enemyStore;
     }
 
-    public UnitBlock[][] getStore(){
-        return store;
+    public void clearAttackLines() {
+        attackLines = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
     }
 
     public void attack() {
-        store = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
+        attackLines = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
     }
 }
