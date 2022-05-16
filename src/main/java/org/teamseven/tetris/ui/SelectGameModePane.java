@@ -14,7 +14,7 @@ import java.awt.event.WindowEvent;
 public class SelectGameModePane extends JLayeredPane implements IDesign {
     private Label title;
     private Panel gameModePanel, buttonPanel, titlePanel;
-    private Button normalMode, itemMode, twoPlayerMode;
+    private Button normalMode, itemMode, twoPlayerMode_Normal, twoPlayerMode_Item, twoPlayerMode_Time, home;
     private Button selected;
     private static int sizeInt = Pipeline.getSizeInt();
 
@@ -38,13 +38,19 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
 
         normalMode = new Button("Normal Mode");
         itemMode = new Button("Item Mode");
-        twoPlayerMode = new Button("Two Player Mode");
+        twoPlayerMode_Normal = new Button("Two Player Mode : Normal");
+        twoPlayerMode_Item = new Button("Two Player Mode : Item");
+        twoPlayerMode_Time = new Button("Two Player Mode : Time");
+        home = new Button("Back to Menu");
 
         selected = normalMode;
 
         buttonPanel.add(normalMode);
         buttonPanel.add(itemMode);
-        buttonPanel.add(twoPlayerMode);
+        buttonPanel.add(twoPlayerMode_Normal);
+        buttonPanel.add(twoPlayerMode_Item);
+        buttonPanel.add(twoPlayerMode_Time);
+        buttonPanel.add(home);
 
         gameModePanel.add(buttonPanel);
         gameModePanel.add(titlePanel);
@@ -65,10 +71,17 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
         title.setForeground(Color.RED);
 
         buttonPanel.setBounds(sizeInt * 50, sizeInt * 110, Pipeline.getScreenResolutionX() - sizeInt * 50 *2 , sizeInt * 150);
-        buttonPanel.setLayout(new GridLayout(1, 5));
+        buttonPanel.setLayout(new GridLayout(3, 5));
     }
 
     public void setAction(){
+        home.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Pipeline.replacePane(new GameMenuPane());
+            }
+        });
+
         normalMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -91,7 +104,7 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
             }
         });
 
-        twoPlayerMode.addActionListener(new ActionListener() {
+        twoPlayerMode_Normal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selected.setForeground(Color.black);

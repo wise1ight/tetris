@@ -37,6 +37,22 @@ public class Const {
     public static final String PREF_BTN_SOFT_DROP_KEY = "BTN_SOFT_DROP";
     public static final String PREF_BTN_PAUSE_KEY = "BTN_PAUSE";
     public static final String PREF_BTN_EXIT_KEY = "BTN_EXIT";
+//new
+    public static final String PREF_BTN_LEFT_ONE_KEY = "BTN_LEFT_ONE";
+    public static final String PREF_BTN_LEFT_TWO_KEY = "BTN_LEFT_TWO";
+
+    public static final String PREF_BTN_RIGHT_ONE_KEY = "BTN_RIGHT_ONE";
+    public static final String PREF_BTN_RIGHT_TWO_KEY = "BTN_RIGHT_TWO";
+
+    public static final String PREF_BTN_ROTATE_RIGHT_ONE_KEY = "BTN_ROTATE_RIGHT_ONE";
+    public static final String PREF_BTN_ROTATE_RIGHT_TWO_KEY = "BTN_ROTATE_RIGHT_TWO";
+
+    public static final String PREF_BTN_HARD_DROP_ONE_KEY = "BTN_HARD_DROP_ONE";
+    public static final String PREF_BTN_HARD_DROP_TWO_KEY = "BTN_HARD_DROP_TWO";
+
+    public static final String PREF_BTN_SOFT_DROP_ONE_KEY = "BTN_SOFT_DROP_ONE";
+    public static final String PREF_BTN_SOFT_DROP_TWO_KEY = "BTN_SOFT_DROP_TWO";
+//NEW ---- END ----
     public static final String PREF_COLOR_BLINDNESS_KEY = "COLOR_BLINDNESS";
     public static final String PREF_MODE_KEY = "MODE";
 
