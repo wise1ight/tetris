@@ -3,6 +3,7 @@ package org.teamseven.tetris.ui;
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.handler.GameHandler;
 import org.teamseven.tetris.handler.ItemModeHandler;
+import org.teamseven.tetris.handler.TwoPersonGameHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -110,6 +111,10 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
                 selected.setForeground(Color.black);
                 selected = normalMode;
                 selected.setForeground(Color.gray);
+
+                GameHandler aGameHandler = new GameHandler();
+                GameHandler bGameHandler = new GameHandler();
+                Pipeline.replacePane(new TwoPlayerModeTetrisPane(new TwoPersonGameHandler(aGameHandler, bGameHandler)));
 
                 //SelectGameMode.selectGameModeFrame.setVisible(true);
                 //homeFrame.setVisible(false);
