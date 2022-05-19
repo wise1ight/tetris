@@ -7,9 +7,7 @@ import org.teamseven.tetris.factory.BlockFactory;
 
 import java.util.*;
 
-import static org.teamseven.tetris.Const.HEIGHT;
-import static org.teamseven.tetris.Const.WIDTH;
-
+import static org.teamseven.tetris.Const.*;
 
 @Getter
 @Setter
@@ -24,8 +22,17 @@ public class MatchModeHandler extends GameHandler {
         preBoard = new UnitBlock[HEIGHT][WIDTH];
     }
 
-    @Override
-    protected boolean nextTurn() {
+    public boolean playing(MatchModeHandler attackedPlayer) {
+        if (curr.isStopped(board, nextBlock)) {
+            return nextTurn(attackedPlayer);
+        } else {
+            int cnt = curr.move(board, DOWN);
+            addScoreByMove(cnt);
+            return true;
+        }
+    }
+
+    protected boolean nextTurn(MatchModeHandler otherPlayer) {
         if (animating()) {
             return true;
         }
@@ -36,7 +43,11 @@ public class MatchModeHandler extends GameHandler {
         curr.newBlock(nextBlock);
         addBlockCnt();
 
-        appendAttackedLines();
+
+        initPreBoard();
+        attackedLines = otherPlayer.attack();
+        otherPlayer.clearAttackLines();
+        board.setBoard(appendAttackedLines());
 
         if (isFinished()) {
             return false;
@@ -45,7 +56,6 @@ public class MatchModeHandler extends GameHandler {
         speedUp();
         nextBlock = BlockFactory.blockGenerator("random").generate();
 
-        initPreBoard();
 
         board.placeBlock(curr);
         return true;
@@ -104,7 +114,8 @@ public class MatchModeHandler extends GameHandler {
         attackLines = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
     }
 
-    public void attack() {
-        attackLines = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
+    public UnitBlock[][] attack() {
+        return attackLines;
     }
 }
+

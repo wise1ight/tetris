@@ -5,7 +5,7 @@ import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.handler.GameHandler;
 import org.teamseven.tetris.handler.PreferencesHandler;
-import org.teamseven.tetris.handler.TwoPersonGameHandler;
+import org.teamseven.tetris.handler.MatchModeBridge;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -27,7 +27,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
     private GridBagConstraints gridBagConstraints;
     private GridBagLayout gridBagLayout;
 
-    private final TwoPersonGameHandler gameHandler;
+    private final MatchModeBridge gameHandler;
     private boolean itemMode;
     private int[] preferredResolution;  // frame resolution - frame top border
 
@@ -44,7 +44,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
     private static final int KEY_CODE_SOFT_DROP_TWO = PreferencesHandler.getSoftDropTwoBtnCode();
     private static final int KEY_CODE_EXIT = PreferencesHandler.getExitBtnCode();
 
-    public TwoPlayerModeTetrisPane(TwoPersonGameHandler gameHandler) {
+    public TwoPlayerModeTetrisPane(MatchModeBridge gameHandler) {
         int[] frameBorderSize = new int[2];       // frame top border
         frameBorderSize[0] = this.getInsets().left + this.getInsets().right;
         frameBorderSize[1] = this.getInsets().top + this.getInsets().bottom;
@@ -76,7 +76,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         Timer aTimer = new Timer(INIT_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (gameHandler.getAGameHandler().playing()) {
+                if (gameHandler.getAGameHandler().playing(gameHandler.getBGameHandler())) {
                     drawBoard();
                 } else {
                     finishGame();
@@ -87,7 +87,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         Timer bTimer = new Timer(INIT_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (gameHandler.getBGameHandler().playing()) {
+                if (gameHandler.getBGameHandler().playing(gameHandler.getAGameHandler())) {
                     drawBoard();
                 } else {
                     finishGame();
