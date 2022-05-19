@@ -21,8 +21,8 @@ import static org.teamseven.tetris.Const.*;
 public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, KeyEventDispatcher {
 
     private JPanel main;
-    private JTextPane aTetrisBoard, aNextBlockBoard, aScoreBoard;
-    private JTextPane bTetrisBoard, bNextBlockBoard, bScoreBoard;
+    private JTextPane aTetrisBoard, aNextBlockBoard, aScoreBoard, aAttackBoard;
+    private JTextPane bTetrisBoard, bNextBlockBoard, bScoreBoard, bAttackBoard;
 
     private GridBagConstraints gridBagConstraints;
     private GridBagLayout gridBagLayout;
@@ -65,9 +65,11 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         aTetrisBoard = new JTextPane();
         aNextBlockBoard = new JTextPane();
         aScoreBoard = new JTextPane();
+        aAttackBoard = new JTextPane();
         bTetrisBoard = new JTextPane();
         bNextBlockBoard = new JTextPane();
         bScoreBoard = new JTextPane();
+        bAttackBoard = new JTextPane();
 
         gridBagConstraints = new GridBagConstraints();
         gridBagLayout = new GridBagLayout();
@@ -282,6 +284,8 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         bNextBlockBoard.setEditable(false);
         aScoreBoard.setEditable(false);
         bScoreBoard.setEditable(false);
+        aAttackBoard.setEditable(false);
+        bAttackBoard.setEditable(false);
 
         aTetrisBoard.setBackground(Color.BLACK);
         bTetrisBoard.setBackground(Color.BLACK);
@@ -289,6 +293,8 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         bNextBlockBoard.setBackground(Color.BLACK);
         aScoreBoard.setBackground(Color.BLACK);
         bScoreBoard.setBackground(Color.BLACK);
+        aAttackBoard.setBackground(Color.BLACK);
+        bAttackBoard.setBackground(Color.BLACK);
 
         CompoundBorder border = BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.gray, preferredResolution[1] / 60),
@@ -300,32 +306,41 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         bNextBlockBoard.setBorder(border);
         aScoreBoard.setBorder(border);
         bScoreBoard.setBorder(border);
+        aAttackBoard.setBorder(border);
+        bAttackBoard.setBorder(border);
 
         main.setLayout(gridBagLayout);
         gridBagConstraints.fill = GridBagConstraints.BOTH;
 
-        gridBagConstraints.weightx = 2.0;
-        gridBagConstraints.weighty = 3.0;
-        //gridBagConstraints.insets = new Insets(preferredResolution[1] / 18, 0, preferredResolution[1] / 18, 0);
-        make(aTetrisBoard, 0, 0, 1, 2);
-        make(bTetrisBoard, 2, 0, 1, 2);
+        //gridBagConstraints.weightx = 2.0;
+        //gridBagConstraints.weighty = 3.0;
+        gridBagConstraints.insets = new Insets(preferredResolution[1] / 18, 0, preferredResolution[1] / 18, 0);
+        make(aTetrisBoard, 0, 0, 1, 3);
+        make(bTetrisBoard, 2, 0, 1, 3);
 
-        gridBagConstraints.weightx = 1.0;
+        //gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new Insets(preferredResolution[1] / 18, preferredResolution[0] / 32, preferredResolution[1] / 180, preferredResolution[0] / 32);
         make(aNextBlockBoard, 1, 0, 1, 1);
         make(bNextBlockBoard, 3, 0, 1, 1);
 
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new Insets(preferredResolution[1] / 180, preferredResolution[0] / 32, preferredResolution[1] * 3 / 5, preferredResolution[0] / 32);
+        //gridBagConstraints.weighty = 1.0;
         make(aScoreBoard, 1, 1, 1, 1);
         make(bScoreBoard, 3, 1, 1, 1);
+
+        //gridBagConstraints.weighty = 1.0;
+        //gridBagConstraints.insets = new Insets(preferredResolution[1] / 180, preferredResolution[0] / 32, preferredResolution[1] * 3 / 5, preferredResolution[0] / 32);
+        gridBagConstraints.insets = new Insets(preferredResolution[1] / 180, preferredResolution[0] / 32, preferredResolution[1] * 3 / 5, preferredResolution[0] / 32);
+        make(aAttackBoard, 1, 2, 1, 1);
+        make(bAttackBoard, 3, 2, 1, 1);
 
         main.add(aTetrisBoard);
         main.add(aNextBlockBoard);
         main.add(aScoreBoard);
+        main.add(aAttackBoard);
         main.add(bTetrisBoard);
         main.add(bNextBlockBoard);
         main.add(bScoreBoard);
+        main.add(bAttackBoard);
 
         main.setBounds(0, 0, preferredResolution[0], preferredResolution[1]);
         this.add(main, JLayeredPane.DEFAULT_LAYER);
