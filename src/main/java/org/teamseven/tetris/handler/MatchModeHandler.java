@@ -56,7 +56,6 @@ public class MatchModeHandler extends GameHandler {
         speedUp();
         nextBlock = BlockFactory.blockGenerator("random").generate();
 
-
         board.placeBlock(curr);
         return true;
     }
@@ -118,4 +117,3 @@ public class MatchModeHandler extends GameHandler {
         return attackLines;
     }
 }
-
