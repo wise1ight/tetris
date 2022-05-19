@@ -93,7 +93,7 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
             Pipeline.replacePane(new SettingPane());
         });
         scoreBoard.addActionListener(e -> {
-            Pipeline.replacePane(new ScoreBoardTabbedPane());
+            Pipeline.replacePane(new SelectScoreBoardPane());
         });
         exit.addActionListener(e -> {
             System.exit(0);
