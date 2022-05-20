@@ -4,6 +4,7 @@ import org.teamseven.tetris.Const;
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.handler.GameHandler;
+import org.teamseven.tetris.handler.MatchModeHandler;
 import org.teamseven.tetris.handler.PreferencesHandler;
 import org.teamseven.tetris.handler.MatchModeBridge;
 
@@ -120,6 +121,8 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         drawNextBlock(gameHandler.getBGameHandler(), bNextBlockBoard);
         drawScore(gameHandler.getAGameHandler(), aScoreBoard);
         drawScore(gameHandler.getBGameHandler(), bScoreBoard);
+        drawAttackBoard(gameHandler.getAGameHandler(), aAttackBoard);
+        drawAttackBoard(gameHandler.getBGameHandler(), bAttackBoard);
     }
 
     private void drawGameBoard(GameHandler gh, JTextPane tb) {
@@ -268,6 +271,76 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         sb.setStyledDocument(doc);
     }
 
+    private void drawAttackBoard(GameHandler gh, JTextPane nbb) {
+        if(!(gh instanceof MatchModeHandler))
+            return;
+
+        StringBuffer sb = new StringBuffer();
+
+        UnitBlock[][] unitBlocks = ((MatchModeHandler) gh).getAttackedLines();
+        for (UnitBlock[] unitBlock : unitBlocks) {
+            for (UnitBlock block : unitBlock) {
+                if (block != null) {
+                    sb.append("O");
+                } else {
+                    sb.append(" ");
+                }
+            }
+            sb.append("\n");
+        }
+
+        nbb.setText(sb.toString());
+        StyledDocument doc = nbb.getStyledDocument();
+        doc.setParagraphAttributes(0, doc.getLength(), TetrisStyle.getStyle(Color.WHITE), false);
+        nbb.setStyledDocument(doc);
+
+        for (int row = 0; row < unitBlocks.length; row++) {
+            for (int col = 0; col < unitBlocks[row].length; col++) {
+                int offset = (unitBlocks[row].length + 1) * row + col;
+                if(unitBlocks[row][col] != null) {
+                    if(unitBlocks[row][col].getColor().equals(Color.LIGHT_GRAY)) { // Boom
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "B", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (unitBlocks[row][col].getColor().equals(Color.DARK_GRAY)) { // Clear
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "C", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (unitBlocks[row][col].getColor().equals(Color.GRAY)) { // ColorScore
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "S", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (unitBlocks[row][col].getColor().equals(Color.BLACK)) { // Line Remove
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "L", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (unitBlocks[row][col].getColor().equals(Color.PINK)) { // Weight Block
+                        try {
+                            doc.remove(offset, 1);
+                            doc.insertString(offset, "W", TetrisStyle.getStyle(Color.WHITE));
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        doc.setCharacterAttributes(offset, 1, TetrisStyle.getStyle(unitBlocks[row][col].getColor()), false);
+                    }
+                }
+            }
+        }
+    }
+
     private StringBuffer drawWidthBorder(StringBuffer sb) {
         StringBuffer buffer = new StringBuffer(sb);
         for (int t = 0; t< Const.WIDTH+2; t++) {
@@ -329,7 +402,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
 
         //gridBagConstraints.weighty = 1.0;
         //gridBagConstraints.insets = new Insets(preferredResolution[1] / 180, preferredResolution[0] / 32, preferredResolution[1] * 3 / 5, preferredResolution[0] / 32);
-        gridBagConstraints.insets = new Insets(preferredResolution[1] / 180, preferredResolution[0] / 32, preferredResolution[1] * 3 / 5, preferredResolution[0] / 32);
+        //gridBagConstraints.insets = new Insets(preferredResolution[1] / 180, preferredResolution[0] / 32, preferredResolution[1] * 3 / 5, preferredResolution[0] / 32);
         make(aAttackBoard, 1, 2, 1, 1);
         make(bAttackBoard, 3, 2, 1, 1);
 

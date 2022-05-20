@@ -19,6 +19,7 @@ public class MatchModeHandler extends GameHandler {
 
     public MatchModeHandler() {
         attackLines = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
+        attackedLines = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
         preBoard = new UnitBlock[HEIGHT][WIDTH];
     }
 
