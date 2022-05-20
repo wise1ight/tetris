@@ -52,6 +52,7 @@ public class GameBoard {
 
         for (int j = 0; j < HEIGHT; j++) {
             if (isFilled(board[j])) {
+                eraseIndex.add(j);
                 erased += eraseLine(j);
             }
         }
@@ -62,7 +63,6 @@ public class GameBoard {
         UnitBlock[] blankLine = new UnitBlock[WIDTH];
 
         for (int i = j; i >= 1; i--) {
-            appendEraseIndex(i);
             board[i] = board[i - 1].clone();
         }
         board[0] = blankLine;
