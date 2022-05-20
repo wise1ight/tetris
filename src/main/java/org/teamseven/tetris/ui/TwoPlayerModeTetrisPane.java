@@ -121,8 +121,8 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         drawNextBlock(gameHandler.getBGameHandler(), bNextBlockBoard);
         drawScore(gameHandler.getAGameHandler(), aScoreBoard);
         drawScore(gameHandler.getBGameHandler(), bScoreBoard);
-        drawAttackBoard(gameHandler.getAGameHandler(), aAttackBoard);
-        drawAttackBoard(gameHandler.getBGameHandler(), bAttackBoard);
+        drawAttackBoard(gameHandler.getBGameHandler(), aAttackBoard);
+        drawAttackBoard(gameHandler.getAGameHandler(), bAttackBoard);
     }
 
     private void drawGameBoard(GameHandler gh, JTextPane tb) {
@@ -277,7 +277,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
 
         StringBuffer sb = new StringBuffer();
 
-        UnitBlock[][] unitBlocks = ((MatchModeHandler) gh).getAttackedLines();
+        UnitBlock[][] unitBlocks = ((MatchModeHandler) gh).getAttackLines();
         for (UnitBlock[] unitBlock : unitBlocks) {
             for (UnitBlock block : unitBlock) {
                 if (block != null) {
