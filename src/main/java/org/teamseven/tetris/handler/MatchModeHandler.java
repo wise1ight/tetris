@@ -14,7 +14,6 @@ import static org.teamseven.tetris.Const.*;
 public class MatchModeHandler extends GameHandler {
     private UnitBlock[][] attackLines;
     private UnitBlock[][] attackedLines;
-//    private int attackLinesNum;
     private UnitBlock[][] preBoard;
     private static final int MAXIMUM_ATTACK_LINES = 10;
 
@@ -52,8 +51,6 @@ public class MatchModeHandler extends GameHandler {
         curr.newBlock(nextBlock);
         addBlockCnt();
 
-//        initPreBoard();
-
         if (isFinished()) {
             return false;
         }
@@ -83,7 +80,7 @@ public class MatchModeHandler extends GameHandler {
         }
         return board;
     }
-//
+
     private void initPreBoard() {
         for (int i = 0; i < HEIGHT; i++) {
             preBoard[i] = board.getBoard()[i].clone();
@@ -112,7 +109,8 @@ public class MatchModeHandler extends GameHandler {
         }
         for (int i = 0; i < curr.height(); i++) {
             for (int j = 0; j < curr.width(); j++) {
-                if (curr.getBlock().getUnitBlock(j, i) != null && i + curr.y <= eraseIndex.get(eraseIndex.size() - 1) && i + curr.y >= eraseIndex.get(0)) {
+                if (curr.getBlock().getUnitBlock(j, i) != null &&
+                        i + curr.y <= eraseIndex.get(eraseIndex.size() - 1) && i + curr.y >= eraseIndex.get(0)) {
                     int y = MAXIMUM_ATTACK_LINES - (curr.height() - i);
                     int x = j + curr.x;
                     attackLines[y][x] = null;
@@ -120,16 +118,7 @@ public class MatchModeHandler extends GameHandler {
             }
         }
     }
-//        for (int j = curr.y; j < curr.height() + curr.y; j++) {
-//            for (int i = curr.x; i < curr.width() + curr.x; i++) {
-//                attackLines[j][i]
-//            }
-//        }
-//
-//    public void attacked(UnitBlock[][] enemyStore) {
-//        this.attackedLines = enemyStore;
-//    }
-//
+
     public void clearAttackLines() {
         attackLines = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
     }
