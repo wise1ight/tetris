@@ -76,7 +76,7 @@ public class MatchModeHandler extends GameHandler {
                     break;
                 }
             }
-            board[i + MAXIMUM_ATTACK_LINES] = attackLines[i];
+            board[i + MAXIMUM_ATTACK_LINES] = attackedLines[i];
         }
         for (int i = 0; i < HEIGHT - attackedLinesNum; i++) {
             board[i] = this.board.getBoard()[i + attackedLinesNum].clone();
