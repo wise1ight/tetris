@@ -15,6 +15,9 @@ public class MatchModeHandler extends GameHandler {
     private UnitBlock[][] attackLines;
     private UnitBlock[][] attackedLines;
     private UnitBlock[][] preBoard;
+    //TODO
+    //minimum erase line 2로 바꾸기
+    public static final int MINIMUM_ERASE_LINE = 1;
     private static final int MAXIMUM_ATTACK_LINES = 10;
 
     public MatchModeHandler() {
@@ -91,7 +94,7 @@ public class MatchModeHandler extends GameHandler {
     //공격준비할 줄 만들기
     private void readyAttack() {
         List<Integer> eraseIndex = board.getEraseIndex();
-        if (eraseIndex.size() < 1) {
+        if (eraseIndex.size() < MINIMUM_ERASE_LINE) {
             return;
         }
         saveAttackLines(eraseIndex);
@@ -105,12 +108,12 @@ public class MatchModeHandler extends GameHandler {
             attackLines[i] = attackLines[i + erasedNum].clone();
         }
         for (int i = 0; i < eraseIndex.size(); i++) {
-            attackLines[MAXIMUM_ATTACK_LINES - i - 1] = preBoard[eraseIndex.get(i)].clone();
+            attackLines[MAXIMUM_ATTACK_LINES - i - MINIMUM_ERASE_LINE] = preBoard[eraseIndex.get(i)].clone();
         }
         for (int i = 0; i < curr.height(); i++) {
             for (int j = 0; j < curr.width(); j++) {
                 if (curr.getBlock().getUnitBlock(j, i) != null &&
-                        i + curr.y <= eraseIndex.get(eraseIndex.size() - 1) && i + curr.y >= eraseIndex.get(0)) {
+                        i + curr.y <= eraseIndex.get(eraseIndex.size() - MINIMUM_ERASE_LINE) && i + curr.y >= eraseIndex.get(0)) {
                     int y = MAXIMUM_ATTACK_LINES - (curr.height() - i);
                     int x = j + curr.x;
                     attackLines[y][x] = null;
