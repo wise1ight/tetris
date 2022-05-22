@@ -144,3 +144,5 @@ checkstyle-idea.xml
 item.csv
 
 normal.csv
+
+build/reports

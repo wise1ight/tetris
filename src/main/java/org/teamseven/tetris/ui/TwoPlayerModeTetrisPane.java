@@ -4,8 +4,9 @@ import org.teamseven.tetris.Const;
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.handler.GameHandler;
+import org.teamseven.tetris.handler.MatchModeHandler;
 import org.teamseven.tetris.handler.PreferencesHandler;
-import org.teamseven.tetris.handler.TwoPersonGameHandler;
+import org.teamseven.tetris.handler.MatchModeBridge;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -21,13 +22,13 @@ import static org.teamseven.tetris.Const.*;
 public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, KeyEventDispatcher {
 
     private JPanel main;
-    private JTextPane aTetrisBoard, aNextBlockBoard, aScoreBoard;
-    private JTextPane bTetrisBoard, bNextBlockBoard, bScoreBoard;
+    private JTextPane aTetrisBoard, aNextBlockBoard, aScoreBoard, aAttackBoard;
+    private JTextPane bTetrisBoard, bNextBlockBoard, bScoreBoard, bAttackBoard;
 
     private GridBagConstraints gridBagConstraints;
     private GridBagLayout gridBagLayout;
 
-    private final TwoPersonGameHandler gameHandler;
+    private final MatchModeBridge gameHandler;
     private boolean itemMode;
     private int[] preferredResolution;  // frame resolution - frame top border
 
@@ -35,7 +36,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
     private static final int KEY_CODE_LEFT_TWO = PreferencesHandler.getLeftTwoBtnCode();
     private static final int KEY_CODE_RIGHT_ONE = PreferencesHandler.getRightOneBtnCode();
     private static final int KEY_CODE_RIGHT_TWO = PreferencesHandler.getRightTwoBtnCode();
-    private static final int KEY_CODE_ROTATE_RIGHT_ONE = PreferencesHandler.getRotateRightTwoBtnCode();
+    private static final int KEY_CODE_ROTATE_RIGHT_ONE = PreferencesHandler.getRotateRightOneBtnCode();
     private static final int KEY_CODE_ROTATE_RIGHT_TWO = PreferencesHandler.getRotateRightTwoBtnCode();
     private static final int KEY_CODE_PAUSE = PreferencesHandler.getPauseBtnCode();
     private static final int KEY_CODE_HARD_DROP_ONE = PreferencesHandler.getHardDropOneBtnCode();
@@ -44,7 +45,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
     private static final int KEY_CODE_SOFT_DROP_TWO = PreferencesHandler.getSoftDropTwoBtnCode();
     private static final int KEY_CODE_EXIT = PreferencesHandler.getExitBtnCode();
 
-    public TwoPlayerModeTetrisPane(TwoPersonGameHandler gameHandler) {
+    public TwoPlayerModeTetrisPane(MatchModeBridge gameHandler) {
         int[] frameBorderSize = new int[2];       // frame top border
         frameBorderSize[0] = this.getInsets().left + this.getInsets().right;
         frameBorderSize[1] = this.getInsets().top + this.getInsets().bottom;
@@ -65,9 +66,11 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         aTetrisBoard = new JTextPane();
         aNextBlockBoard = new JTextPane();
         aScoreBoard = new JTextPane();
+        aAttackBoard = new JTextPane();
         bTetrisBoard = new JTextPane();
         bNextBlockBoard = new JTextPane();
         bScoreBoard = new JTextPane();
+        bAttackBoard = new JTextPane();
 
         gridBagConstraints = new GridBagConstraints();
         gridBagLayout = new GridBagLayout();
@@ -76,7 +79,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         Timer aTimer = new Timer(INIT_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (gameHandler.getAGameHandler().playing()) {
+                if (gameHandler.getAGameHandler().playing(gameHandler.getBGameHandler())) {
                     drawBoard();
                 } else {
                     finishGame();
@@ -87,7 +90,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         Timer bTimer = new Timer(INIT_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (gameHandler.getBGameHandler().playing()) {
+                if (gameHandler.getBGameHandler().playing(gameHandler.getAGameHandler())) {
                     drawBoard();
                 } else {
                     finishGame();
@@ -118,6 +121,8 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         drawNextBlock(gameHandler.getBGameHandler(), bNextBlockBoard);
         drawScore(gameHandler.getAGameHandler(), aScoreBoard);
         drawScore(gameHandler.getBGameHandler(), bScoreBoard);
+        drawAttackBoard(gameHandler.getBGameHandler(), aAttackBoard);
+        drawAttackBoard(gameHandler.getAGameHandler(), bAttackBoard);
     }
 
     private void drawGameBoard(GameHandler gh, JTextPane tb) {
@@ -266,6 +271,39 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         sb.setStyledDocument(doc);
     }
 
+    private void drawAttackBoard(GameHandler gh, JTextPane nbb) {
+        if(!(gh instanceof MatchModeHandler))
+            return;
+
+        StringBuffer sb = new StringBuffer();
+
+        UnitBlock[][] unitBlocks = ((MatchModeHandler) gh).getAttackLines();
+        for (UnitBlock[] unitBlock : unitBlocks) {
+            for (UnitBlock block : unitBlock) {
+                if (block != null) {
+                    sb.append("O");
+                } else {
+                    sb.append(" ");
+                }
+            }
+            sb.append("\n");
+        }
+
+        nbb.setText(sb.toString());
+        StyledDocument doc = nbb.getStyledDocument();
+        doc.setParagraphAttributes(0, doc.getLength(), TetrisStyle.getStyle(Color.WHITE), false);
+        nbb.setStyledDocument(doc);
+
+        for (int row = 0; row < unitBlocks.length; row++) {
+            for (int col = 0; col < unitBlocks[row].length; col++) {
+                int offset = (unitBlocks[row].length + 1) * row + col;
+                if(unitBlocks[row][col] != null) {
+                    doc.setCharacterAttributes(offset, 1, TetrisStyle.getStyle(unitBlocks[row][col].getColor()), false);
+                }
+            }
+        }
+    }
+
     private StringBuffer drawWidthBorder(StringBuffer sb) {
         StringBuffer buffer = new StringBuffer(sb);
         for (int t = 0; t< Const.WIDTH+2; t++) {
@@ -282,6 +320,8 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         bNextBlockBoard.setEditable(false);
         aScoreBoard.setEditable(false);
         bScoreBoard.setEditable(false);
+        aAttackBoard.setEditable(false);
+        bAttackBoard.setEditable(false);
 
         aTetrisBoard.setBackground(Color.BLACK);
         bTetrisBoard.setBackground(Color.BLACK);
@@ -289,6 +329,8 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         bNextBlockBoard.setBackground(Color.BLACK);
         aScoreBoard.setBackground(Color.BLACK);
         bScoreBoard.setBackground(Color.BLACK);
+        aAttackBoard.setBackground(Color.BLACK);
+        bAttackBoard.setBackground(Color.BLACK);
 
         CompoundBorder border = BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.gray, preferredResolution[1] / 60),
@@ -300,32 +342,41 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         bNextBlockBoard.setBorder(border);
         aScoreBoard.setBorder(border);
         bScoreBoard.setBorder(border);
+        aAttackBoard.setBorder(border);
+        bAttackBoard.setBorder(border);
 
         main.setLayout(gridBagLayout);
         gridBagConstraints.fill = GridBagConstraints.BOTH;
 
-        gridBagConstraints.weightx = 2.0;
-        gridBagConstraints.weighty = 3.0;
-        //gridBagConstraints.insets = new Insets(preferredResolution[1] / 18, 0, preferredResolution[1] / 18, 0);
-        make(aTetrisBoard, 0, 0, 1, 2);
-        make(bTetrisBoard, 2, 0, 1, 2);
+        //gridBagConstraints.weightx = 2.0;
+        //gridBagConstraints.weighty = 3.0;
+        gridBagConstraints.insets = new Insets(preferredResolution[1] / 18, 0, preferredResolution[1] / 18, 0);
+        make(aTetrisBoard, 0, 0, 1, 3);
+        make(bTetrisBoard, 2, 0, 1, 3);
 
-        gridBagConstraints.weightx = 1.0;
+        //gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new Insets(preferredResolution[1] / 18, preferredResolution[0] / 32, preferredResolution[1] / 180, preferredResolution[0] / 32);
         make(aNextBlockBoard, 1, 0, 1, 1);
         make(bNextBlockBoard, 3, 0, 1, 1);
 
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new Insets(preferredResolution[1] / 180, preferredResolution[0] / 32, preferredResolution[1] * 3 / 5, preferredResolution[0] / 32);
+        //gridBagConstraints.weighty = 1.0;
         make(aScoreBoard, 1, 1, 1, 1);
         make(bScoreBoard, 3, 1, 1, 1);
+
+        //gridBagConstraints.weighty = 1.0;
+        //gridBagConstraints.insets = new Insets(preferredResolution[1] / 180, preferredResolution[0] / 32, preferredResolution[1] * 3 / 5, preferredResolution[0] / 32);
+        //gridBagConstraints.insets = new Insets(preferredResolution[1] / 180, preferredResolution[0] / 32, preferredResolution[1] * 3 / 5, preferredResolution[0] / 32);
+        make(aAttackBoard, 1, 2, 1, 1);
+        make(bAttackBoard, 3, 2, 1, 1);
 
         main.add(aTetrisBoard);
         main.add(aNextBlockBoard);
         main.add(aScoreBoard);
+        main.add(aAttackBoard);
         main.add(bTetrisBoard);
         main.add(bNextBlockBoard);
         main.add(bScoreBoard);
+        main.add(bAttackBoard);
 
         main.setBounds(0, 0, preferredResolution[0], preferredResolution[1]);
         this.add(main, JLayeredPane.DEFAULT_LAYER);
@@ -355,7 +406,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
-        if(e.getID() == KeyEvent.KEY_PRESSED && e.getModifiers() == 0) {
+        if(e.getID() == KeyEvent.KEY_PRESSED) {
             if (e.getKeyCode() == KEY_CODE_EXIT) {
                 System.exit(0);
                 return true;
@@ -410,11 +461,11 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
                 drawBoard();
                 return true;
             } else if (e.getKeyCode() == KEY_CODE_HARD_DROP_ONE) {
-                gameHandler.getAGameHandler().drop();
+                gameHandler.getAGameHandler().drop(gameHandler.getBGameHandler());
                 drawBoard();
                 return true;
             } else if (e.getKeyCode() == KEY_CODE_HARD_DROP_TWO) {
-                gameHandler.getBGameHandler().drop();
+                gameHandler.getBGameHandler().drop(gameHandler.getAGameHandler());
                 drawBoard();
                 return true;
             }

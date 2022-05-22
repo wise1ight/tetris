@@ -6,19 +6,19 @@ import org.teamseven.tetris.block.item.ItemBlock;
 import org.teamseven.tetris.block.item.WeightBlock;
 import org.teamseven.tetris.factory.BlockFactory;
 
-public class ItemModeHandler extends GameHandler {
+public class ItemMatchModeHandler extends MatchModeHandler {
 
-    public static final int MINIMUM_ERASE_LINE = 2;
     private int[] pos;
 
     @Override
-    protected boolean nextTurn() {
+    protected boolean nextTurn(MatchModeHandler otherPlayer){
         if (hasItem(curr)) {
             executeItem(board, curr, this);
         }
         if (animating()) {
             return true;
         }
+        initPreBoard();
 
         setErasedLines(board.eraseLines());
         addScoreByEraseLine();
@@ -28,6 +28,12 @@ public class ItemModeHandler extends GameHandler {
         } else {
             curr.setHandler(new BlockMovementHandler());
         }
+
+        readyAttack();
+        attackedLines = otherPlayer.attack();
+        otherPlayer.clearAttackLines();
+        board.setBoard(appendAttackedLines());
+
         curr.newBlock(nextBlock);
         addBlockCnt();
 
@@ -35,6 +41,7 @@ public class ItemModeHandler extends GameHandler {
             return false;
         }
 
+        speedUp();
         if (isNewItem()) {
             nextBlock = BlockFactory.blockGenerator("item").generate();
         } else {
@@ -70,7 +77,7 @@ public class ItemModeHandler extends GameHandler {
     }
 
     private boolean isNewItem() {
-        if (totalErasedLines != 0 && totalErasedLines / MINIMUM_ERASE_LINE > 0) {
+        if (totalErasedLines != 0 && totalErasedLines / 2 > 0) {
             setTotalErasedLines(0);
             return true;
         }
