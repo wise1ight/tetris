@@ -2,28 +2,19 @@ package org.teamseven.tetris.ui.menu;
 
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.handler.*;
-import org.teamseven.tetris.ui.IDesign;
+import org.teamseven.tetris.ui.BasePane;
 import org.teamseven.tetris.ui.game.TetrisPane;
 import org.teamseven.tetris.ui.game.TwoPlayerModeTetrisPane;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SelectGameModePane extends JLayeredPane implements IDesign {
+public class SelectGameModePane extends BasePane {
     private Label title;
     private Panel gameModePanel, buttonPanel, titlePanel;
     private Button normalMode, itemMode, twoPlayerMode_Normal, twoPlayerMode_Item, twoPlayerMode_Time, home;
     private Button selected;
-    private static int sizeInt = Pipeline.getSizeInt();
-
-    public SelectGameModePane() {
-        sizeInt = Pipeline.getSizeInt();
-        setComp();
-        setDesign();
-        setAction();
-    }
 
     @Override
     public void setComp() {

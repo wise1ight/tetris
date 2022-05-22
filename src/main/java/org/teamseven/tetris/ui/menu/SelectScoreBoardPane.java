@@ -1,28 +1,18 @@
 package org.teamseven.tetris.ui.menu;
 
 import org.teamseven.tetris.Pipeline;
-import org.teamseven.tetris.ui.IDesign;
+import org.teamseven.tetris.ui.BasePane;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SelectScoreBoardPane extends JLayeredPane implements IDesign {
-
-    private static int sizeInt = Pipeline.getSizeInt();
+public class SelectScoreBoardPane extends BasePane {
 
     private Panel scoreBoardPanel, titlePanel, buttonPanel;
 
     private Button normal, item, home;
     private Label title;
-
-    public SelectScoreBoardPane() {
-        sizeInt = Pipeline.getSizeInt();
-        setComp();
-        setDesign();
-        setAction();
-    }
 
     @Override
     public void setComp() {
