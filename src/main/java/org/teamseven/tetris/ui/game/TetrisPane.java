@@ -201,24 +201,33 @@ public class TetrisPane extends BaseTetrisPane {
         g.setColor(color);
         g.fillRect(x, y, BLOCK_WIDTH * sizeInt, BLOCK_WIDTH * sizeInt);
 
+        g.setColor(Color.GRAY);
+        g.drawRect(x, y, BLOCK_WIDTH* sizeInt, BLOCK_WIDTH * sizeInt);
+
+
         if (color == Color.LIGHT_GRAY) {
             g.setColor(Color.WHITE);
+            g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
             g.drawString("B", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
         }
         if (color == Color.DARK_GRAY) {
             g.setColor(Color.WHITE);
+            g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
             g.drawString("C", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
         }
         if (color == Color.GRAY) {
             g.setColor(Color.WHITE);
+            g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
             g.drawString("S", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
         }
         if (color == Color.BLACK) {
             g.setColor(Color.WHITE);
+            g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
             g.drawString("L", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
         }
         if (color == Color.PINK) {
             g.setColor(Color.WHITE);
+            g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
             g.drawString("W", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
         }
     }
