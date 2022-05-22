@@ -5,6 +5,7 @@ import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.handler.GameHandler;
 import org.teamseven.tetris.handler.MatchModeHandler;
 import org.teamseven.tetris.handler.MatchModeBridge;
+import org.teamseven.tetris.handler.PreferencesHandler;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -14,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static org.teamseven.tetris.Const.*;
+import static org.teamseven.tetris.ui.KeyTool.getStringKey;
 
 public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
 
@@ -91,6 +93,8 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         drawScore(gameHandler.getBGameHandler(), bScoreBoard);
         drawAttackBoard(gameHandler.getBGameHandler(), attackBoard);
         drawAttackBoard(gameHandler.getAGameHandler(), bAttackBoard);
+
+        this.repaint();
     }
 
     private void drawAttackBoard(GameHandler gh, JTextPane nbb) {
@@ -212,4 +216,131 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         });
         manager.addKeyEventDispatcher(keyEventDispatcher);
     }
+
+
+    private int BLOCK_WIDTH = 10;
+    private int sizeInt;
+
+    public void paint(Graphics g){
+        sizeInt = Pipeline.getSizeInt();
+
+        super.paint(g);
+
+        drawHelpBox(g, 120, 60);
+
+        drawGameBoard(g, 10, 30, gameHandler.getAGameHandler());
+        drawNextBlock(g, 120, 30, gameHandler.getAGameHandler());
+
+        drawGameBoard(g, 230, 30, gameHandler.getBGameHandler());
+        drawNextBlock(g, 340, 30, gameHandler.getBGameHandler());
+    }
+
+    public void drawGameBoard(Graphics g, int boardConerX, int boardConerY, GameHandler gameHandler){
+        drawBoards(g, boardConerX, boardConerY);
+        drawCell(g, boardConerX, boardConerY, gameHandler);
+
+    }
+
+    public void drawHelpBox(Graphics g, int X, int Y){
+        int x = X * sizeInt;
+        int y = Y * sizeInt;
+        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
+        g.setColor(Color.RED);
+
+        g.drawString("H E L P", x, y);
+        g.drawString(getStringKey(PreferencesHandler.getRotateRightBtnCode())+" : Rotate", x, y + 10*sizeInt);
+        g.drawString(getStringKey(PreferencesHandler.getLeftBtnCode()) + " : Move Left", x, y + 20*sizeInt);
+        g.drawString(getStringKey(PreferencesHandler.getRightBtnCode()) + " : Move Right", x,y + 30*sizeInt);
+        g.drawString(getStringKey(PreferencesHandler.getSoftDropBtnCode())+ " : Move Down", x, y + 40*sizeInt);
+        g.drawString(getStringKey(PreferencesHandler.getHardDropBtnCode()) + " : Drop", x, y + 50*sizeInt);
+//        g.drawString("F2: Home", sizeInt * 5, sizeInt * 150);
+        //    g.drawString("F1: New Game", sizeInt * 5, sizeInt * 80);
+        //      g.drawString("ESC: Pause Game/Continue", sizeInt * 5, sizeInt * 90);
+
+    }
+    public void drawNextBlock(Graphics g, int X, int Y, GameHandler gameHandler){
+        int x = X *sizeInt;
+        int y = Y *sizeInt;
+
+        UnitBlock[][] unitBlocks = gameHandler.getNextBlock().getShape();
+        for (UnitBlock[] unitBlock : unitBlocks) {
+            for (UnitBlock block : unitBlock) {
+                if (block != null) {
+                    drawBlock(g, x, y, block.getColor());
+                    x += sizeInt*BLOCK_WIDTH;
+                } else {
+                    x += sizeInt*BLOCK_WIDTH;
+                }
+            }
+            y += sizeInt*BLOCK_WIDTH;
+            x = X *sizeInt;
+        }
+
+    }
+    public void drawBoards(Graphics g, int boardConerX, int boardConerY){
+
+        g.setColor(Color.BLACK);
+        g.fillRect(boardConerX*sizeInt -1,boardConerY*sizeInt -1,BLOCK_WIDTH*sizeInt*10 +2 ,BLOCK_WIDTH*sizeInt*20 +2);
+        g.setColor(Color.GRAY);
+        g.drawRect(boardConerX*sizeInt -1,boardConerY*sizeInt -1,BLOCK_WIDTH*sizeInt*10 +2,BLOCK_WIDTH*sizeInt*20 +2); //주의
+
+    }
+    public void drawCell(Graphics g, int boardConerX, int boardConerY, GameHandler gameHandler){
+        int x = boardConerX *sizeInt;
+        int y = boardConerY *sizeInt;
+
+        UnitBlock[][] unitBlocks = gameHandler.getBoard();
+        for (UnitBlock[] unitBlock : unitBlocks) {
+            for (UnitBlock block : unitBlock) {
+                if (block != null) {
+                    drawBlock(g, x, y, block.getColor());
+                    x += sizeInt*BLOCK_WIDTH;
+                } else {
+                    x += sizeInt*BLOCK_WIDTH;
+                }
+            }
+            y += sizeInt*BLOCK_WIDTH;
+            x = boardConerX *sizeInt;
+        }
+
+    }
+    public void drawBlock(Graphics g, int x, int y, Color color) {
+        g.setColor(color);
+        g.fillRect(x, y, BLOCK_WIDTH * sizeInt, BLOCK_WIDTH * sizeInt);
+
+        g.setColor(Color.GRAY);
+        g.drawRect(x, y, BLOCK_WIDTH* sizeInt, BLOCK_WIDTH * sizeInt);
+
+
+        if (color == Color.LIGHT_GRAY) {
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
+            g.drawString("B", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
+        }
+        if (color == Color.DARK_GRAY) {
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
+            g.drawString("C", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
+        }
+        if (color == Color.GRAY) {
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
+            g.drawString("S", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
+        }
+        if (color == Color.BLACK) {
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
+            g.drawString("L", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
+        }
+        if (color == Color.PINK) {
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
+            g.drawString("W", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
+        }
+    }
+    public void drawAttackBoards(Graphics g, int X, int Y, GameHandler gameHandler){
+
+    }
+
+
 }

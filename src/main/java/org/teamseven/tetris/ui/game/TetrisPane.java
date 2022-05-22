@@ -65,6 +65,7 @@ public class TetrisPane extends BaseTetrisPane {
         drawGameBoard(gameHandler, tetrisBoard);
         drawNextBlock(gameHandler, nextBlockBoard);
         drawScore(gameHandler, scoreBoard);
+        this.repaint();
     }
 
     @Override
@@ -123,11 +124,11 @@ public class TetrisPane extends BaseTetrisPane {
 
         super.paint(g);
 
-        drawBoards(g, 30, 30);
-        drawCell(g, 30, 30);
-        drawNextBlock(g, 135, 30);
+        drawBoards(g, 10, 30);
+        drawCell(g, 10, 30);
+        drawNextBlock(g, 120, 30);
+        drawHelpBox(g, 120, 60);
 
-        drawHelpBox(g, 130, 100);
     }
 
     public void drawHelpBox(Graphics g, int X, int Y){
