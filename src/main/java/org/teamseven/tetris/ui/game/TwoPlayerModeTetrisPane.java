@@ -148,12 +148,12 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
 
         super.paint(g);
 
-
+        drawScore(g, 10, 10, gameHandler.getAGameHandler());
         drawGameBoard(g, 10, 30, gameHandler.getAGameHandler());
         drawNextBlock(g, 120, 30, gameHandler.getAGameHandler());
         drawHelpBox(g, 120, 70);
 
-
+        drawScore(g, 230, 10, gameHandler.getBGameHandler());
         drawGameBoard(g, 230, 30, gameHandler.getBGameHandler());
         drawNextBlock(g, 340, 30, gameHandler.getBGameHandler());
         bDrawHelpBox(g, 340, 70);
@@ -299,9 +299,16 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
             x = X *sizeInt;
         }
 
-
+    }
+    public void drawScore(Graphics g, int X, int Y, GameHandler gameHandler){
+        g.setColor(Color.BLACK);
+        g.fillRect( X*sizeInt, Y*sizeInt, BLOCK_WIDTH*10*sizeInt, BLOCK_WIDTH*sizeInt + 3*sizeInt);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
+        g.drawString(" SCORE : " +String.valueOf(gameHandler.getScore()), X*sizeInt, Y*sizeInt + 10*sizeInt);
 
     }
+
 
 
 }

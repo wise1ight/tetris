@@ -99,6 +99,7 @@ public class TetrisPane extends BaseTetrisPane {
 
         super.paint(g);
 
+        drawScore(g, 10,10, gameHandler);
         drawBoards(g, 10, 30);
         drawCell(g, 10, 30);
         drawNextBlock(g, 120, 30);
@@ -174,6 +175,14 @@ public class TetrisPane extends BaseTetrisPane {
             x = boardConerX *sizeInt;
         }
 
+    }
+
+    public void drawScore(Graphics g, int X, int Y, GameHandler gameHandler){
+        g.setColor(Color.BLACK);
+        g.fillRect( X*sizeInt, Y*sizeInt, BLOCK_WIDTH*10*sizeInt, BLOCK_WIDTH*sizeInt + 3*sizeInt);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
+        g.drawString(" SCORE : " +String.valueOf(gameHandler.getScore()), X*sizeInt, Y*sizeInt + 10*sizeInt);
     }
 
     public void drawBlock(Graphics g, int x, int y, Color color) {
