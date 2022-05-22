@@ -47,9 +47,7 @@ public class MatchModeHandler extends GameHandler {
         addScoreByEraseLine();
 
         readyAttack();
-        attackedLines = otherPlayer.attack();
-        otherPlayer.clearAttackLines();
-        board.setBoard(appendAttackedLines());
+        attacked(otherPlayer);
 
         curr.newBlock(nextBlock);
         addBlockCnt();
@@ -63,6 +61,12 @@ public class MatchModeHandler extends GameHandler {
 
         board.placeBlock(curr);
         return true;
+    }
+
+    private void attacked(MatchModeHandler otherPlayer) {
+        attackedLines = otherPlayer.attack();
+        otherPlayer.clearAttackLines();
+        board.setBoard(appendAttackedLines());
     }
 
     public void drop(MatchModeHandler otherPlayer) {
