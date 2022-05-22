@@ -8,6 +8,7 @@ import org.teamseven.tetris.ui.IDesign;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
@@ -18,6 +19,7 @@ public abstract class BaseTetrisPane extends JLayeredPane implements IDesign {
 
     protected JPanel main;
     protected JTextPane tetrisBoard, nextBlockBoard, scoreBoard;
+    protected JLabel pauseLabel;
 
     protected GridBagConstraints gridBagConstraints;
     protected GridBagLayout gridBagLayout;
@@ -42,6 +44,15 @@ public abstract class BaseTetrisPane extends JLayeredPane implements IDesign {
 
         gridBagConstraints = new GridBagConstraints();
         gridBagLayout = new GridBagLayout();
+
+        pauseLabel = new JLabel("PAUSE");
+        pauseLabel.setOpaque(true);
+        pauseLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        pauseLabel.setBackground(new Color(50, 210, 250, 200));
+        pauseLabel.setSize(200, 50);
+        pauseLabel.setBorder(new LineBorder(Color.gray));
+        pauseLabel.setVisible(false);
+        this.add(pauseLabel, JLayeredPane.POPUP_LAYER);
 
         CompoundBorder border = BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.gray, preferredResolution[1] / 60),

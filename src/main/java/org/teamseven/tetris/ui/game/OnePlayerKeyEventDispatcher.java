@@ -40,8 +40,10 @@ public class OnePlayerKeyEventDispatcher implements KeyEventDispatcher {
             if (e.getKeyCode() == KEY_CODE_PAUSE) {
                 if (gameHandler.isPaused()) {
                     gameHandler.start();
+                    feedbackListener.start();
                 } else {
                     gameHandler.pause();
+                    feedbackListener.pause();
                 }
                 return true;
             }
