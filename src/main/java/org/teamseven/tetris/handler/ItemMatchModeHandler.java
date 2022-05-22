@@ -6,7 +6,7 @@ import org.teamseven.tetris.block.item.ItemBlock;
 import org.teamseven.tetris.block.item.WeightBlock;
 import org.teamseven.tetris.factory.BlockFactory;
 
-public class ItemMatchModeHandler extends MatchModeHandler{
+public class ItemMatchModeHandler extends MatchModeHandler {
 
     private int[] pos;
 
@@ -23,16 +23,16 @@ public class ItemMatchModeHandler extends MatchModeHandler{
         setErasedLines(board.eraseLines());
         addScoreByEraseLine();
 
-        readyAttack();
-        attackedLines = otherPlayer.attack();
-        otherPlayer.clearAttackLines();
-        board.setBoard(appendAttackedLines());
-
         if (nextBlock instanceof WeightBlock) {
             curr.setHandler(new WeightMovementHandler());
         } else {
             curr.setHandler(new BlockMovementHandler());
         }
+
+        readyAttack();
+        attackedLines = otherPlayer.attack();
+        otherPlayer.clearAttackLines();
+        board.setBoard(appendAttackedLines());
 
         curr.newBlock(nextBlock);
         addBlockCnt();
