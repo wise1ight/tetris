@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import static org.teamseven.tetris.Const.*;
+import static org.teamseven.tetris.ui.KeyTool.getStringKey;
 
 public class TetrisPane extends BaseTetrisPane {
 
