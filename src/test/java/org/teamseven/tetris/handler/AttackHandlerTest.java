@@ -22,6 +22,56 @@ class AttackHandlerTest {
     @Nested
     @DisplayName("readyAttack 테스트")
     class ReadyAttackTest {
+
+        @Test
+        @DisplayName("한 줄만 지우는 경우 추가 x")
+        void eraseLineNumIs1Test() {
+            UnitBlock[][] attackLines = initBoard(new int[][]{
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+            });
+
+            UnitBlock[][] preBoard = initBoard(new int[][]{
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 0, 0}
+            });
+
+            currBlock.setBlock(new IBlock());
+            currBlock.y = 16;
+            currBlock.x = 6;
+            List<Integer> eraseIndex = new ArrayList<>();
+            eraseIndex.add(16);
+            UnitBlock[][] newAttackLines = attackHandler.readyAttack(eraseIndex, attackLines, preBoard, currBlock);
+
+            assertThat(newAttackLines).isNull();
+        }
+
         @Test
         @DisplayName("일반적으로 추가하는 경우")
         void basicAppendTest() {
@@ -284,6 +334,7 @@ class AttackHandlerTest {
     @Nested
     @DisplayName("getAttackedBoard 테스트")
     class GetAttackedBoardTest {
+
         @Test
         @DisplayName("일반적으로 추가하는 경우")
         void basicAppendTest() {
