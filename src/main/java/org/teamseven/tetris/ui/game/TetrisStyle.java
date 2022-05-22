@@ -51,7 +51,7 @@ public class TetrisStyle {
         }
     }
 
-    private static Color getColorForBlindness(ColorBlindnessType colorBlindnessType, Color color) {
+    public static Color getColorForBlindness(ColorBlindnessType colorBlindnessType, Color color) {
         switch (colorBlindnessType) {
             case BLINDNESS: {
                 if (color.equals(Color.MAGENTA))
