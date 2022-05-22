@@ -221,4 +221,11 @@ public class TetrisPane extends BaseTetrisPane {
             g.drawString("W", x + sizeInt, 8 * sizeInt + y);
         }
     }
+    private void drawPause(Graphics g, int X, int Y){
+
+        g.setColor(Color.RED);
+        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 20));
+        g.drawString(" SCORE : " , X*sizeInt, Y*sizeInt);
+
+    }
 }
