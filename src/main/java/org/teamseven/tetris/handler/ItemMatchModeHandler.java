@@ -1,9 +1,9 @@
 package org.teamseven.tetris.handler;
 
 import org.teamseven.tetris.Board.GameBoard;
+import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
-import org.teamseven.tetris.block.item.ItemBlock;
-import org.teamseven.tetris.block.item.WeightBlock;
+import org.teamseven.tetris.block.item.*;
 import org.teamseven.tetris.factory.BlockFactory;
 
 public class ItemMatchModeHandler extends MatchModeHandler {
@@ -77,7 +77,7 @@ public class ItemMatchModeHandler extends MatchModeHandler {
     }
 
     private boolean isNewItem() {
-        if (totalErasedLines != 0 && totalErasedLines / 2 > 0) {
+        if (totalErasedLines != 0 && totalErasedLines / 10 > 0) {
             setTotalErasedLines(0);
             return true;
         }

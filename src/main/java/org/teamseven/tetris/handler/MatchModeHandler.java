@@ -116,21 +116,26 @@ public class MatchModeHandler extends GameHandler {
 
     protected void saveAttackLines(List<Integer> eraseIndex) {
         int erasedNum = eraseIndex.size();
+        int k = eraseIndex.size();
 
         for (int i = 0; i < MAXIMUM_ATTACK_LINES - erasedNum; i++) {
             attackLines[i] = attackLines[i + erasedNum].clone();
         }
         for (int i = 0; i < eraseIndex.size(); i++) {
-            attackLines[MAXIMUM_ATTACK_LINES - i - MINIMUM_ERASE_LINE] = preBoard[eraseIndex.get(i)].clone();
+            attackLines[MAXIMUM_ATTACK_LINES - i - 1] = preBoard[eraseIndex.get(i)].clone();
         }
         for (int i = 0; i < curr.height(); i++) {
+            boolean flag = false;
             for (int j = 0; j < curr.width(); j++) {
-                if (curr.getBlock().getUnitBlock(j, i) != null &&
-                        i + curr.y <= eraseIndex.get(eraseIndex.size() - MINIMUM_ERASE_LINE) && i + curr.y >= eraseIndex.get(0)) {
-                    int y = MAXIMUM_ATTACK_LINES - (curr.height() - i);
+                if (curr.getBlock().getUnitBlock(j, i) != null && eraseIndex.contains(i + curr.y)) {
+                    int y = MAXIMUM_ATTACK_LINES - k;
                     int x = j + curr.x;
                     attackLines[y][x] = null;
+                    flag = true;
                 }
+            }
+            if (flag) {
+                k--;
             }
         }
     }
