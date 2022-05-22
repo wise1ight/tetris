@@ -102,7 +102,7 @@ public class TetrisPane extends BaseTetrisPane {
         drawBoards(g, 10, 30);
         drawCell(g, 10, 30);
         drawNextBlock(g, 120, 30);
-        drawHelpBox(g, 120, 60);
+        drawHelpBox(g, 120, 90);
 
     }
 
@@ -125,8 +125,11 @@ public class TetrisPane extends BaseTetrisPane {
     }
 
     public void drawNextBlock(Graphics g, int X, int Y){
-        int x = X *sizeInt;
-        int y = Y *sizeInt;
+        g.setColor(Color.BLACK);
+        g.fillRect(X * sizeInt,Y*sizeInt,BLOCK_WIDTH*sizeInt*6,BLOCK_WIDTH*sizeInt*4);
+
+        int x = X *sizeInt + BLOCK_WIDTH*sizeInt;
+        int y = Y *sizeInt + BLOCK_WIDTH*sizeInt;
 
         UnitBlock[][] unitBlocks = gameHandler.getNextBlock().getShape();
         for (UnitBlock[] unitBlock : unitBlocks) {
@@ -139,7 +142,7 @@ public class TetrisPane extends BaseTetrisPane {
                 }
             }
             y += sizeInt*BLOCK_WIDTH;
-            x = X *sizeInt;
+            x = X *sizeInt + BLOCK_WIDTH*sizeInt;
         }
 
     }
