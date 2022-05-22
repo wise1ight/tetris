@@ -93,11 +93,11 @@ public class MatchModeHandler extends GameHandler {
         board.clearErasedIndex();
     }
 
-    public void clearAttackLines() {
+    private void clearAttackLines() {
         attackLines = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
     }
 
-    public UnitBlock[][] attack() {
+    private UnitBlock[][] attack() {
         return attackLines;
     }
 }
