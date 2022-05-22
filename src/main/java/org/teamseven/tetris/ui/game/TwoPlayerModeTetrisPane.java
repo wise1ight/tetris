@@ -2,10 +2,7 @@ package org.teamseven.tetris.ui.game;
 
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.UnitBlock;
-import org.teamseven.tetris.handler.GameHandler;
-import org.teamseven.tetris.handler.MatchModeHandler;
-import org.teamseven.tetris.handler.MatchModeBridge;
-import org.teamseven.tetris.handler.PreferencesHandler;
+import org.teamseven.tetris.handler.*;
 
 import javax.swing.*;
 import javax.swing.text.StyledDocument;
@@ -21,6 +18,8 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
     private final MatchModeBridge gameHandler;
 
     private TwoPlayerKeyEventDispatcher keyEventDispatcher;
+
+    private int timeCount = 0;
 
     public TwoPlayerModeTetrisPane(MatchModeBridge gameHandler) {
         this.gameHandler = gameHandler;
@@ -63,6 +62,20 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         repaint();
         aTimer.start();
         bTimer.start();
+
+        if(gameHandler.getAGameHandler() instanceof TimeMatchModeHandler) {
+            Timer timer = new Timer(100, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    timeCount += 100;
+
+                    if(timeCount >= TIME_MATCH)
+                        finishGame();
+                }
+            });
+
+            timer.start();
+        }
     }
 
     @Override
@@ -139,7 +152,6 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         manager.addKeyEventDispatcher(keyEventDispatcher);
     }
 
-
     private int BLOCK_WIDTH = 10;
     private int sizeInt;
 
@@ -158,6 +170,9 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
 
         drawAttackBoards(g, 340, 130, gameHandler.getAGameHandler());
         drawAttackBoards(g, 120, 130, gameHandler.getBGameHandler());
+
+        if(gameHandler.getAGameHandler() instanceof TimeMatchModeHandler)
+            drawRemainTime(g, 180, 20);
     }
 
     public void drawGameBoard(Graphics g, int boardConerX, int boardConerY, GameHandler gameHandler){
@@ -284,10 +299,15 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
             y += sizeInt*BLOCK_WIDTH;
             x = X *sizeInt;
         }
-
-
-
     }
 
+    public void drawRemainTime(Graphics g, int X, int Y){
+        int x = X * sizeInt;
+        int y = Y * sizeInt;
+        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
+        g.setColor(Color.RED);
+
+        g.drawString("Remain Time : " + (TIME_MATCH - timeCount) / 1000, x, y);
+    }
 
 }

@@ -82,4 +82,6 @@ public class Const {
 
     public static final int INIT_DELAY = 1000;
 
+    public static final int TIME_MATCH = 60 * 1000;
+
 }

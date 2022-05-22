@@ -101,6 +101,12 @@ public class SelectGameModePane extends BasePane {
             MatchModeHandler bGameHandler = new ItemMatchModeHandler();
             Pipeline.replacePane(new TwoPlayerModeTetrisPane(new MatchModeBridge(aGameHandler, bGameHandler)));
         });
+
+        twoPlayerMode_Time.addActionListener(e -> {
+            MatchModeHandler aGameHandler = new TimeMatchModeHandler();
+            MatchModeHandler bGameHandler = new TimeMatchModeHandler();
+            Pipeline.replacePane(new TwoPlayerModeTetrisPane(new MatchModeBridge(aGameHandler, bGameHandler)));
+        });
     }
 
 }
