@@ -11,18 +11,18 @@ import static org.teamseven.tetris.Const.LEFT;
 
 public class TwoPlayerKeyEventDispatcher implements KeyEventDispatcher {
 
-    private static final int KEY_CODE_LEFT_ONE = PreferencesHandler.getLeftOneBtnCode();
-    private static final int KEY_CODE_LEFT_TWO = PreferencesHandler.getLeftTwoBtnCode();
-    private static final int KEY_CODE_RIGHT_ONE = PreferencesHandler.getRightOneBtnCode();
-    private static final int KEY_CODE_RIGHT_TWO = PreferencesHandler.getRightTwoBtnCode();
-    private static final int KEY_CODE_ROTATE_RIGHT_ONE = PreferencesHandler.getRotateRightOneBtnCode();
-    private static final int KEY_CODE_ROTATE_RIGHT_TWO = PreferencesHandler.getRotateRightTwoBtnCode();
-    private static final int KEY_CODE_PAUSE = PreferencesHandler.getPauseBtnCode();
-    private static final int KEY_CODE_HARD_DROP_ONE = PreferencesHandler.getHardDropOneBtnCode();
-    private static final int KEY_CODE_HARD_DROP_TWO = PreferencesHandler.getHardDropTwoBtnCode();
-    private static final int KEY_CODE_SOFT_DROP_ONE = PreferencesHandler.getSoftDropOneBtnCode();
-    private static final int KEY_CODE_SOFT_DROP_TWO = PreferencesHandler.getSoftDropTwoBtnCode();
-    private static final int KEY_CODE_EXIT = PreferencesHandler.getExitBtnCode();
+    private final int KEY_CODE_LEFT_ONE = PreferencesHandler.getLeftOneBtnCode();
+    private final int KEY_CODE_LEFT_TWO = PreferencesHandler.getLeftTwoBtnCode();
+    private final int KEY_CODE_RIGHT_ONE = PreferencesHandler.getRightOneBtnCode();
+    private final int KEY_CODE_RIGHT_TWO = PreferencesHandler.getRightTwoBtnCode();
+    private final int KEY_CODE_ROTATE_RIGHT_ONE = PreferencesHandler.getRotateRightOneBtnCode();
+    private final int KEY_CODE_ROTATE_RIGHT_TWO = PreferencesHandler.getRotateRightTwoBtnCode();
+    private final int KEY_CODE_PAUSE = PreferencesHandler.getPauseBtnCode();
+    private final int KEY_CODE_HARD_DROP_ONE = PreferencesHandler.getHardDropOneBtnCode();
+    private final int KEY_CODE_HARD_DROP_TWO = PreferencesHandler.getHardDropTwoBtnCode();
+    private final int KEY_CODE_SOFT_DROP_ONE = PreferencesHandler.getSoftDropOneBtnCode();
+    private final int KEY_CODE_SOFT_DROP_TWO = PreferencesHandler.getSoftDropTwoBtnCode();
+    private final int KEY_CODE_EXIT = PreferencesHandler.getExitBtnCode();
 
     private MatchModeBridge gameHandler;
     private IKeyInputFeedback feedbackListener;

@@ -10,13 +10,13 @@ import static org.teamseven.tetris.Const.*;
 
 public class OnePlayerKeyEventDispatcher implements KeyEventDispatcher {
 
-    private static final int KEY_CODE_LEFT = PreferencesHandler.getLeftBtnCode();
-    private static final int KEY_CODE_RIGHT = PreferencesHandler.getRightBtnCode();
-    private static final int KEY_CODE_ROTATE_RIGHT = PreferencesHandler.getRotateRightBtnCode();
-    private static final int KEY_CODE_PAUSE = PreferencesHandler.getPauseBtnCode();
-    private static final int KEY_CODE_HARD_DROP = PreferencesHandler.getHardDropBtnCode();
-    private static final int KEY_CODE_SOFT_DROP = PreferencesHandler.getSoftDropBtnCode();
-    private static final int KEY_CODE_EXIT = PreferencesHandler.getExitBtnCode();
+    private final int KEY_CODE_LEFT = PreferencesHandler.getLeftBtnCode();
+    private final int KEY_CODE_RIGHT = PreferencesHandler.getRightBtnCode();
+    private final int KEY_CODE_ROTATE_RIGHT = PreferencesHandler.getRotateRightBtnCode();
+    private final int KEY_CODE_PAUSE = PreferencesHandler.getPauseBtnCode();
+    private final int KEY_CODE_HARD_DROP = PreferencesHandler.getHardDropBtnCode();
+    private final int KEY_CODE_SOFT_DROP = PreferencesHandler.getSoftDropBtnCode();
+    private final int KEY_CODE_EXIT = PreferencesHandler.getExitBtnCode();
 
     private GameHandler gameHandler;
     private IKeyInputFeedback feedbackListener;
