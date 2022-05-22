@@ -18,16 +18,6 @@ public class MatchModeBridge {
         return pause;
     }
 
-//    public void attack(MatchModeHandler attackPlayer) {
-//        MatchModeHandler attackedPlayer = bGameHandler;
-//        if (attackPlayer != aGameHandler) {
-//            attackPlayer = bGameHandler;
-//            attackedPlayer = attackPlayer;
-//        }
-//        attackedPlayer.attacked(attackPlayer.attack());
-//        attackPlayer.clearAttackLines();
-//    }
-
     public void pause() {
         this.pause = true;
         aGameHandler.getTimer().stop();

@@ -2,13 +2,13 @@ package org.teamseven.tetris.handler;
 
 import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.block.CurrBlock;
-import org.teamseven.tetris.block.item.ItemBlock;
-import org.teamseven.tetris.block.item.WeightBlock;
+import org.teamseven.tetris.block.item.*;
 import org.teamseven.tetris.factory.BlockFactory;
 
 public class ItemMatchModeHandler extends MatchModeHandler {
 
     private int[] pos;
+    private static final int MINIMUM_ERASE_LINES = 10;
 
     @Override
     protected boolean nextTurn(MatchModeHandler otherPlayer){
@@ -30,9 +30,7 @@ public class ItemMatchModeHandler extends MatchModeHandler {
         }
 
         readyAttack();
-        attackedLines = otherPlayer.attack();
-        otherPlayer.clearAttackLines();
-        board.setBoard(appendAttackedLines());
+        attacked(otherPlayer);
 
         curr.newBlock(nextBlock);
         addBlockCnt();
@@ -77,7 +75,7 @@ public class ItemMatchModeHandler extends MatchModeHandler {
     }
 
     private boolean isNewItem() {
-        if (totalErasedLines != 0 && totalErasedLines / 2 > 0) {
+        if (totalErasedLines != 0 && totalErasedLines / MINIMUM_ERASE_LINES > 0) {
             setTotalErasedLines(0);
             return true;
         }

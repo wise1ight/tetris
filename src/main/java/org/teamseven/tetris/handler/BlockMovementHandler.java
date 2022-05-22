@@ -24,7 +24,7 @@ public class BlockMovementHandler {
         return 1;
     }
 
-    public boolean isStopped(GameBoard board, CurrBlock curr, Block nextBlock) {
+    public boolean isStopped(GameBoard board, CurrBlock curr) {
         board.eraseCurr(curr);
         if (canMove(board, curr, DOWN)) {
             board.placeBlock(curr);
