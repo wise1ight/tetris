@@ -12,8 +12,7 @@ public class BlockFactory {
             return new RouletteWheelGenerator();
         else if ("item".equals(algorithm)) {
             return new ItemBlockGenerator();
-        } else {
         }
-            return null;
+        return null;
     }
 }
