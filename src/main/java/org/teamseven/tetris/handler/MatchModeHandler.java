@@ -63,7 +63,7 @@ public class MatchModeHandler extends GameHandler {
         return true;
     }
 
-    private void attacked(MatchModeHandler otherPlayer) {
+    protected void attacked(MatchModeHandler otherPlayer) {
         attackedLines = otherPlayer.attack();
         otherPlayer.clearAttackLines();
         board.setBoard(appendAttackedLines());
