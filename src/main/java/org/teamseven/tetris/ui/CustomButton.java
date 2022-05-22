@@ -8,12 +8,6 @@ public class CustomButton extends JButton {
     private final Font font = this.getFont();
 
     public CustomButton() {
-        // set painted
-        this.setOpaque(false);
-        this.setContentAreaFilled(false);
-        this.setBorderPainted(false);
-        this.setFocusPainted(false);
-
         // set Inputkey(focus)
         this.getInputMap().getParent().remove(KeyStroke.getKeyStroke("pressed SPACE"));
         this.getInputMap().getParent().remove(KeyStroke.getKeyStroke("released SPACE"));
@@ -21,10 +15,14 @@ public class CustomButton extends JButton {
         this.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("released ENTER"), "released");
 
         // set Listners
-        //this.removeMouseListener(this.getMouseListeners()[0]);
         this.addFocusListener(focusListener);
 
         CustomButton.this.setFont(new Font(font.getName(), font.getStyle(), font.getSize() + 5));
+    }
+
+    public CustomButton(String text) {
+        this();
+        this.setText(text);
     }
 
     //focus animation

@@ -23,7 +23,7 @@ public class Const {
     public static final int SCREEN_LARGE_RESOLUTION_X = BASE_FRAME_X * LARGE_INT;
     public static final int SCREEN_LARGE_RESOLUTION_Y = BASE_FRAME_Y * LARGE_INT;
 
-    public static final int SCREEN_SMALL_BLOCK_FONT_SIZE = 24;
+    public static final int SCREEN_SMALL_BLOCK_FONT_SIZE = 20;
     public static final int SCREEN_MEDIUM_BLOCK_FONT_SIZE = 33;
     public static final int SCREEN_LARGE_BLOCK_FONT_SIZE = 38;
 
