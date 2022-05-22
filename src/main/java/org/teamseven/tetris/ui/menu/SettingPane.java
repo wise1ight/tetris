@@ -1,4 +1,4 @@
-package org.teamseven.tetris.ui;
+package org.teamseven.tetris.ui.menu;
 
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.enums.ColorBlindnessType;
@@ -6,6 +6,7 @@ import org.teamseven.tetris.enums.Mode;
 import org.teamseven.tetris.enums.ScreenSize;
 import org.teamseven.tetris.handler.PreferencesHandler;
 import org.teamseven.tetris.handler.ScoreMemoryHandler;
+import org.teamseven.tetris.ui.IDesign;
 
 import javax.swing.*;
 import java.awt.*;
@@ -86,7 +87,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
         home.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Pipeline.replacePane(new GameMenuPane());
+                Pipeline.replacePane(new MainMenuPane());
             }
         });
 
@@ -99,7 +100,7 @@ public class SettingPane extends JLayeredPane implements IDesign {
         twoPlayerModeKey.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Pipeline.replacePane(new twoPlayerModeKeyPane());
+                Pipeline.replacePane(new TwoPlayerModeKeyPane());
             }
         });
 

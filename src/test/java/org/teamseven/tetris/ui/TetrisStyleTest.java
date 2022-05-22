@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.teamseven.tetris.Const;
 import org.teamseven.tetris.enums.ColorBlindnessType;
 import org.teamseven.tetris.enums.ScreenSize;
+import org.teamseven.tetris.ui.game.TetrisStyle;
 
 public class TetrisStyleTest {
 
