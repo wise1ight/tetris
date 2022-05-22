@@ -11,10 +11,8 @@ import static org.teamseven.tetris.Const.WIDTH;
 
 public class AttackHandler {
 
-    //TODO
-    //minimum erase line 2로 바꾸기
-    protected static final int MINIMUM_ERASE_LINE = 1;
-    public static final int MAXIMUM_ATTACK_LINES = 10;
+    private static final int MINIMUM_ERASE_LINE = 2;
+    private static final int MAXIMUM_ATTACK_LINES = 10;
 
     public UnitBlock[][] getAttackedBoard(UnitBlock[][] attackedLines, GameBoard gameBoard) {
         UnitBlock[][] board = new UnitBlock[HEIGHT][WIDTH];
