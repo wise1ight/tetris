@@ -1,12 +1,9 @@
-
 package org.teamseven.tetris.ui;
 
-import com.sun.org.apache.xpath.internal.operations.String;
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.handler.PreferencesHandler;
 import org.teamseven.tetris.handler.ScoreMemoryHandler;
 import org.teamseven.tetris.score.Score;
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,20 +16,40 @@ import static org.teamseven.tetris.Const.SCORE_ITEM_FILE;
 import static org.teamseven.tetris.Const.SCORE_NORMAL_FILE;
 
 public class ScoreBoardPane extends JLayeredPane implements IDesign {
+
     private Label title;
-
-    private Label rank1,  rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9, rank10;
     private Panel scoreBoardPanel, scoreBoardTable, buttonPanel, titlePanel;
-
-    private Label rank1st, rank2nd;
     private Button home;
-    private static int sizeInt = Pipeline.getSizeInt();
 
-    public ScoreBoardPane(){
+    private String highlightUUID = null;
+    private List<Score> scores;
+    private final String fileName;
+
+    private final ScoreMemoryHandler handler;
+    private static int sizeInt = Pipeline.getSizeInt();
+    private static final int LIST_MAX_ITEM_SIZE = 10;
+
+    public ScoreBoardPane(boolean itemMode, int newScore){
         sizeInt = Pipeline.getSizeInt();
         setComp();
         setDesign();
         setAction();
+
+        handler = new ScoreMemoryHandler();
+
+        fileName = itemMode ? SCORE_ITEM_FILE : SCORE_NORMAL_FILE;
+        scores = handler.getScores(fileName);
+
+        if(newScore >= 0 && (scores.size() < 10 || newScore > scores.stream().map(Score::getScore).map(Integer::valueOf).mapToInt(k -> k).min().getAsInt())) {
+            this.revalidate();
+            this.repaint();
+            String name = showInputDialog("이름을 입력하세요.");
+            Score score = new Score(newScore, name, itemMode ? "ITEM" : PreferencesHandler.getMode().name());
+            highlightUUID = score.getUuid();
+            addScore(score);
+        }
+
+        drawScore();
     }
 
     @Override
@@ -51,29 +68,6 @@ public class ScoreBoardPane extends JLayeredPane implements IDesign {
         home = new Button("Back to Menu");
 
         buttonPanel.add(home);
-
-        rank1 = new Label();
-        rank2 = new Label();
-        rank3 = new Label();
-        rank4 = new Label();
-        rank5 = new Label();
-        rank6 = new Label();
-        rank7 = new Label();
-        rank8 = new Label();
-        rank9 = new Label();
-        rank10 = new Label();
-
-        scoreBoardTable.add(rank1);
-        scoreBoardTable.add(rank2);
-        scoreBoardTable.add(rank3);
-        scoreBoardTable.add(rank4);
-        scoreBoardTable.add(rank5);
-        scoreBoardTable.add(rank6);
-        scoreBoardTable.add(rank7);
-        scoreBoardTable.add(rank8);
-        scoreBoardTable.add(rank9);
-        scoreBoardTable.add(rank10);
-
 
         scoreBoardPanel.add(buttonPanel);
         scoreBoardPanel.add(titlePanel);
@@ -98,8 +92,6 @@ public class ScoreBoardPane extends JLayeredPane implements IDesign {
         scoreBoardTable.setLayout(new GridLayout(10,1));
         scoreBoardTable.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 10));
 
-        setScoreBoardFontColor(Color.lightGray);
-
         buttonPanel.setBounds(sizeInt * 50, sizeInt * 240, Pipeline.getScreenResolutionX() - sizeInt * 50 *2 , sizeInt * 80);
         buttonPanel.setLayout(new GridLayout(3, 5));
     }
@@ -111,19 +103,54 @@ public class ScoreBoardPane extends JLayeredPane implements IDesign {
                 Pipeline.replacePane(new GameMenuPane());
             }
         });
-
     }
 
-    private void setScoreBoardFontColor(Color color){
-        rank1.setForeground(color);
-        rank2.setForeground(color);
-        rank3.setForeground(color);
-        rank4.setForeground(color);
-        rank5.setForeground(color);
-        rank6.setForeground(color);
-        rank7.setForeground(color);
-        rank8.setForeground(color);
-        rank9.setForeground(color);
-        rank10.setForeground(color);
+    public void addScore(Score score){
+        handler.saveScoreFile(score, this.fileName);
+    }
+
+    public void drawScore(){
+        scores = handler.getScores(fileName);
+
+        int scoreSize = Math.min(scores.size(), LIST_MAX_ITEM_SIZE);
+        for(int i = 0; i < scoreSize; i++){
+            Score score = scores.get(i);
+
+            Panel scoreItemPanel = new Panel();
+
+            Label scoreIndexLabel = new Label();
+            scoreIndexLabel.setForeground(Color.lightGray);
+            scoreIndexLabel.setText(String.valueOf(i + 1));
+            scoreItemPanel.add(scoreIndexLabel);
+
+            Label scoreNameLabel = new Label();
+            if(score.getUuid().equals(highlightUUID))
+                scoreNameLabel.setForeground(Color.YELLOW);
+            else
+                scoreNameLabel.setForeground(Color.lightGray);
+            scoreNameLabel.setText(score.getName());
+            scoreItemPanel.add(scoreNameLabel);
+
+            Label scoreValueLabel = new Label();
+            scoreValueLabel.setForeground(Color.lightGray);
+            scoreValueLabel.setText(score.getScore());
+            scoreItemPanel.add(scoreValueLabel);
+
+            Label scoreDateLabel = new Label();
+            scoreDateLabel.setForeground(Color.lightGray);
+            scoreDateLabel.setText(score.getDate().substring(5));
+            scoreItemPanel.add(scoreDateLabel);
+
+            Label scoreModeLabel = new Label();
+            scoreModeLabel.setForeground(Color.gray);
+            scoreModeLabel.setText(score.getMode());
+            scoreItemPanel.add(scoreModeLabel);
+
+            scoreItemPanel.setPreferredSize(new Dimension(Pipeline.getScreenResolutionX() * 8 / 130,Pipeline.getScreenResolutionY() * 3 / 130));
+            scoreBoardTable.add(scoreItemPanel);
+        }
+
+        this.revalidate();
+        this.repaint();
     }
 }

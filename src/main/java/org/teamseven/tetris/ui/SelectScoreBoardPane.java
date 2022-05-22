@@ -70,14 +70,14 @@ public class SelectScoreBoardPane extends JLayeredPane implements IDesign {
         normal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Add normal score board
+                Pipeline.replacePane(new ScoreBoardPane(false, -1));
             }
         });
 
         item.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Add item score board
+                Pipeline.replacePane(new ScoreBoardPane(true, -1));
             }
         });
 

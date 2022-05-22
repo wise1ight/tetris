@@ -30,7 +30,6 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private GridBagLayout gridBagLayout;
 
     private final GameHandler gameHandler;
-    private boolean itemMode;
     private int[] preferredResolution;  // frame resolution - frame top border
 
     private static final int KEY_CODE_LEFT = PreferencesHandler.getLeftBtnCode();
@@ -88,7 +87,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
         gameHandler.pause();
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.removeKeyEventDispatcher(this);
-        Pipeline.replacePane(new ScoreBoardPanelTab(preferredResolution, itemMode, gameHandler.getScore()));
+        Pipeline.replacePane(new ScoreBoardPane(gameHandler instanceof ItemModeHandler, gameHandler.getScore()));
     }
 
     public void drawBoard() {
