@@ -2,11 +2,10 @@ package org.teamseven.tetris.ui.menu;
 
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.ui.BasePane;
+import org.teamseven.tetris.ui.CustomButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -98,32 +97,4 @@ public class MainMenuPane extends BasePane {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().setDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, BackwardKey);
     }
 
-    class CustomButton extends Button {
-
-        public CustomButton(String label) {
-            super(label);
-
-            // set Inputkey(focus)
-
-            // set Listners
-            //this.removeMouseListener(this.getMouseListeners()[0]);
-            this.addFocusListener(focusListener);
-
-            this.setFont(new Font("Courier", Font.ITALIC,sizeInt * 6));
-        }
-
-        //focus animation
-        private FocusListener focusListener = new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                CustomButton.this.setFont(new Font("Courier", Font.ITALIC,sizeInt * 10));
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                CustomButton.this.setFont(new Font("Courier", Font.ITALIC,sizeInt * 6));
-            }
-        };
-
-    }
 }
