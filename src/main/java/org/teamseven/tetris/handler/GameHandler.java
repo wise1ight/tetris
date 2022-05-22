@@ -5,7 +5,6 @@ import org.teamseven.tetris.Board.GameBoard;
 import org.teamseven.tetris.Const;
 import org.teamseven.tetris.block.Block;
 import org.teamseven.tetris.block.CurrBlock;
-import org.teamseven.tetris.block.IBlock;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.factory.BlockFactory;
 
