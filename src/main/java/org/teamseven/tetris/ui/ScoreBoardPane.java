@@ -117,6 +117,7 @@ public class ScoreBoardPane extends JLayeredPane implements IDesign {
             Score score = scores.get(i);
 
             Panel scoreItemPanel = new Panel();
+            scoreItemPanel.setLayout(new GridLayout(1, 5));
 
             Label scoreIndexLabel = new Label();
             scoreIndexLabel.setForeground(Color.lightGray);
