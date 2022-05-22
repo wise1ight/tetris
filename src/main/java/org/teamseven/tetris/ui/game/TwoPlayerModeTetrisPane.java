@@ -243,7 +243,9 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
 
     }
     public void drawBlock(Graphics g, int x, int y, Color color) {
-        g.setColor(color);
+
+        Color displayingColor = TetrisStyle.getColorForBlindness(PreferencesHandler.getColorBlindnessType(),color);
+        g.setColor(displayingColor);
         g.fillRect(x, y, BLOCK_WIDTH * sizeInt, BLOCK_WIDTH * sizeInt);
 
         g.setColor(Color.GRAY);
@@ -306,6 +308,14 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
         g.drawString(" SCORE : " +String.valueOf(gameHandler.getScore()), X*sizeInt, Y*sizeInt + 10*sizeInt);
+
+    }
+
+    private void drawPause(Graphics g, int X, int Y){
+
+        g.setColor(Color.RED);
+        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 20));
+        g.drawString(" SCORE : " , X*sizeInt, Y*sizeInt);
 
     }
 

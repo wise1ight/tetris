@@ -186,7 +186,9 @@ public class TetrisPane extends BaseTetrisPane {
     }
 
     public void drawBlock(Graphics g, int x, int y, Color color) {
-        g.setColor(color);
+
+        Color displayingColor = TetrisStyle.getColorForBlindness(PreferencesHandler.getColorBlindnessType(),color);
+        g.setColor(displayingColor);
         g.fillRect(x, y, BLOCK_WIDTH * sizeInt, BLOCK_WIDTH * sizeInt);
 
         g.setColor(Color.GRAY);
