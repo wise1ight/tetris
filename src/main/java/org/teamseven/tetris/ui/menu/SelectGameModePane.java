@@ -2,28 +2,19 @@ package org.teamseven.tetris.ui.menu;
 
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.handler.*;
-import org.teamseven.tetris.ui.IDesign;
+import org.teamseven.tetris.ui.BasePane;
+import org.teamseven.tetris.ui.CustomButton;
 import org.teamseven.tetris.ui.game.TetrisPane;
 import org.teamseven.tetris.ui.game.TwoPlayerModeTetrisPane;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SelectGameModePane extends JLayeredPane implements IDesign {
+public class SelectGameModePane extends BasePane {
     private Label title;
     private Panel gameModePanel, buttonPanel, titlePanel;
-    private Button normalMode, itemMode, twoPlayerMode_Normal, twoPlayerMode_Item, twoPlayerMode_Time, home;
-    private Button selected;
-    private static int sizeInt = Pipeline.getSizeInt();
-
-    public SelectGameModePane() {
-        sizeInt = Pipeline.getSizeInt();
-        setComp();
-        setDesign();
-        setAction();
-    }
+    private CustomButton normalMode, itemMode, twoPlayerMode_Normal, twoPlayerMode_Item, twoPlayerMode_Time, home;
 
     @Override
     public void setComp() {
@@ -36,14 +27,12 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
 
         buttonPanel = new Panel();
 
-        normalMode = new Button("Normal Mode");
-        itemMode = new Button("Item Mode");
-        twoPlayerMode_Normal = new Button("Two Player Mode : Normal");
-        twoPlayerMode_Item = new Button("Two Player Mode : Item");
-        twoPlayerMode_Time = new Button("Two Player Mode : Time");
-        home = new Button("Back to Menu");
-
-        selected = normalMode;
+        normalMode = new CustomButton("Normal Mode");
+        itemMode = new CustomButton("Item Mode");
+        twoPlayerMode_Normal = new CustomButton("Two Player Mode : Normal");
+        twoPlayerMode_Item = new CustomButton("Two Player Mode : Item");
+        twoPlayerMode_Time = new CustomButton("Two Player Mode : Time");
+        home = new CustomButton("Back to Menu");
 
         buttonPanel.add(normalMode);
         buttonPanel.add(itemMode);
@@ -75,6 +64,8 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
     }
 
     public void setAction() {
+        setFocusTraversal();
+
         home.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -85,10 +76,6 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
         normalMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selected.setForeground(Color.black);
-                selected = normalMode;
-                selected.setForeground(Color.gray);
-
                 Pipeline.replacePane(new TetrisPane(new GameHandler()));
             }
         });
@@ -96,10 +83,6 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
         itemMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selected.setForeground(Color.black);
-                selected = normalMode;
-                selected.setForeground(Color.gray);
-
                 Pipeline.replacePane(new TetrisPane(new ItemModeHandler()));
             }
         });
@@ -107,28 +90,17 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
         twoPlayerMode_Normal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selected.setForeground(Color.black);
-                selected = normalMode;
-                selected.setForeground(Color.gray);
-
                 MatchModeHandler aGameHandler = new MatchModeHandler();
                 MatchModeHandler bGameHandler = new MatchModeHandler();
                 Pipeline.replacePane(new TwoPlayerModeTetrisPane(new MatchModeBridge(aGameHandler, bGameHandler)));
-
-                //SelectGameMode.selectGameModeFrame.setVisible(true);
-                //homeFrame.setVisible(false);
             }
         });
 
         twoPlayerMode_Item.addActionListener(e -> {
-
-            selected.setForeground(Color.black);
-            selected = normalMode;
-            selected.setForeground(Color.gray);
-
             MatchModeHandler aGameHandler = new ItemMatchModeHandler();
             MatchModeHandler bGameHandler = new ItemMatchModeHandler();
             Pipeline.replacePane(new TwoPlayerModeTetrisPane(new MatchModeBridge(aGameHandler, bGameHandler)));
         });
     }
+
 }

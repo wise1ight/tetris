@@ -6,28 +6,17 @@ import org.teamseven.tetris.enums.Mode;
 import org.teamseven.tetris.enums.ScreenSize;
 import org.teamseven.tetris.handler.PreferencesHandler;
 import org.teamseven.tetris.handler.ScoreMemoryHandler;
-import org.teamseven.tetris.ui.IDesign;
+import org.teamseven.tetris.ui.BasePane;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SettingPane extends JLayeredPane implements IDesign {
+public class SettingPane extends BasePane {
 
     private Panel settingPanel, buttonPanel, titlePanel;
     private Button home, keySetting, scoreBoard, color, difficulty_level, size, reSetting, twoPlayerModeKey;
-    private Button selected;
     private Label title;
-    private int sizeInt;
-
-    public SettingPane() {
-        sizeInt = Pipeline.getSizeInt();
-        setComp();
-        setDesign();
-        setAction();
-        refreshPref();
-    }
 
     @Override
     public void setComp() {
@@ -48,8 +37,6 @@ public class SettingPane extends JLayeredPane implements IDesign {
         reSetting = new Button("Reset Setting");
         home = new Button("Home");
         twoPlayerModeKey = new Button("Two Player Mode Key");
-
-        selected = keySetting;
 
         buttonPanel.add(keySetting);
         buttonPanel.add(twoPlayerModeKey);
@@ -84,6 +71,8 @@ public class SettingPane extends JLayeredPane implements IDesign {
 
     @Override
     public void setAction() {
+        refreshPref();
+
         home.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

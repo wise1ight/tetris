@@ -4,9 +4,8 @@ import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.handler.PreferencesHandler;
 import org.teamseven.tetris.handler.ScoreMemoryHandler;
 import org.teamseven.tetris.score.Score;
-import org.teamseven.tetris.ui.IDesign;
+import org.teamseven.tetris.ui.BasePane;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +15,7 @@ import static javax.swing.JOptionPane.showInputDialog;
 import static org.teamseven.tetris.Const.SCORE_ITEM_FILE;
 import static org.teamseven.tetris.Const.SCORE_NORMAL_FILE;
 
-public class ScoreBoardPane extends JLayeredPane implements IDesign {
+public class ScoreBoardPane extends BasePane {
 
     private Label title;
     private Panel scoreBoardPanel, scoreBoardTable, buttonPanel, titlePanel;
@@ -27,14 +26,10 @@ public class ScoreBoardPane extends JLayeredPane implements IDesign {
     private final String fileName;
 
     private final ScoreMemoryHandler handler;
-    private static int sizeInt = Pipeline.getSizeInt();
     private static final int LIST_MAX_ITEM_SIZE = 10;
 
     public ScoreBoardPane(boolean itemMode, int newScore){
-        sizeInt = Pipeline.getSizeInt();
-        setComp();
-        setDesign();
-        setAction();
+        super();
 
         handler = new ScoreMemoryHandler();
 

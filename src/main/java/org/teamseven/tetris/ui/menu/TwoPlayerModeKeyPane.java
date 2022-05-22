@@ -2,39 +2,24 @@ package org.teamseven.tetris.ui.menu;
 
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.handler.PreferencesHandler;
-import org.teamseven.tetris.ui.IDesign;
-import org.teamseven.tetris.ui.menu.SettingPane;
+import org.teamseven.tetris.ui.BasePane;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class TwoPlayerModeKeyPane extends JLayeredPane implements IDesign {
-    private static int sizeInt = Pipeline.getSizeInt();
+public class TwoPlayerModeKeyPane extends BasePane {
 
     private Label title;
-    private Frame settingFrameIn;
     private Panel keySettingPanel, buttonPanel, titlePanel;
 
     private Button left_one, right_one, down_one, drop_one, rotate_one, backToSetting;
     private Button left_two, right_two, down_two, drop_two, rotate_two;
 
-    private Button selected;
-
-    public TwoPlayerModeKeyPane() {
-        sizeInt = Pipeline.getSizeInt();
-        setComp();
-        setDesign();
-        setAction();
-        //refreshPref();
-    }
-
     @Override
     public void setComp() {
-
         keySettingPanel = new Panel();
 
         titlePanel = new Panel();
