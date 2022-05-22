@@ -39,7 +39,7 @@ public class TetrisPane extends BaseTetrisPane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (gameHandler.playing()) {
-                    drawBoard();
+                    repaint();
                 } else {
                     finishGame();
                 }
@@ -48,7 +48,7 @@ public class TetrisPane extends BaseTetrisPane {
 
         gameHandler.setTimer(timer);
 
-        drawBoard();
+        repaint();
         timer.start();
     }
 
@@ -61,33 +61,8 @@ public class TetrisPane extends BaseTetrisPane {
     }
 
     @Override
-    public void drawBoard() {
-        drawGameBoard(gameHandler, tetrisBoard);
-        drawNextBlock(gameHandler, nextBlockBoard);
-        drawScore(gameHandler, scoreBoard);
-        this.repaint();
-    }
-
-    @Override
     public void setDesign() {
         super.setDesign();
-
-        gridBagConstraints.weightx = 2.0;
-        gridBagConstraints.weighty = 3.0;
-        gridBagConstraints.insets = new Insets(preferredResolution[1] / 18, preferredResolution[0] * 3 / 8, preferredResolution[1] / 18, 0);
-        make(tetrisBoard, 0, 0, 1, 2);
-
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new Insets(preferredResolution[1] / 18, preferredResolution[0] / 16, preferredResolution[1] / 180, preferredResolution[0] * 3 / 16);
-        make(nextBlockBoard, 1, 0, 1, 1);
-
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new Insets(preferredResolution[1] / 180, preferredResolution[0] / 16, preferredResolution[1] * 3 / 5, preferredResolution[0] * 3 / 16);
-        make(scoreBoard, 1, 1, 1, 1);
-
-        main.add(tetrisBoard);
-        main.add(nextBlockBoard);
-        main.add(scoreBoard);
 
         main.setBounds(0, 0, preferredResolution[0], preferredResolution[1]);
         this.add(main, JLayeredPane.DEFAULT_LAYER);
@@ -99,7 +74,7 @@ public class TetrisPane extends BaseTetrisPane {
         keyEventDispatcher = new OnePlayerKeyEventDispatcher(gameHandler, new IKeyInputFeedback() {
             @Override
             public void feedback() {
-                drawBoard();
+                repaint();
             }
 
             @Override
