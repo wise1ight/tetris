@@ -233,6 +233,9 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
 
         drawGameBoard(g, 230, 30, gameHandler.getBGameHandler());
         drawNextBlock(g, 340, 30, gameHandler.getBGameHandler());
+
+        drawAttackBoards(g, 340, 130, gameHandler.getAGameHandler());
+        drawAttackBoards(g, 120, 130, gameHandler.getBGameHandler());
     }
 
     public void drawGameBoard(Graphics g, int boardConerX, int boardConerY, GameHandler gameHandler){
@@ -278,7 +281,6 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
 
     }
     public void drawBoards(Graphics g, int boardConerX, int boardConerY){
-
         g.setColor(Color.BLACK);
         g.fillRect(boardConerX*sizeInt -1,boardConerY*sizeInt -1,BLOCK_WIDTH*sizeInt*10 +2 ,BLOCK_WIDTH*sizeInt*20 +2);
         g.setColor(Color.GRAY);
@@ -339,6 +341,29 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         }
     }
     public void drawAttackBoards(Graphics g, int X, int Y, GameHandler gameHandler){
+        g.setColor(Color.BLACK);
+        g.fillRect(X * sizeInt -1,Y*sizeInt -1,BLOCK_WIDTH*sizeInt*10 +2 ,BLOCK_WIDTH*sizeInt*10 +2);
+        g.setColor(Color.GRAY);
+        g.drawRect(X*sizeInt -1,Y*sizeInt -1,BLOCK_WIDTH*sizeInt*10 +2,BLOCK_WIDTH*sizeInt*10 +2);
+
+        int x = X *sizeInt;
+        int y = Y *sizeInt;
+
+        UnitBlock[][] unitBlocks = ((MatchModeHandler) gameHandler).getAttackLines();
+        for (UnitBlock[] unitBlock : unitBlocks) {
+            for (UnitBlock block : unitBlock) {
+                if (block != null) {
+                    drawBlock(g, x, y, block.getColor());
+                    x += sizeInt*BLOCK_WIDTH;
+                } else {
+                    x += sizeInt*BLOCK_WIDTH;
+                }
+            }
+            y += sizeInt*BLOCK_WIDTH;
+            x = X *sizeInt;
+        }
+
+
 
     }
 
