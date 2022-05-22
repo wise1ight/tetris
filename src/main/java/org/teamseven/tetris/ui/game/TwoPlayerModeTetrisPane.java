@@ -69,10 +69,15 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
                 public void actionPerformed(ActionEvent e) {
                     timeCount += 100;
 
+                    if(timeCount % 1000 == 0)
+                        repaint();
+
                     if(timeCount >= TIME_MATCH)
                         finishGame();
                 }
             });
+
+            gameHandler.setTimeMatchTimer(timer);
 
             timer.start();
         }
