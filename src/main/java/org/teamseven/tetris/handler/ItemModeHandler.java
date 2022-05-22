@@ -8,12 +8,8 @@ import org.teamseven.tetris.factory.BlockFactory;
 
 public class ItemModeHandler extends GameHandler {
 
+    public static final int MINIMUM_ERASE_LINE = 2;
     private int[] pos;
-
-
-    public ItemModeHandler() {
-        super();
-    }
 
     @Override
     protected boolean nextTurn() {
@@ -74,7 +70,7 @@ public class ItemModeHandler extends GameHandler {
     }
 
     private boolean isNewItem() {
-        if (totalErasedLines != 0 && totalErasedLines / 10 > 0) {
+        if (totalErasedLines != 0 && totalErasedLines / MINIMUM_ERASE_LINE > 0) {
             setTotalErasedLines(0);
             return true;
         }
