@@ -1,7 +1,9 @@
 package org.teamseven.tetris.ui.game;
 
+import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.handler.MatchModeBridge;
 import org.teamseven.tetris.handler.PreferencesHandler;
+import org.teamseven.tetris.ui.menu.SelectGameModePane;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -47,7 +49,7 @@ public class TwoPlayerKeyEventDispatcher implements KeyEventDispatcher {
 
             for (Integer keyCode : pressedKeys) {
                 if (keyCode == KEY_CODE_EXIT) {
-                    System.exit(0);
+                    Pipeline.replacePane(new SelectGameModePane());
                 }
                 if (keyCode == KEY_CODE_PAUSE) {
                     if (gameHandler.isPaused()) {
