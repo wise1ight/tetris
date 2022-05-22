@@ -1,10 +1,7 @@
 package org.teamseven.tetris.ui;
 
 import org.teamseven.tetris.Pipeline;
-import org.teamseven.tetris.handler.GameHandler;
-import org.teamseven.tetris.handler.ItemModeHandler;
-import org.teamseven.tetris.handler.MatchModeHandler;
-import org.teamseven.tetris.handler.MatchModeBridge;
+import org.teamseven.tetris.handler.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +15,7 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
     private Button selected;
     private static int sizeInt = Pipeline.getSizeInt();
 
-    public SelectGameModePane(){
+    public SelectGameModePane() {
         sizeInt = Pipeline.getSizeInt();
         setComp();
         setDesign();
@@ -70,11 +67,11 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
 
         title.setForeground(Color.RED);
 
-        buttonPanel.setBounds(sizeInt * 50, sizeInt * 110, Pipeline.getScreenResolutionX() - sizeInt * 50 *2 , sizeInt * 150);
+        buttonPanel.setBounds(sizeInt * 50, sizeInt * 110, Pipeline.getScreenResolutionX() - sizeInt * 50 * 2, sizeInt * 150);
         buttonPanel.setLayout(new GridLayout(3, 5));
     }
 
-    public void setAction(){
+    public void setAction() {
         home.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -118,6 +115,17 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
                 //SelectGameMode.selectGameModeFrame.setVisible(true);
                 //homeFrame.setVisible(false);
             }
+        });
+
+        twoPlayerMode_Item.addActionListener(e -> {
+
+            selected.setForeground(Color.black);
+            selected = normalMode;
+            selected.setForeground(Color.gray);
+
+            MatchModeHandler aGameHandler = new ItemMatchModeHandler();
+            MatchModeHandler bGameHandler = new ItemMatchModeHandler();
+            Pipeline.replacePane(new TwoPlayerModeTetrisPane(new MatchModeBridge(aGameHandler, bGameHandler)));
         });
     }
 }
