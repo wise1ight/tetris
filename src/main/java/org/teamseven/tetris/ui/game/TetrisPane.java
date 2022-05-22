@@ -5,7 +5,6 @@ import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.handler.GameHandler;
 import org.teamseven.tetris.handler.ItemModeHandler;
-import org.teamseven.tetris.handler.PreferencesHandler;
 import org.teamseven.tetris.ui.IDesign;
 import org.teamseven.tetris.ui.menu.ScoreBoardPane;
 
@@ -16,11 +15,10 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 import static org.teamseven.tetris.Const.*;
 
-public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatcher {
+public class TetrisPane extends JLayeredPane implements IDesign {
 
     private JPanel main;
     private JTextPane tetrisBoard, nextBlockBoard, scoreBoard;
@@ -31,13 +29,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private final GameHandler gameHandler;
     private int[] preferredResolution;  // frame resolution - frame top border
 
-    private static final int KEY_CODE_LEFT = PreferencesHandler.getLeftBtnCode();
-    private static final int KEY_CODE_RIGHT = PreferencesHandler.getRightBtnCode();
-    private static final int KEY_CODE_ROTATE_RIGHT = PreferencesHandler.getRotateRightBtnCode();
-    private static final int KEY_CODE_PAUSE = PreferencesHandler.getPauseBtnCode();
-    private static final int KEY_CODE_HARD_DROP = PreferencesHandler.getHardDropBtnCode();
-    private static final int KEY_CODE_SOFT_DROP = PreferencesHandler.getSoftDropBtnCode();
-    private static final int KEY_CODE_EXIT = PreferencesHandler.getExitBtnCode();
+    private OnePlayerKeyEventDispatcher keyEventDispatcher;
 
     public TetrisPane(GameHandler gameHandler) {
         int[] frameBorderSize = new int[2];       // frame top border
@@ -85,7 +77,7 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     private void finishGame() {
         gameHandler.pause();
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        manager.removeKeyEventDispatcher(this);
+        manager.removeKeyEventDispatcher(keyEventDispatcher);
         Pipeline.replacePane(new ScoreBoardPane(gameHandler instanceof ItemModeHandler, gameHandler.getScore()));
     }
 
@@ -295,7 +287,13 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
     @Override
     public void setAction() {
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        manager.addKeyEventDispatcher(this);
+        keyEventDispatcher = new OnePlayerKeyEventDispatcher(gameHandler, new IKeyInputFeedback() {
+            @Override
+            public void feedback() {
+                drawBoard();
+            }
+        });
+        manager.addKeyEventDispatcher(keyEventDispatcher);
     }
 
     public void make(JComponent c, int x, int y, int w, int h) {
@@ -313,50 +311,4 @@ public class TetrisPane extends JLayeredPane implements IDesign, KeyEventDispatc
 
     }
 
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent e) {
-        if(e.getID() == KeyEvent.KEY_PRESSED) {
-            if (e.getKeyCode() == KEY_CODE_EXIT) {
-                System.exit(0);
-                return true;
-            }
-            if (e.getKeyCode() == KEY_CODE_PAUSE) {
-                if (gameHandler.isPaused()) {
-                    gameHandler.start();
-                } else {
-                    gameHandler.pause();
-                }
-                return true;
-            }
-            if (gameHandler.isPaused()) {
-                return true;
-            }
-            if (gameHandler.isAnimating()) {
-                return true;
-            }
-            if (e.getKeyCode() == KEY_CODE_SOFT_DROP) {
-                gameHandler.move(DOWN);
-                drawBoard();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_RIGHT) {
-                gameHandler.move(RIGHT);
-                drawBoard();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_LEFT) {
-                gameHandler.move(LEFT);
-                drawBoard();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_ROTATE_RIGHT) {
-                gameHandler.rotate();
-                drawBoard();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_HARD_DROP) {
-                gameHandler.drop();
-                drawBoard();
-                return true;
-            }
-        }
-
-        return false;
-    }
 }

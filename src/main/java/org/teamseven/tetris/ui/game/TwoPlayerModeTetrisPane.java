@@ -5,10 +5,8 @@ import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.handler.GameHandler;
 import org.teamseven.tetris.handler.MatchModeHandler;
-import org.teamseven.tetris.handler.PreferencesHandler;
 import org.teamseven.tetris.handler.MatchModeBridge;
 import org.teamseven.tetris.ui.IDesign;
-import org.teamseven.tetris.ui.game.TetrisStyle;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -17,11 +15,10 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 import static org.teamseven.tetris.Const.*;
 
-public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, KeyEventDispatcher {
+public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign {
 
     private JPanel main;
     private JTextPane aTetrisBoard, aNextBlockBoard, aScoreBoard, aAttackBoard;
@@ -31,21 +28,9 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
     private GridBagLayout gridBagLayout;
 
     private final MatchModeBridge gameHandler;
-    private boolean itemMode;
     private int[] preferredResolution;  // frame resolution - frame top border
 
-    private static final int KEY_CODE_LEFT_ONE = PreferencesHandler.getLeftOneBtnCode();
-    private static final int KEY_CODE_LEFT_TWO = PreferencesHandler.getLeftTwoBtnCode();
-    private static final int KEY_CODE_RIGHT_ONE = PreferencesHandler.getRightOneBtnCode();
-    private static final int KEY_CODE_RIGHT_TWO = PreferencesHandler.getRightTwoBtnCode();
-    private static final int KEY_CODE_ROTATE_RIGHT_ONE = PreferencesHandler.getRotateRightOneBtnCode();
-    private static final int KEY_CODE_ROTATE_RIGHT_TWO = PreferencesHandler.getRotateRightTwoBtnCode();
-    private static final int KEY_CODE_PAUSE = PreferencesHandler.getPauseBtnCode();
-    private static final int KEY_CODE_HARD_DROP_ONE = PreferencesHandler.getHardDropOneBtnCode();
-    private static final int KEY_CODE_HARD_DROP_TWO = PreferencesHandler.getHardDropTwoBtnCode();
-    private static final int KEY_CODE_SOFT_DROP_ONE = PreferencesHandler.getSoftDropOneBtnCode();
-    private static final int KEY_CODE_SOFT_DROP_TWO = PreferencesHandler.getSoftDropTwoBtnCode();
-    private static final int KEY_CODE_EXIT = PreferencesHandler.getExitBtnCode();
+    private TwoPlayerKeyEventDispatcher keyEventDispatcher;
 
     public TwoPlayerModeTetrisPane(MatchModeBridge gameHandler) {
         int[] frameBorderSize = new int[2];       // frame top border
@@ -111,7 +96,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
     private void finishGame() {
         gameHandler.pause();
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        manager.removeKeyEventDispatcher(this);
+        manager.removeKeyEventDispatcher(keyEventDispatcher);
         //TODO 2인 게임 했을때 스코어 처리
         //Pipeline.replacePane(new ScoreBoardPanelTab(preferredResolution, itemMode, gameHandler.getScore()));
     }
@@ -388,7 +373,13 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
     @Override
     public void setAction() {
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        manager.addKeyEventDispatcher(this);
+        keyEventDispatcher = new TwoPlayerKeyEventDispatcher(gameHandler, new IKeyInputFeedback() {
+            @Override
+            public void feedback() {
+                drawBoard();
+            }
+        });
+        manager.addKeyEventDispatcher(keyEventDispatcher);
     }
 
     public void make(JComponent c, int x, int y, int w, int h) {
@@ -404,75 +395,5 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
         // c.setBackground(Color.getHSBColor((y+1)  /9f + (x+1) /9f,0.75f,0.95f));
         //  gridBagConstraints.insets = new Insets(15,10,15,10);
 
-    }
-
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent e) {
-        if(e.getID() == KeyEvent.KEY_PRESSED) {
-            if (e.getKeyCode() == KEY_CODE_EXIT) {
-                System.exit(0);
-                return true;
-            }
-            if (e.getKeyCode() == KEY_CODE_PAUSE) {
-                if (gameHandler.isPaused()) {
-                    gameHandler.start();
-                } else {
-                    gameHandler.pause();
-                }
-                return true;
-            }
-            if (gameHandler.isPaused()) {
-                return true;
-            }
-            if (gameHandler.getAGameHandler().isAnimating()) {
-                return true;
-            }
-            if (gameHandler.getBGameHandler().isAnimating()) {
-                return true;
-            }
-            if (e.getKeyCode() == KEY_CODE_SOFT_DROP_ONE) {
-                gameHandler.getAGameHandler().move(DOWN);
-                drawBoard();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_SOFT_DROP_TWO) {
-                gameHandler.getBGameHandler().move(DOWN);
-                drawBoard();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_RIGHT_ONE) {
-                gameHandler.getAGameHandler().move(RIGHT);
-                drawBoard();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_RIGHT_TWO) {
-                gameHandler.getBGameHandler().move(RIGHT);
-                drawBoard();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_LEFT_ONE) {
-                gameHandler.getAGameHandler().move(LEFT);
-                drawBoard();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_LEFT_TWO) {
-                gameHandler.getBGameHandler().move(LEFT);
-                drawBoard();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_ROTATE_RIGHT_ONE) {
-                gameHandler.getAGameHandler().rotate();
-                drawBoard();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_ROTATE_RIGHT_TWO) {
-                gameHandler.getBGameHandler().rotate();
-                drawBoard();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_HARD_DROP_ONE) {
-                gameHandler.getAGameHandler().drop(gameHandler.getBGameHandler());
-                drawBoard();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_HARD_DROP_TWO) {
-                gameHandler.getBGameHandler().drop(gameHandler.getAGameHandler());
-                drawBoard();
-                return true;
-            }
-        }
-
-        return false;
     }
 }
