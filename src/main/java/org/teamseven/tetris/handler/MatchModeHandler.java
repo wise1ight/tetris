@@ -65,6 +65,13 @@ public class MatchModeHandler extends GameHandler {
         return true;
     }
 
+    public void drop(MatchModeHandler otherPlayer) {
+        int cnt = curr.moveEnd(board);
+        addScoreByMove(cnt);
+        addScoreByEraseLine();
+        nextTurn(otherPlayer);
+    }
+
     protected UnitBlock[][] appendAttackedLines() {
         UnitBlock[][] board = new UnitBlock[HEIGHT][WIDTH];
         int attackedLinesNum = 0;

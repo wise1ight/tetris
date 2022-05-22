@@ -461,11 +461,11 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
                 drawBoard();
                 return true;
             } else if (e.getKeyCode() == KEY_CODE_HARD_DROP_ONE) {
-                gameHandler.getAGameHandler().drop();
+                gameHandler.getAGameHandler().drop(gameHandler.getBGameHandler());
                 drawBoard();
                 return true;
             } else if (e.getKeyCode() == KEY_CODE_HARD_DROP_TWO) {
-                gameHandler.getBGameHandler().drop();
+                gameHandler.getBGameHandler().drop(gameHandler.getAGameHandler());
                 drawBoard();
                 return true;
             }
