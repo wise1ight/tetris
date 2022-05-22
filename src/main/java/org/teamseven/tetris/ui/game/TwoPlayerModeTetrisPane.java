@@ -4,7 +4,6 @@ import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.handler.GameHandler;
 import org.teamseven.tetris.handler.MatchModeHandler;
 import org.teamseven.tetris.handler.MatchModeBridge;
-import org.teamseven.tetris.ui.IDesign;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -15,7 +14,7 @@ import java.awt.event.ActionListener;
 
 import static org.teamseven.tetris.Const.*;
 
-public class TwoPlayerModeTetrisPane extends BaseTetrisPane implements IDesign {
+public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
 
     private JTextPane attackBoard, bTetrisBoard, bNextBlockBoard, bScoreBoard, bAttackBoard;
 
@@ -33,18 +32,13 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane implements IDesign {
 
     @Override
     public void setComp() {
-        main = new JPanel();
-        tetrisBoard = new JTextPane();
-        nextBlockBoard = new JTextPane();
-        scoreBoard = new JTextPane();
+        super.setComp();
+
         attackBoard = new JTextPane();
         bTetrisBoard = new JTextPane();
         bNextBlockBoard = new JTextPane();
         bScoreBoard = new JTextPane();
         bAttackBoard = new JTextPane();
-
-        gridBagConstraints = new GridBagConstraints();
-        gridBagLayout = new GridBagLayout();
 
         //Set timer for block drops.
         Timer aTimer = new Timer(INIT_DELAY, new ActionListener() {
@@ -133,20 +127,16 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane implements IDesign {
 
     @Override
     public void setDesign() {
-        tetrisBoard.setEditable(false);
+        super.setDesign();
+
         bTetrisBoard.setEditable(false);
-        nextBlockBoard.setEditable(false);
         bNextBlockBoard.setEditable(false);
-        scoreBoard.setEditable(false);
         bScoreBoard.setEditable(false);
         attackBoard.setEditable(false);
         bAttackBoard.setEditable(false);
 
-        tetrisBoard.setBackground(Color.BLACK);
         bTetrisBoard.setBackground(Color.BLACK);
-        nextBlockBoard.setBackground(Color.BLACK);
         bNextBlockBoard.setBackground(Color.BLACK);
-        scoreBoard.setBackground(Color.BLACK);
         bScoreBoard.setBackground(Color.BLACK);
         attackBoard.setBackground(Color.BLACK);
         bAttackBoard.setBackground(Color.BLACK);
@@ -155,11 +145,8 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane implements IDesign {
                 BorderFactory.createLineBorder(Color.gray, preferredResolution[1] / 60),
                 BorderFactory.createLineBorder(Color.darkGray, preferredResolution[1] / 90));
 
-        tetrisBoard.setBorder(border);
         bTetrisBoard.setBorder(border);
-        nextBlockBoard.setBorder(border);
         bNextBlockBoard.setBorder(border);
-        scoreBoard.setBorder(border);
         bScoreBoard.setBorder(border);
         attackBoard.setBorder(border);
         bAttackBoard.setBorder(border);
@@ -199,7 +186,6 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane implements IDesign {
 
         main.setBounds(0, 0, preferredResolution[0], preferredResolution[1]);
         this.add(main, JLayeredPane.DEFAULT_LAYER);
-
     }
 
     @Override

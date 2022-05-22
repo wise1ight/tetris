@@ -3,18 +3,16 @@ package org.teamseven.tetris.ui.game;
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.handler.GameHandler;
 import org.teamseven.tetris.handler.ItemModeHandler;
-import org.teamseven.tetris.ui.IDesign;
 import org.teamseven.tetris.ui.menu.ScoreBoardPane;
 
 import javax.swing.*;
-import javax.swing.border.CompoundBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static org.teamseven.tetris.Const.*;
 
-public class TetrisPane extends BaseTetrisPane implements IDesign {
+public class TetrisPane extends BaseTetrisPane {
 
     private final GameHandler gameHandler;
 
@@ -30,13 +28,7 @@ public class TetrisPane extends BaseTetrisPane implements IDesign {
 
     @Override
     public void setComp() {
-        main = new JPanel();
-        tetrisBoard = new JTextPane();
-        nextBlockBoard = new JTextPane();
-        scoreBoard = new JTextPane();
-
-        gridBagConstraints = new GridBagConstraints();
-        gridBagLayout = new GridBagLayout();
+        super.setComp();
 
         //Set timer for block drops.
         Timer timer = new Timer(INIT_DELAY, new ActionListener() {
@@ -73,24 +65,7 @@ public class TetrisPane extends BaseTetrisPane implements IDesign {
 
     @Override
     public void setDesign() {
-        tetrisBoard.setEditable(false);
-        nextBlockBoard.setEditable(false);
-        scoreBoard.setEditable(false);
-
-        tetrisBoard.setBackground(Color.BLACK);
-        nextBlockBoard.setBackground(Color.BLACK);
-        scoreBoard.setBackground(Color.BLACK);
-
-        CompoundBorder border = BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.gray, preferredResolution[1] / 60),
-                BorderFactory.createLineBorder(Color.darkGray, preferredResolution[1] / 90));
-
-        tetrisBoard.setBorder(border);
-        nextBlockBoard.setBorder(border);
-        scoreBoard.setBorder(border);
-
-        main.setLayout(gridBagLayout);
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        super.setDesign();
 
         gridBagConstraints.weightx = 2.0;
         gridBagConstraints.weighty = 3.0;
@@ -111,7 +86,6 @@ public class TetrisPane extends BaseTetrisPane implements IDesign {
 
         main.setBounds(0, 0, preferredResolution[0], preferredResolution[1]);
         this.add(main, JLayeredPane.DEFAULT_LAYER);
-
     }
 
     @Override

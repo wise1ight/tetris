@@ -4,15 +4,17 @@ import org.teamseven.tetris.Const;
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.handler.GameHandler;
+import org.teamseven.tetris.ui.IDesign;
 
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 
 import static org.teamseven.tetris.Const.BORDER_CHAR;
 
-public abstract class BaseTetrisPane extends JLayeredPane {
+public abstract class BaseTetrisPane extends JLayeredPane implements IDesign {
 
     protected JPanel main;
     protected JTextPane tetrisBoard, nextBlockBoard, scoreBoard;
@@ -29,6 +31,39 @@ public abstract class BaseTetrisPane extends JLayeredPane {
         preferredResolution = new int[2];
         preferredResolution[0] = Pipeline.getScreenResolutionX() - frameBorderSize[0];
         preferredResolution[1] = Pipeline.getScreenResolutionY() - frameBorderSize[1];
+    }
+
+    @Override
+    public void setComp() {
+        main = new JPanel();
+        tetrisBoard = new JTextPane();
+        nextBlockBoard = new JTextPane();
+        scoreBoard = new JTextPane();
+
+        gridBagConstraints = new GridBagConstraints();
+        gridBagLayout = new GridBagLayout();
+
+        CompoundBorder border = BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.gray, preferredResolution[1] / 60),
+                BorderFactory.createLineBorder(Color.darkGray, preferredResolution[1] / 90));
+
+        tetrisBoard.setBorder(border);
+        nextBlockBoard.setBorder(border);
+        scoreBoard.setBorder(border);
+
+        main.setLayout(gridBagLayout);
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+    }
+
+    @Override
+    public void setDesign() {
+        tetrisBoard.setEditable(false);
+        nextBlockBoard.setEditable(false);
+        scoreBoard.setEditable(false);
+
+        tetrisBoard.setBackground(Color.BLACK);
+        nextBlockBoard.setBackground(Color.BLACK);
+        scoreBoard.setBackground(Color.BLACK);
     }
 
     private StringBuffer drawWidthBorder(StringBuffer sb) {
