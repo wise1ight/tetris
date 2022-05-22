@@ -406,7 +406,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
-        if(e.getID() == KeyEvent.KEY_PRESSED && e.getModifiers() == 0) {
+        if(e.getID() == KeyEvent.KEY_PRESSED) {
             if (e.getKeyCode() == KEY_CODE_EXIT) {
                 System.exit(0);
                 return true;
