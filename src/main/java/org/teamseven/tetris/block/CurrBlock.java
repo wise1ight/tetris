@@ -41,8 +41,8 @@ public class CurrBlock {
         handler.rotate(board, this);
     }
 
-    public boolean isStopped(GameBoard board, Block nextBlock) {
-        return handler.isStopped(board, this, nextBlock);
+    public boolean isStopped(GameBoard board) {
+        return handler.isStopped(board, this);
     }
 
     public boolean canMove(GameBoard board) {

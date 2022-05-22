@@ -5,8 +5,6 @@ import lombok.Setter;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.factory.BlockFactory;
 
-import java.util.*;
-
 import static org.teamseven.tetris.Const.*;
 
 @Getter
@@ -15,19 +13,20 @@ public class MatchModeHandler extends GameHandler {
     protected UnitBlock[][] attackLines;
     protected UnitBlock[][] attackedLines;
     protected UnitBlock[][] preBoard;
-    //TODO
-    //minimum erase line 2로 바꾸기
-    protected static final int MINIMUM_ERASE_LINE = 1;
+
+    protected AttackHandler attackHandler;
+
     protected static final int MAXIMUM_ATTACK_LINES = 10;
 
     public MatchModeHandler() {
         attackLines = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
         attackedLines = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
         preBoard = new UnitBlock[HEIGHT][WIDTH];
+        attackHandler = new AttackHandler();
     }
 
     public boolean playing(MatchModeHandler attackedPlayer) {
-        if (curr.isStopped(board, nextBlock)) {
+        if (curr.isStopped(board)) {
             return nextTurn(attackedPlayer);
 
         } else {
@@ -47,9 +46,7 @@ public class MatchModeHandler extends GameHandler {
         addScoreByEraseLine();
 
         readyAttack();
-        attackedLines = otherPlayer.attack();
-        otherPlayer.clearAttackLines();
-        board.setBoard(appendAttackedLines());
+        attacked(otherPlayer);
 
         curr.newBlock(nextBlock);
         addBlockCnt();
@@ -60,9 +57,23 @@ public class MatchModeHandler extends GameHandler {
 
         speedUp();
         nextBlock = BlockFactory.blockGenerator("random").generate();
-
         board.placeBlock(curr);
         return true;
+    }
+
+    protected void readyAttack() {
+        UnitBlock[][] newAttackLines = attackHandler.readyAttack(board.getEraseIndex(), attackLines, preBoard, curr);
+        board.clearErasedIndex();
+        if (newAttackLines != null) {
+            attackLines = newAttackLines;
+        }
+    }
+
+    protected void attacked(MatchModeHandler otherPlayer) {
+        attackedLines = otherPlayer.attack();
+        otherPlayer.clearAttackLines();
+        UnitBlock[][] attackedBoard = attackHandler.getAttackedBoard(attackedLines, board);
+        board.setBoard(attackedBoard);
     }
 
     public void drop(MatchModeHandler otherPlayer) {
@@ -72,31 +83,6 @@ public class MatchModeHandler extends GameHandler {
         nextTurn(otherPlayer);
     }
 
-    protected UnitBlock[][] appendAttackedLines() {
-        UnitBlock[][] board = new UnitBlock[HEIGHT][WIDTH];
-        int attackedLinesNum = 0;
-        int k = 0;
-
-        for (int i = 0; i < MAXIMUM_ATTACK_LINES; i++) {
-            for (int j = 0; j < MAXIMUM_ATTACK_LINES; j++) {
-                if (attackedLines[i][j] != null) {
-                    attackedLinesNum++;
-                    break;
-                }
-            }
-//            board[i + MAXIMUM_ATTACK_LINES] = attackedLines[i];
-        }
-        for (int i = 0; i < HEIGHT; i++) {
-            if (i < HEIGHT - attackedLinesNum) {
-                board[i] = this.board.getBoard()[i + attackedLinesNum].clone();
-            } else {
-                board[i] = attackedLines[MAXIMUM_ATTACK_LINES - attackedLinesNum + k].clone();
-                k++;
-            }
-        }
-        return board;
-    }
-
     protected void initPreBoard() {
         for (int i = 0; i < HEIGHT; i++) {
             preBoard[i] = board.getBoard()[i].clone();
@@ -104,42 +90,11 @@ public class MatchModeHandler extends GameHandler {
         board.clearErasedIndex();
     }
 
-    //공격준비할 줄 만들기
-    protected void readyAttack() {
-        List<Integer> eraseIndex = board.getEraseIndex();
-        if (eraseIndex.size() < MINIMUM_ERASE_LINE) {
-            return;
-        }
-        saveAttackLines(eraseIndex);
-        board.clearErasedIndex();
-    }
-
-    protected void saveAttackLines(List<Integer> eraseIndex) {
-        int erasedNum = eraseIndex.size();
-
-        for (int i = 0; i < MAXIMUM_ATTACK_LINES - erasedNum; i++) {
-            attackLines[i] = attackLines[i + erasedNum].clone();
-        }
-        for (int i = 0; i < eraseIndex.size(); i++) {
-            attackLines[MAXIMUM_ATTACK_LINES - i - MINIMUM_ERASE_LINE] = preBoard[eraseIndex.get(i)].clone();
-        }
-        for (int i = 0; i < curr.height(); i++) {
-            for (int j = 0; j < curr.width(); j++) {
-                if (curr.getBlock().getUnitBlock(j, i) != null &&
-                        i + curr.y <= eraseIndex.get(eraseIndex.size() - MINIMUM_ERASE_LINE) && i + curr.y >= eraseIndex.get(0)) {
-                    int y = MAXIMUM_ATTACK_LINES - (curr.height() - i);
-                    int x = j + curr.x;
-                    attackLines[y][x] = null;
-                }
-            }
-        }
-    }
-
-    public void clearAttackLines() {
+    private void clearAttackLines() {
         attackLines = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
     }
 
-    public UnitBlock[][] attack() {
+    private UnitBlock[][] attack() {
         return attackLines;
     }
 }
