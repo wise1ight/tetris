@@ -46,7 +46,7 @@ public class GameHandler {
     }
 
     public boolean playing() {
-        if (curr.isStopped(board, nextBlock)) {
+        if (curr.isStopped(board)) {
             return nextTurn();
         } else {
             int cnt = curr.move(board, DOWN);

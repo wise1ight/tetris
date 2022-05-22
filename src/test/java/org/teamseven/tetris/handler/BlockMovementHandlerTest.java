@@ -443,7 +443,7 @@ class BlockMovementHandlerTest {
         void return_true() {
             curr.y = 16;
 
-            boolean res = handler.isStopped(board, curr, null);
+            boolean res = handler.isStopped(board, curr);
 
             assertThat(res).isTrue();
         }
@@ -451,7 +451,7 @@ class BlockMovementHandlerTest {
         @Test
         @DisplayName("안 멈춘 경우")
         void return_false() {
-            boolean res = handler.isStopped(board, curr, null);
+            boolean res = handler.isStopped(board, curr);
 
             assertThat(res).isFalse();
         }

@@ -16,9 +16,6 @@ public class MatchModeHandler extends GameHandler {
 
     protected AttackHandler attackHandler;
 
-    //TODO
-    //minimum erase line 2로 바꾸기
-    protected static final int MINIMUM_ERASE_LINE = 1;
     protected static final int MAXIMUM_ATTACK_LINES = 10;
 
     public MatchModeHandler() {
@@ -29,7 +26,7 @@ public class MatchModeHandler extends GameHandler {
     }
 
     public boolean playing(MatchModeHandler attackedPlayer) {
-        if (curr.isStopped(board, nextBlock)) {
+        if (curr.isStopped(board)) {
             return nextTurn(attackedPlayer);
 
         } else {
