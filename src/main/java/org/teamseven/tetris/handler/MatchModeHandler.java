@@ -2,6 +2,7 @@ package org.teamseven.tetris.handler;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.teamseven.tetris.block.IBlock;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.factory.BlockFactory;
 
@@ -58,7 +59,6 @@ public class MatchModeHandler extends GameHandler {
 
         speedUp();
         nextBlock = BlockFactory.blockGenerator("random").generate();
-
         board.placeBlock(curr);
         return true;
     }
@@ -78,18 +78,9 @@ public class MatchModeHandler extends GameHandler {
 
     protected UnitBlock[][] appendAttackedLines() {
         UnitBlock[][] board = new UnitBlock[HEIGHT][WIDTH];
-        int attackedLinesNum = 0;
         int k = 0;
 
-        for (int i = 0; i < MAXIMUM_ATTACK_LINES; i++) {
-            for (int j = 0; j < MAXIMUM_ATTACK_LINES; j++) {
-                if (attackedLines[i][j] != null) {
-                    attackedLinesNum++;
-                    break;
-                }
-            }
-//            board[i + MAXIMUM_ATTACK_LINES] = attackedLines[i];
-        }
+        int attackedLinesNum = getAttackLinesNum(attackedLines);
         for (int i = 0; i < HEIGHT; i++) {
             if (i < HEIGHT - attackedLinesNum) {
                 board[i] = this.board.getBoard()[i + attackedLinesNum].clone();
@@ -99,6 +90,20 @@ public class MatchModeHandler extends GameHandler {
             }
         }
         return board;
+    }
+
+    private int getAttackLinesNum(UnitBlock[][] attackLines) {
+        int attackedLinesNum = 0;
+
+        for (int i = 0; i < MAXIMUM_ATTACK_LINES; i++) {
+            for (int j = 0; j < MAXIMUM_ATTACK_LINES; j++) {
+                if (attackLines[i][j] != null) {
+                    attackedLinesNum++;
+                    break;
+                }
+            }
+        }
+        return attackedLinesNum;
     }
 
     protected void initPreBoard() {
@@ -119,8 +124,13 @@ public class MatchModeHandler extends GameHandler {
     }
 
     protected void saveAttackLines(List<Integer> eraseIndex) {
-        int erasedNum = eraseIndex.size();
+        int attackLinesNum = getAttackLinesNum(attackLines);
+        int erasedNum = eraseIndex.size() + attackLinesNum > MAXIMUM_ATTACK_LINES ? eraseIndex.size() + attackLinesNum - MAXIMUM_ATTACK_LINES : eraseIndex.size();
         int k = eraseIndex.size();
+
+        if (attackLinesNum == 10) {
+            return;
+        }
 
         for (int i = 0; i < MAXIMUM_ATTACK_LINES - erasedNum; i++) {
             attackLines[i] = attackLines[i + erasedNum].clone();
