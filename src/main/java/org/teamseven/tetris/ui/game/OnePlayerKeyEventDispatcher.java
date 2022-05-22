@@ -1,7 +1,9 @@
 package org.teamseven.tetris.ui.game;
 
+import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.handler.GameHandler;
 import org.teamseven.tetris.handler.PreferencesHandler;
+import org.teamseven.tetris.ui.menu.SelectGameModePane;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -34,14 +36,16 @@ public class OnePlayerKeyEventDispatcher implements KeyEventDispatcher {
     public boolean dispatchKeyEvent(KeyEvent e) {
         if(e.getID() == KeyEvent.KEY_PRESSED) {
             if (e.getKeyCode() == KEY_CODE_EXIT) {
-                System.exit(0);
+                Pipeline.replacePane(new SelectGameModePane());
                 return true;
             }
             if (e.getKeyCode() == KEY_CODE_PAUSE) {
                 if (gameHandler.isPaused()) {
                     gameHandler.start();
+                    feedbackListener.start();
                 } else {
                     gameHandler.pause();
+                    feedbackListener.pause();
                 }
                 return true;
             }

@@ -99,6 +99,18 @@ public class TetrisPane extends BaseTetrisPane {
             public void feedback() {
                 drawBoard();
             }
+
+            @Override
+            public void pause() {
+                pauseLabel.setLocation(new Point(main.getWidth() / 2 - pauseLabel.getWidth() / 2,
+                        main.getHeight() / 2 - pauseLabel.getHeight() / 2));
+                pauseLabel.setVisible(true);
+            }
+
+            @Override
+            public void start() {
+                pauseLabel.setVisible(false);
+            }
         });
         manager.addKeyEventDispatcher(keyEventDispatcher);
     }

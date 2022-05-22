@@ -1,5 +1,6 @@
 package org.teamseven.tetris.ui.game;
 
+import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.handler.GameHandler;
 import org.teamseven.tetris.handler.MatchModeHandler;
@@ -195,6 +196,18 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
             @Override
             public void feedback() {
                 drawBoard();
+            }
+
+            @Override
+            public void pause() {
+                pauseLabel.setLocation(new Point(main.getWidth() / 2 - pauseLabel.getWidth() / 2,
+                        main.getHeight() / 2 - pauseLabel.getHeight() / 2));
+                pauseLabel.setVisible(true);
+            }
+
+            @Override
+            public void start() {
+                pauseLabel.setVisible(false);
             }
         });
         manager.addKeyEventDispatcher(keyEventDispatcher);
