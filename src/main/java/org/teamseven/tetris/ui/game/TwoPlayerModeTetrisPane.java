@@ -148,13 +148,15 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
 
         super.paint(g);
 
-        drawHelpBox(g, 120, 60);
 
         drawGameBoard(g, 10, 30, gameHandler.getAGameHandler());
         drawNextBlock(g, 120, 30, gameHandler.getAGameHandler());
+        drawHelpBox(g, 120, 70);
+
 
         drawGameBoard(g, 230, 30, gameHandler.getBGameHandler());
         drawNextBlock(g, 340, 30, gameHandler.getBGameHandler());
+        bDrawHelpBox(g, 340, 70);
 
         drawAttackBoards(g, 340, 130, gameHandler.getAGameHandler());
         drawAttackBoards(g, 120, 130, gameHandler.getBGameHandler());
@@ -172,20 +174,32 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
         g.setColor(Color.RED);
 
-        g.drawString("H E L P", x, y);
-        g.drawString(getStringKey(PreferencesHandler.getRotateRightBtnCode())+" : Rotate", x, y + 10*sizeInt);
-        g.drawString(getStringKey(PreferencesHandler.getLeftBtnCode()) + " : Move Left", x, y + 20*sizeInt);
-        g.drawString(getStringKey(PreferencesHandler.getRightBtnCode()) + " : Move Right", x,y + 30*sizeInt);
-        g.drawString(getStringKey(PreferencesHandler.getSoftDropBtnCode())+ " : Move Down", x, y + 40*sizeInt);
-        g.drawString(getStringKey(PreferencesHandler.getHardDropBtnCode()) + " : Drop", x, y + 50*sizeInt);
-//        g.drawString("F2: Home", sizeInt * 5, sizeInt * 150);
-        //    g.drawString("F1: New Game", sizeInt * 5, sizeInt * 80);
-        //      g.drawString("ESC: Pause Game/Continue", sizeInt * 5, sizeInt * 90);
+        g.drawString(getStringKey(PreferencesHandler.getRotateRightOneBtnCode())+" : Rotate", x, y + 10*sizeInt);
+        g.drawString(getStringKey(PreferencesHandler.getLeftOneBtnCode()) + " : Move Left", x, y + 20*sizeInt);
+        g.drawString(getStringKey(PreferencesHandler.getRightOneBtnCode()) + " : Move Right", x,y + 30*sizeInt);
+        g.drawString(getStringKey(PreferencesHandler.getSoftDropOneBtnCode())+ " : Move Down", x, y + 40*sizeInt);
+        g.drawString(getStringKey(PreferencesHandler.getHardDropOneBtnCode()) + " : Drop", x, y + 50*sizeInt);
+    }
 
+    public void bDrawHelpBox(Graphics g, int X, int Y){
+        int x = X * sizeInt;
+        int y = Y * sizeInt;
+        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
+        g.setColor(Color.RED);
+
+        g.drawString(getStringKey(PreferencesHandler.getRotateRightTwoBtnCode())+" : Rotate", x, y + 10*sizeInt);
+        g.drawString(getStringKey(PreferencesHandler.getLeftTwoBtnCode()) + " : Move Left", x, y + 20*sizeInt);
+        g.drawString(getStringKey(PreferencesHandler.getRightTwoBtnCode()) + " : Move Right", x,y + 30*sizeInt);
+        g.drawString(getStringKey(PreferencesHandler.getSoftDropTwoBtnCode())+ " : Move Down", x, y + 40*sizeInt);
+        g.drawString(getStringKey(PreferencesHandler.getHardDropTwoBtnCode()) + " : Drop", x, y + 50*sizeInt);
     }
     public void drawNextBlock(Graphics g, int X, int Y, GameHandler gameHandler){
-        int x = X *sizeInt;
-        int y = Y *sizeInt;
+        g.setColor(Color.BLACK);
+        g.fillRect(X * sizeInt,Y*sizeInt,BLOCK_WIDTH*sizeInt*6,BLOCK_WIDTH*sizeInt*4);
+
+
+        int x = X *sizeInt + BLOCK_WIDTH*sizeInt;
+        int y = Y *sizeInt + BLOCK_WIDTH*sizeInt;
 
         UnitBlock[][] unitBlocks = gameHandler.getNextBlock().getShape();
         for (UnitBlock[] unitBlock : unitBlocks) {
@@ -198,7 +212,7 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
                 }
             }
             y += sizeInt*BLOCK_WIDTH;
-            x = X *sizeInt;
+            x = X *sizeInt + BLOCK_WIDTH*sizeInt;
         }
 
     }
