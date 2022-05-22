@@ -17,15 +17,16 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
     private CustomButton start, scoreBoard, setting, exit;
     private java.util.List<CustomButton> buttonList = new ArrayList<>();
 
-    private int[] preferredResolution;  // frame resolution - frame top border
+   // private int[] preferredResolution;  // frame resolution - frame top border
 
-    private static int sizeInt = Pipeline.getSizeInt();
+    private static int sizeInt;
 
     public GameMenuPane() {
-        preferredResolution = new int[2];
-        preferredResolution[0] = Pipeline.getScreenResolutionX();
-        preferredResolution[1] = Pipeline.getScreenResolutionY();
+//        preferredResolution = new int[2];
+  //      preferredResolution[0] = Pipeline.getScreenResolutionX();
+    //    preferredResolution[1] = Pipeline.getScreenResolutionY();
 
+        sizeInt = Pipeline.getSizeInt();
         setComp();
         setDesign();
         setAction();
@@ -63,20 +64,20 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
 
     @Override
     public void setDesign() {
-        homePanel.setSize(preferredResolution[0], preferredResolution[1]);
+        homePanel.setSize(Pipeline.getScreenResolutionX(),Pipeline.getScreenResolutionY());
         homePanel.setBackground(Color.black);
         homePanel.setLayout(null);
         homePanel.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
 
-        titlePanel.setBounds(0, sizeInt * 50, preferredResolution[0], sizeInt * 40);
+        titlePanel.setBounds(0, sizeInt * 50, Pipeline.getScreenResolutionX(), sizeInt * 40);
         titlePanel.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 25));
 
-        buttonPanel.setBounds(sizeInt * 110, sizeInt * 110, preferredResolution[0] - sizeInt * 110 * 2, sizeInt * 150);
+        buttonPanel.setBounds(sizeInt * 110, sizeInt * 110, Pipeline.getScreenResolutionX() - sizeInt * 110 * 2, sizeInt * 150);
         buttonPanel.setLayout(new GridLayout(5, 1));
 
         title.setForeground(Color.RED);
 
-        homePanel.setBounds(0, 0, preferredResolution[0], preferredResolution[1]);
+        homePanel.setBounds(0, 0, Pipeline.getScreenResolutionX(), Pipeline.getScreenResolutionY());
         this.add(homePanel, JLayeredPane.DEFAULT_LAYER);
     }
 
@@ -93,7 +94,7 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
             Pipeline.replacePane(new SettingPane());
         });
         scoreBoard.addActionListener(e -> {
-            Pipeline.replacePane(new ScoreBoardTabbedPane());
+            Pipeline.replacePane(new SelectScoreBoardPane());
         });
         exit.addActionListener(e -> {
             System.exit(0);
