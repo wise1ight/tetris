@@ -253,27 +253,27 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         if (color == Color.LIGHT_GRAY) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
-            g.drawString("B", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
+            g.drawString("B", x + sizeInt, 8 * sizeInt + y);
         }
         if (color == Color.DARK_GRAY) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
-            g.drawString("C", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
+            g.drawString("C", x + sizeInt, 8 * sizeInt + y);
         }
         if (color == Color.GRAY) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
-            g.drawString("S", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
+            g.drawString("S", x + sizeInt, 8 * sizeInt + y);
         }
         if (color == Color.BLACK) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
-            g.drawString("L", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
+            g.drawString("L",x + sizeInt, 8 * sizeInt + y);
         }
         if (color == Color.PINK) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
-            g.drawString("W", x + BLOCK_WIDTH / 5, BLOCK_WIDTH * 8 / 10 + y);
+            g.drawString("W", x + sizeInt, 8 * sizeInt + y);
         }
     }
     public void drawAttackBoards(Graphics g, int X, int Y, GameHandler gameHandler){
