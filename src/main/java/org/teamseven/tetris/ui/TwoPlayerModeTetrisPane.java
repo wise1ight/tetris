@@ -36,7 +36,7 @@ public class TwoPlayerModeTetrisPane extends JLayeredPane implements IDesign, Ke
     private static final int KEY_CODE_LEFT_TWO = PreferencesHandler.getLeftTwoBtnCode();
     private static final int KEY_CODE_RIGHT_ONE = PreferencesHandler.getRightOneBtnCode();
     private static final int KEY_CODE_RIGHT_TWO = PreferencesHandler.getRightTwoBtnCode();
-    private static final int KEY_CODE_ROTATE_RIGHT_ONE = PreferencesHandler.getRotateRightTwoBtnCode();
+    private static final int KEY_CODE_ROTATE_RIGHT_ONE = PreferencesHandler.getRotateRightOneBtnCode();
     private static final int KEY_CODE_ROTATE_RIGHT_TWO = PreferencesHandler.getRotateRightTwoBtnCode();
     private static final int KEY_CODE_PAUSE = PreferencesHandler.getPauseBtnCode();
     private static final int KEY_CODE_HARD_DROP_ONE = PreferencesHandler.getHardDropOneBtnCode();
