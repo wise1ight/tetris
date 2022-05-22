@@ -79,22 +79,4 @@ public class MainMenuPane extends BasePane {
         });
     }
 
-    // TAB -> up,down key
-    public void setFocusTraversal() {
-        KeyStroke DownKeyStroke = KeyStroke.getKeyStroke("DOWN");
-        KeyStroke UpKeyStroke = KeyStroke.getKeyStroke("UP");
-
-        Set<AWTKeyStroke> ForwardKey = new HashSet<AWTKeyStroke>(KeyboardFocusManager.getCurrentKeyboardFocusManager().
-                getDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
-        ForwardKey.clear();
-        ForwardKey.add(DownKeyStroke);
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, ForwardKey);
-
-        Set<AWTKeyStroke> BackwardKey = new HashSet<AWTKeyStroke>(KeyboardFocusManager.getCurrentKeyboardFocusManager().
-                getDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS));
-        BackwardKey.clear();
-        BackwardKey.add(UpKeyStroke);
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().setDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, BackwardKey);
-    }
-
 }

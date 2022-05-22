@@ -2,6 +2,7 @@ package org.teamseven.tetris.ui.menu;
 
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.ui.BasePane;
+import org.teamseven.tetris.ui.CustomButton;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +12,7 @@ public class SelectScoreBoardPane extends BasePane {
 
     private Panel scoreBoardPanel, titlePanel, buttonPanel;
 
-    private Button normal, item, home;
+    private CustomButton normal, item, home;
     private Label title;
 
     @Override
@@ -26,9 +27,9 @@ public class SelectScoreBoardPane extends BasePane {
 
         buttonPanel = new Panel();
 
-        normal = new Button("Normal Mode");
-        item = new Button("Item Mode");
-        home = new Button("Home");
+        normal = new CustomButton("Normal Mode");
+        item = new CustomButton("Item Mode");
+        home = new CustomButton("Home");
 
         buttonPanel.add(normal);
         buttonPanel.add(item);
@@ -58,6 +59,8 @@ public class SelectScoreBoardPane extends BasePane {
 
     @Override
     public void setAction() {
+        setFocusTraversal();
+
         normal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
