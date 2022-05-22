@@ -1,7 +1,9 @@
-package org.teamseven.tetris.ui;
+package org.teamseven.tetris.ui.menu;
 
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.handler.PreferencesHandler;
+import org.teamseven.tetris.ui.IDesign;
+import org.teamseven.tetris.ui.menu.SettingPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,12 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
-public class twoPlayerModeKeyPane extends JLayeredPane implements IDesign {
+public class TwoPlayerModeKeyPane extends JLayeredPane implements IDesign {
     private static int sizeInt = Pipeline.getSizeInt();
 
     private Label title;
@@ -26,7 +24,7 @@ public class twoPlayerModeKeyPane extends JLayeredPane implements IDesign {
 
     private Button selected;
 
-    public twoPlayerModeKeyPane() {
+    public TwoPlayerModeKeyPane() {
         sizeInt = Pipeline.getSizeInt();
         setComp();
         setDesign();

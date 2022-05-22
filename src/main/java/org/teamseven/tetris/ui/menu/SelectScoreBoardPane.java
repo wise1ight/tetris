@@ -1,6 +1,7 @@
-package org.teamseven.tetris.ui;
+package org.teamseven.tetris.ui.menu;
 
 import org.teamseven.tetris.Pipeline;
+import org.teamseven.tetris.ui.IDesign;
 
 import javax.swing.*;
 import java.awt.*;
@@ -84,7 +85,7 @@ public class SelectScoreBoardPane extends JLayeredPane implements IDesign {
         home.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Pipeline.replacePane(new GameMenuPane());
+                Pipeline.replacePane(new MainMenuPane());
             }
         });
     }

@@ -1,6 +1,7 @@
-package org.teamseven.tetris.ui;
+package org.teamseven.tetris.ui.menu;
 
 import org.teamseven.tetris.Pipeline;
+import org.teamseven.tetris.ui.IDesign;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GameMenuPane extends JLayeredPane implements IDesign {
+public class MainMenuPane extends JLayeredPane implements IDesign {
 
     private Label title;
     private Panel homePanel, titlePanel, buttonPanel;
@@ -21,7 +22,7 @@ public class GameMenuPane extends JLayeredPane implements IDesign {
 
     private static int sizeInt;
 
-    public GameMenuPane() {
+    public MainMenuPane() {
 //        preferredResolution = new int[2];
   //      preferredResolution[0] = Pipeline.getScreenResolutionX();
     //    preferredResolution[1] = Pipeline.getScreenResolutionY();

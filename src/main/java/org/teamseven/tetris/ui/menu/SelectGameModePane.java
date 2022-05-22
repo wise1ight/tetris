@@ -1,7 +1,10 @@
-package org.teamseven.tetris.ui;
+package org.teamseven.tetris.ui.menu;
 
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.handler.*;
+import org.teamseven.tetris.ui.IDesign;
+import org.teamseven.tetris.ui.game.TetrisPane;
+import org.teamseven.tetris.ui.game.TwoPlayerModeTetrisPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -75,7 +78,7 @@ public class SelectGameModePane extends JLayeredPane implements IDesign {
         home.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Pipeline.replacePane(new GameMenuPane());
+                Pipeline.replacePane(new MainMenuPane());
             }
         });
 

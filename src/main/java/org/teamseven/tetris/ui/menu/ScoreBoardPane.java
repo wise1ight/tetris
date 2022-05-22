@@ -1,9 +1,10 @@
-package org.teamseven.tetris.ui;
+package org.teamseven.tetris.ui.menu;
 
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.handler.PreferencesHandler;
 import org.teamseven.tetris.handler.ScoreMemoryHandler;
 import org.teamseven.tetris.score.Score;
+import org.teamseven.tetris.ui.IDesign;
 
 import javax.swing.*;
 import java.awt.*;
@@ -100,7 +101,7 @@ public class ScoreBoardPane extends JLayeredPane implements IDesign {
         home.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Pipeline.replacePane(new GameMenuPane());
+                Pipeline.replacePane(new MainMenuPane());
             }
         });
     }

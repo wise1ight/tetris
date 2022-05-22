@@ -1,4 +1,4 @@
-package org.teamseven.tetris.ui;
+package org.teamseven.tetris.ui.game;
 
 import org.teamseven.tetris.enums.ColorBlindnessType;
 import org.teamseven.tetris.enums.ScreenSize;
