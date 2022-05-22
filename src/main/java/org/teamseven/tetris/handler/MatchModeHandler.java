@@ -12,13 +12,13 @@ import static org.teamseven.tetris.Const.*;
 @Getter
 @Setter
 public class MatchModeHandler extends GameHandler {
-    private UnitBlock[][] attackLines;
-    private UnitBlock[][] attackedLines;
-    private UnitBlock[][] preBoard;
+    protected UnitBlock[][] attackLines;
+    protected UnitBlock[][] attackedLines;
+    protected UnitBlock[][] preBoard;
     //TODO
     //minimum erase line 2로 바꾸기
-    public static final int MINIMUM_ERASE_LINE = 1;
-    private static final int MAXIMUM_ATTACK_LINES = 10;
+    protected static final int MINIMUM_ERASE_LINE = 1;
+    protected static final int MAXIMUM_ATTACK_LINES = 10;
 
     public MatchModeHandler() {
         attackLines = new UnitBlock[MAXIMUM_ATTACK_LINES][MAXIMUM_ATTACK_LINES];
@@ -65,7 +65,7 @@ public class MatchModeHandler extends GameHandler {
         return true;
     }
 
-    private UnitBlock[][] appendAttackedLines() {
+    protected UnitBlock[][] appendAttackedLines() {
         UnitBlock[][] board = new UnitBlock[HEIGHT][WIDTH];
         int attackedLinesNum = 0;
 
@@ -84,7 +84,7 @@ public class MatchModeHandler extends GameHandler {
         return board;
     }
 
-    private void initPreBoard() {
+    protected void initPreBoard() {
         for (int i = 0; i < HEIGHT; i++) {
             preBoard[i] = board.getBoard()[i].clone();
         }
@@ -92,7 +92,7 @@ public class MatchModeHandler extends GameHandler {
     }
 
     //공격준비할 줄 만들기
-    private void readyAttack() {
+    protected void readyAttack() {
         List<Integer> eraseIndex = board.getEraseIndex();
         if (eraseIndex.size() < MINIMUM_ERASE_LINE) {
             return;
@@ -101,7 +101,7 @@ public class MatchModeHandler extends GameHandler {
         board.clearErasedIndex();
     }
 
-    private void saveAttackLines(List<Integer> eraseIndex) {
+    protected void saveAttackLines(List<Integer> eraseIndex) {
         int erasedNum = eraseIndex.size();
 
         for (int i = 0; i < MAXIMUM_ATTACK_LINES - erasedNum; i++) {
