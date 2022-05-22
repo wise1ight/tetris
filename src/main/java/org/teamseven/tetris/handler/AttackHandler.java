@@ -32,14 +32,11 @@ public class AttackHandler {
         return board;
     }
 
-    public UnitBlock[][] readyAttack(GameBoard board, UnitBlock[][] attackLines, UnitBlock[][] preBoard, CurrBlock curr) {
-        List<Integer> eraseIndex = board.getEraseIndex();
+    public UnitBlock[][] readyAttack(List<Integer> eraseIndex, UnitBlock[][] attackLines, UnitBlock[][] preBoard, CurrBlock curr) {
         if (eraseIndex.size() < MINIMUM_ERASE_LINE) {
             return null;
         }
-        UnitBlock[][] newAttackLines = saveAttackLines(eraseIndex, attackLines, preBoard, curr);
-        board.clearErasedIndex();
-        return newAttackLines;
+        return saveAttackLines(eraseIndex, attackLines, preBoard, curr);
     }
 
     private UnitBlock[][] saveAttackLines(List<Integer> eraseIndex, UnitBlock[][] attackLines, UnitBlock[][] preBoard, CurrBlock curr) {
@@ -49,7 +46,7 @@ public class AttackHandler {
         int k = eraseIndex.size();
 
         if (attackLinesNum == 10) {
-            return null;
+            return attackLines;
         }
 
         for (int i = 0; i < MAXIMUM_ATTACK_LINES - erasedNum; i++) {

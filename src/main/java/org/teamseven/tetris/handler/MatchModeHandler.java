@@ -65,7 +65,8 @@ public class MatchModeHandler extends GameHandler {
     }
 
     protected void readyAttack() {
-        UnitBlock[][] newAttackLines = attackHandler.readyAttack(board, attackLines, preBoard, curr);
+        UnitBlock[][] newAttackLines = attackHandler.readyAttack(board.getEraseIndex(), attackLines, preBoard, curr);
+        board.clearErasedIndex();
         if (newAttackLines != null) {
             attackLines = newAttackLines;
         }
