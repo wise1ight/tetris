@@ -5,6 +5,8 @@ import org.teamseven.tetris.handler.PreferencesHandler;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.teamseven.tetris.Const.*;
 import static org.teamseven.tetris.Const.LEFT;
@@ -26,81 +28,77 @@ public class TwoPlayerKeyEventDispatcher implements KeyEventDispatcher {
 
     private MatchModeBridge gameHandler;
     private IKeyInputFeedback feedbackListener;
+    private final Set<Integer> pressedKeys;
 
     private TwoPlayerKeyEventDispatcher() {
-
+        this.pressedKeys = new HashSet<>();
     }
 
     public TwoPlayerKeyEventDispatcher(MatchModeBridge gameHandler, IKeyInputFeedback feedbackListener) {
         this.gameHandler = gameHandler;
         this.feedbackListener = feedbackListener;
+        this.pressedKeys = new HashSet<>();
     }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
         if(e.getID() == KeyEvent.KEY_PRESSED) {
-            if (e.getKeyCode() == KEY_CODE_EXIT) {
-                System.exit(0);
-                return true;
-            }
-            if (e.getKeyCode() == KEY_CODE_PAUSE) {
-                if (gameHandler.isPaused()) {
-                    gameHandler.start();
-                } else {
-                    gameHandler.pause();
+            pressedKeys.add(e.getKeyCode());
+
+            for (Integer keyCode : pressedKeys) {
+                if (keyCode == KEY_CODE_EXIT) {
+                    System.exit(0);
                 }
-                return true;
+                if (keyCode == KEY_CODE_PAUSE) {
+                    if (gameHandler.isPaused()) {
+                        gameHandler.start();
+                    } else {
+                        gameHandler.pause();
+                    }
+                }
+                if (gameHandler.isPaused()) {
+                    return true;
+                }
+                if (gameHandler.getAGameHandler().isAnimating()) {
+                    return true;
+                }
+                if (gameHandler.getBGameHandler().isAnimating()) {
+                    return true;
+                }
+                if (keyCode == KEY_CODE_SOFT_DROP_ONE) {
+                    gameHandler.getAGameHandler().move(DOWN);
+                    feedbackListener.feedback();
+                } else if (keyCode == KEY_CODE_SOFT_DROP_TWO) {
+                    gameHandler.getBGameHandler().move(DOWN);
+                    feedbackListener.feedback();
+                } else if (keyCode == KEY_CODE_RIGHT_ONE) {
+                    gameHandler.getAGameHandler().move(RIGHT);
+                    feedbackListener.feedback();
+                } else if (keyCode == KEY_CODE_RIGHT_TWO) {
+                    gameHandler.getBGameHandler().move(RIGHT);
+                    feedbackListener.feedback();
+                } else if (keyCode == KEY_CODE_LEFT_ONE) {
+                    gameHandler.getAGameHandler().move(LEFT);
+                    feedbackListener.feedback();
+                } else if (keyCode == KEY_CODE_LEFT_TWO) {
+                    gameHandler.getBGameHandler().move(LEFT);
+                    feedbackListener.feedback();
+                } else if (keyCode == KEY_CODE_ROTATE_RIGHT_ONE) {
+                    gameHandler.getAGameHandler().rotate();
+                    feedbackListener.feedback();
+                } else if (keyCode == KEY_CODE_ROTATE_RIGHT_TWO) {
+                    gameHandler.getBGameHandler().rotate();
+                    feedbackListener.feedback();
+                } else if (keyCode == KEY_CODE_HARD_DROP_ONE) {
+                    gameHandler.getAGameHandler().drop(gameHandler.getBGameHandler());
+                    feedbackListener.feedback();
+                } else if (keyCode == KEY_CODE_HARD_DROP_TWO) {
+                    gameHandler.getBGameHandler().drop(gameHandler.getAGameHandler());
+                    feedbackListener.feedback();
+                }
             }
-            if (gameHandler.isPaused()) {
-                return true;
-            }
-            if (gameHandler.getAGameHandler().isAnimating()) {
-                return true;
-            }
-            if (gameHandler.getBGameHandler().isAnimating()) {
-                return true;
-            }
-            if (e.getKeyCode() == KEY_CODE_SOFT_DROP_ONE) {
-                gameHandler.getAGameHandler().move(DOWN);
-                feedbackListener.feedback();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_SOFT_DROP_TWO) {
-                gameHandler.getBGameHandler().move(DOWN);
-                feedbackListener.feedback();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_RIGHT_ONE) {
-                gameHandler.getAGameHandler().move(RIGHT);
-                feedbackListener.feedback();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_RIGHT_TWO) {
-                gameHandler.getBGameHandler().move(RIGHT);
-                feedbackListener.feedback();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_LEFT_ONE) {
-                gameHandler.getAGameHandler().move(LEFT);
-                feedbackListener.feedback();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_LEFT_TWO) {
-                gameHandler.getBGameHandler().move(LEFT);
-                feedbackListener.feedback();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_ROTATE_RIGHT_ONE) {
-                gameHandler.getAGameHandler().rotate();
-                feedbackListener.feedback();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_ROTATE_RIGHT_TWO) {
-                gameHandler.getBGameHandler().rotate();
-                feedbackListener.feedback();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_HARD_DROP_ONE) {
-                gameHandler.getAGameHandler().drop(gameHandler.getBGameHandler());
-                feedbackListener.feedback();
-                return true;
-            } else if (e.getKeyCode() == KEY_CODE_HARD_DROP_TWO) {
-                gameHandler.getBGameHandler().drop(gameHandler.getAGameHandler());
-                feedbackListener.feedback();
-                return true;
-            }
+        } else if (e.getID() == KeyEvent.KEY_RELEASED) {
+            pressedKeys.remove(e.getKeyCode());
         }
 
         return false;
