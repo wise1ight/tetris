@@ -32,10 +32,6 @@ public class TwoPlayerKeyEventDispatcher implements KeyEventDispatcher {
     private IKeyInputFeedback feedbackListener;
     private final Set<Integer> pressedKeys;
 
-    private TwoPlayerKeyEventDispatcher() {
-        this.pressedKeys = new HashSet<>();
-    }
-
     public TwoPlayerKeyEventDispatcher(MatchModeBridge gameHandler, IKeyInputFeedback feedbackListener) {
         this.gameHandler = gameHandler;
         this.feedbackListener = feedbackListener;
@@ -45,7 +41,9 @@ public class TwoPlayerKeyEventDispatcher implements KeyEventDispatcher {
     @Override
     public boolean dispatchKeyEvent(KeyEvent e) {
         if(e.getID() == KeyEvent.KEY_PRESSED) {
-            pressedKeys.add(e.getKeyCode());
+            if (isPressedKey(e)) {
+                pressedKeys.add(e.getKeyCode());
+            }
 
             for (Integer keyCode : pressedKeys) {
                 if (keyCode == KEY_CODE_EXIT) {
@@ -85,24 +83,30 @@ public class TwoPlayerKeyEventDispatcher implements KeyEventDispatcher {
                 } else if (keyCode == KEY_CODE_LEFT_TWO) {
                     gameHandler.getBGameHandler().move(LEFT);
                     feedbackListener.feedback();
-                } else if (keyCode == KEY_CODE_ROTATE_RIGHT_ONE) {
-                    gameHandler.getAGameHandler().rotate();
-                    feedbackListener.feedback();
-                } else if (keyCode == KEY_CODE_ROTATE_RIGHT_TWO) {
-                    gameHandler.getBGameHandler().rotate();
-                    feedbackListener.feedback();
-                } else if (keyCode == KEY_CODE_HARD_DROP_ONE) {
-                    gameHandler.getAGameHandler().drop(gameHandler.getBGameHandler());
-                    feedbackListener.feedback();
-                } else if (keyCode == KEY_CODE_HARD_DROP_TWO) {
-                    gameHandler.getBGameHandler().drop(gameHandler.getAGameHandler());
-                    feedbackListener.feedback();
                 }
+            }
+            if (e.getKeyCode() == KEY_CODE_HARD_DROP_ONE) {
+                gameHandler.getAGameHandler().drop(gameHandler.getBGameHandler());
+                feedbackListener.feedback();
+            } else if (e.getKeyCode() == KEY_CODE_HARD_DROP_TWO) {
+                gameHandler.getBGameHandler().drop(gameHandler.getAGameHandler());
+                feedbackListener.feedback();
+            } else if (e.getKeyCode() == KEY_CODE_ROTATE_RIGHT_ONE) {
+                gameHandler.getAGameHandler().rotate();
+                feedbackListener.feedback();
+            } else if (e.getKeyCode() == KEY_CODE_ROTATE_RIGHT_TWO) {
+                gameHandler.getBGameHandler().rotate();
+                feedbackListener.feedback();
             }
         } else if (e.getID() == KeyEvent.KEY_RELEASED) {
             pressedKeys.remove(e.getKeyCode());
         }
 
         return false;
+    }
+
+    private boolean isPressedKey(KeyEvent e) {
+        return e.getKeyCode() != KEY_CODE_HARD_DROP_ONE && e.getKeyCode() != KEY_CODE_HARD_DROP_TWO
+                && e.getKeyCode() != KEY_CODE_ROTATE_RIGHT_ONE && e.getKeyCode() != KEY_CODE_ROTATE_RIGHT_TWO;
     }
 }
