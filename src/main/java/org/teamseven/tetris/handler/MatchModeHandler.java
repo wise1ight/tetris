@@ -68,6 +68,7 @@ public class MatchModeHandler extends GameHandler {
     private UnitBlock[][] appendAttackedLines() {
         UnitBlock[][] board = new UnitBlock[HEIGHT][WIDTH];
         int attackedLinesNum = 0;
+        int k = 0;
 
         for (int i = 0; i < MAXIMUM_ATTACK_LINES; i++) {
             for (int j = 0; j < MAXIMUM_ATTACK_LINES; j++) {
@@ -76,10 +77,15 @@ public class MatchModeHandler extends GameHandler {
                     break;
                 }
             }
-            board[i + MAXIMUM_ATTACK_LINES] = attackedLines[i];
+//            board[i + MAXIMUM_ATTACK_LINES] = attackedLines[i];
         }
-        for (int i = 0; i < HEIGHT - attackedLinesNum; i++) {
-            board[i] = this.board.getBoard()[i + attackedLinesNum].clone();
+        for (int i = 0; i < HEIGHT; i++) {
+            if (i < HEIGHT - attackedLinesNum) {
+                board[i] = this.board.getBoard()[i + attackedLinesNum].clone();
+            } else {
+                board[i] = attackedLines[MAXIMUM_ATTACK_LINES - attackedLinesNum + k].clone();
+                k++;
+            }
         }
         return board;
     }
