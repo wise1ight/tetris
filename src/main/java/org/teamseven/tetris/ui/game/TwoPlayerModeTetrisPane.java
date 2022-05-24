@@ -182,7 +182,7 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
 //        drawYouLose(g, 230, 100);
 
         if(gameHandler.getAGameHandler() instanceof TimeMatchModeHandler)
-            drawRemainTime(g, 180, 20);
+            drawRemainTime(g, 180, 260);
     }
 
     public void drawGameBoard(Graphics g, int boardConerX, int boardConerY, GameHandler gameHandler){
@@ -345,7 +345,7 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
     public void drawRemainTime(Graphics g, int X, int Y){
         int x = X * sizeInt;
         int y = Y * sizeInt;
-        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 8));
+        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 12));
         g.setColor(Color.RED);
 
         g.drawString("Remain Time : " + (TIME_MATCH - timeCount) / 1000, x, y);
