@@ -18,8 +18,10 @@ import static org.teamseven.tetris.Const.SCORE_NORMAL_FILE;
 public class ScoreBoardPane extends BasePane {
 
     private Label title;
-    private Panel scoreBoardPanel, scoreBoardTable, homeButtonPanel, titlePanel, levelButtonPanel;
-    private Button home, level;
+    private Panel scoreBoardPanel, scoreBoardTable, homeButtonPanel, titlePanel;
+    //private Panel levelButtonPanel;
+    private Button home;
+    //private Button level;
 
     private String highlightUUID = null;
     private List<Score> scores;
@@ -61,16 +63,16 @@ public class ScoreBoardPane extends BasePane {
 
         homeButtonPanel = new Panel();
 
-        levelButtonPanel = new Panel();
+//        levelButtonPanel = new Panel();
 
         home = new Button("Back to Menu");
-        level = new Button("Level : " + PreferencesHandler.getMode());
+//        level = new Button("Level : " + PreferencesHandler.getMode());
 
         homeButtonPanel.add(home);
-        levelButtonPanel.add(level);
+//        levelButtonPanel.add(level);
 
         scoreBoardPanel.add(homeButtonPanel);
-        scoreBoardPanel.add(levelButtonPanel);
+//        scoreBoardPanel.add(levelButtonPanel);
         scoreBoardPanel.add(titlePanel);
         scoreBoardPanel.add(scoreBoardTable);
 
@@ -87,8 +89,8 @@ public class ScoreBoardPane extends BasePane {
         titlePanel.setBounds(0, sizeInt * 20, Pipeline.getScreenResolutionX(), sizeInt * 30);
         titlePanel.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 25));
 
-        levelButtonPanel.setBounds(50 * sizeInt, 30* sizeInt, 60*sizeInt, sizeInt* 20);
-        levelButtonPanel.setLayout(new GridLayout(1,1));
+//        levelButtonPanel.setBounds(50 * sizeInt, 30* sizeInt, 60*sizeInt, sizeInt* 20);
+//        levelButtonPanel.setLayout(new GridLayout(1,1));
 
         title.setForeground(Color.RED);
 
@@ -108,12 +110,14 @@ public class ScoreBoardPane extends BasePane {
             }
         });
 
+/*
         level.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
             }
         });
+*/
     }
 
     public void addScore(Score score){
