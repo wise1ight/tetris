@@ -18,8 +18,8 @@ import static org.teamseven.tetris.Const.SCORE_NORMAL_FILE;
 public class ScoreBoardPane extends BasePane {
 
     private Label title;
-    private Panel scoreBoardPanel, scoreBoardTable, buttonPanel, titlePanel;
-    private Button home;
+    private Panel scoreBoardPanel, scoreBoardTable, homeButtonPanel, titlePanel, levelButtonPanel;
+    private Button home, level;
 
     private String highlightUUID = null;
     private List<Score> scores;
@@ -59,13 +59,18 @@ public class ScoreBoardPane extends BasePane {
 
         scoreBoardTable = new Panel();
 
-        buttonPanel = new Panel();
+        homeButtonPanel = new Panel();
+
+        levelButtonPanel = new Panel();
 
         home = new Button("Back to Menu");
+        level = new Button("Level : " + PreferencesHandler.getMode());
 
-        buttonPanel.add(home);
+        homeButtonPanel.add(home);
+        levelButtonPanel.add(level);
 
-        scoreBoardPanel.add(buttonPanel);
+        scoreBoardPanel.add(homeButtonPanel);
+        scoreBoardPanel.add(levelButtonPanel);
         scoreBoardPanel.add(titlePanel);
         scoreBoardPanel.add(scoreBoardTable);
 
@@ -82,14 +87,17 @@ public class ScoreBoardPane extends BasePane {
         titlePanel.setBounds(0, sizeInt * 20, Pipeline.getScreenResolutionX(), sizeInt * 30);
         titlePanel.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 25));
 
+        levelButtonPanel.setBounds(50 * sizeInt, 30* sizeInt, 60*sizeInt, sizeInt* 20);
+        levelButtonPanel.setLayout(new GridLayout(1,1));
+
         title.setForeground(Color.RED);
 
         scoreBoardTable.setBounds(sizeInt * 50, sizeInt * 60, Pipeline.getScreenResolutionX() - sizeInt * 50 , sizeInt * 160);
         scoreBoardTable.setLayout(new GridLayout(10,1));
         scoreBoardTable.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 10));
 
-        buttonPanel.setBounds(sizeInt * 50, sizeInt * 240, Pipeline.getScreenResolutionX() - sizeInt * 50 *2 , sizeInt * 80);
-        buttonPanel.setLayout(new GridLayout(3, 5));
+        homeButtonPanel.setBounds(sizeInt * 50, sizeInt * 240, Pipeline.getScreenResolutionX() - sizeInt * 50 *2 , sizeInt * 80);
+        homeButtonPanel.setLayout(new GridLayout(3, 5));
     }
 
     public void setAction(){
@@ -97,6 +105,13 @@ public class ScoreBoardPane extends BasePane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Pipeline.replacePane(new MainMenuPane());
+            }
+        });
+
+        level.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
