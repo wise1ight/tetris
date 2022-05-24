@@ -168,12 +168,12 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         drawScore(g, 10, 10, gameHandler.getAGameHandler());
         drawGameBoard(g, 10, 30, gameHandler.getAGameHandler());
         drawNextBlock(g, 120, 30, gameHandler.getAGameHandler());
-        drawHelpBox(g, 120, 70);
+        drawHelpBox(g, 120, 72);
 
         drawScore(g, 230, 10, gameHandler.getBGameHandler());
         drawGameBoard(g, 230, 30, gameHandler.getBGameHandler());
         drawNextBlock(g, 340, 30, gameHandler.getBGameHandler());
-        bDrawHelpBox(g, 340, 70);
+        bDrawHelpBox(g, 340, 72);
 
         drawAttackBoards(g, 340, 130, gameHandler.getAGameHandler());
         drawAttackBoards(g, 120, 130, gameHandler.getBGameHandler());
