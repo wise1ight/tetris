@@ -336,13 +336,12 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
     }
 
     private void drawPause(Graphics g, int X, int Y){
-        g.setColor(Color.GRAY);
+        g.setColor(new Color(50, 210, 250, 200));
         g.fillRect(X*sizeInt, Y*sizeInt, preferredResolution[0], 50 *sizeInt);
 
         g.setColor(Color.WHITE);
         g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 30));
         g.drawString(" Pause " , (X+170)*sizeInt, (Y+34)*sizeInt);
-
     }
 
     public void drawRemainTime(Graphics g, int X, int Y){

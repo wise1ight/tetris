@@ -223,7 +223,7 @@ public class TetrisPane extends BaseTetrisPane {
         }
     }
     private void drawPause(Graphics g, int X, int Y){
-        g.setColor(Color.GRAY);
+        g.setColor(new Color(50, 210, 250, 200));
         g.fillRect(X*sizeInt, Y*sizeInt, preferredResolution[0], 50 *sizeInt);
 
         g.setColor(Color.WHITE);
