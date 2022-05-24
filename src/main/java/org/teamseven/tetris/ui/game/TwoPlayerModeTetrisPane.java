@@ -180,6 +180,7 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
 
 //        drawYouWin(g, 10, 100);
 //        drawYouLose(g, 230, 100);
+//        drawPause(g, 0, 120);
 
         if(gameHandler.getAGameHandler() instanceof TimeMatchModeHandler)
             drawRemainTime(g, 180, 260);
@@ -335,10 +336,12 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
     }
 
     private void drawPause(Graphics g, int X, int Y){
+        g.setColor(Color.GRAY);
+        g.fillRect(X*sizeInt, Y*sizeInt, preferredResolution[0], 50 *sizeInt);
 
-        g.setColor(Color.RED);
-        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 20));
-        g.drawString(" SCORE : " , X*sizeInt, Y*sizeInt);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 30));
+        g.drawString(" Pause " , (X+170)*sizeInt, (Y+34)*sizeInt);
 
     }
 

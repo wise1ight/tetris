@@ -104,6 +104,7 @@ public class TetrisPane extends BaseTetrisPane {
         drawCell(g, 10, 30);
         drawNextBlock(g, 120, 30);
         drawHelpBox(g, 120, 90);
+        //        drawPause(g, 0, 120);
 
     }
 
@@ -222,10 +223,11 @@ public class TetrisPane extends BaseTetrisPane {
         }
     }
     private void drawPause(Graphics g, int X, int Y){
+        g.setColor(Color.GRAY);
+        g.fillRect(X*sizeInt, Y*sizeInt, preferredResolution[0], 50 *sizeInt);
 
-        g.setColor(Color.RED);
-        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 20));
-        g.drawString(" SCORE : " , X*sizeInt, Y*sizeInt);
-
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 30));
+        g.drawString(" Pause " , (X+170)*sizeInt, (Y+34)*sizeInt);
     }
 }
