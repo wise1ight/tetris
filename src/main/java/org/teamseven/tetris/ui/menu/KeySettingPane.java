@@ -214,6 +214,9 @@ public class KeySettingPane extends BasePane {
         if(e.getKeyCode() == PreferencesHandler.getSoftDropBtnCode()) return false;
         if(e.getKeyCode() == PreferencesHandler.getHardDropBtnCode()) return false;
 
+        if(e.getKeyCode() == PreferencesHandler.getExitBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getPauseBtnCode()) return false;
+
         return true;
     }
 

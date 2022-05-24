@@ -367,6 +367,9 @@ public class TwoPlayerModeKeyPane extends BasePane {
         if(e.getKeyCode() == PreferencesHandler.getSoftDropOneBtnCode()) return false;
         if(e.getKeyCode() == PreferencesHandler.getHardDropOneBtnCode()) return false;
 
+        if(e.getKeyCode() == PreferencesHandler.getExitBtnCode()) return false;
+        if(e.getKeyCode() == PreferencesHandler.getPauseBtnCode()) return false;
+
         if(e.getKeyCode() == PreferencesHandler.getRightTwoBtnCode()) return false;
         if(e.getKeyCode() == PreferencesHandler.getLeftTwoBtnCode()) return false;
         if(e.getKeyCode() == PreferencesHandler.getRotateRightTwoBtnCode()) return false;
