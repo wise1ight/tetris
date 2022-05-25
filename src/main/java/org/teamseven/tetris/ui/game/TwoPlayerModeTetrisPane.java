@@ -98,39 +98,6 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         //Pipeline.replacePane(new ScoreBoardPanelTab(preferredResolution, itemMode, gameHandler.getScore()));
     }
 
-    private void drawAttackBoard(GameHandler gh, JTextPane nbb) {
-        if(!(gh instanceof MatchModeHandler))
-            return;
-
-        StringBuffer sb = new StringBuffer();
-
-        UnitBlock[][] unitBlocks = ((MatchModeHandler) gh).getAttackLines();
-        for (UnitBlock[] unitBlock : unitBlocks) {
-            for (UnitBlock block : unitBlock) {
-                if (block != null) {
-                    sb.append("O");
-                } else {
-                    sb.append(" ");
-                }
-            }
-            sb.append("\n");
-        }
-
-        nbb.setText(sb.toString());
-        StyledDocument doc = nbb.getStyledDocument();
-        doc.setParagraphAttributes(0, doc.getLength(), TetrisStyle.getStyle(Color.WHITE), false);
-        nbb.setStyledDocument(doc);
-
-        for (int row = 0; row < unitBlocks.length; row++) {
-            for (int col = 0; col < unitBlocks[row].length; col++) {
-                int offset = (unitBlocks[row].length + 1) * row + col;
-                if(unitBlocks[row][col] != null) {
-                    doc.setCharacterAttributes(offset, 1, TetrisStyle.getStyle(unitBlocks[row][col].getColor()), false);
-                }
-            }
-        }
-    }
-
     @Override
     public void setDesign() {
         super.setDesign();
