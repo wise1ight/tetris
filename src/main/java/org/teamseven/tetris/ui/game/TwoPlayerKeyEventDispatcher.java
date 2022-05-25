@@ -47,7 +47,8 @@ public class TwoPlayerKeyEventDispatcher implements KeyEventDispatcher {
 
             for (Integer keyCode : pressedKeys) {
                 if (keyCode == KEY_CODE_EXIT) {
-                    Pipeline.replacePane(new SelectGameModePane());
+                    feedbackListener.quit();
+                    return true;
                 }
                 if (keyCode == KEY_CODE_PAUSE) {
                     if (gameHandler.isPaused()) {

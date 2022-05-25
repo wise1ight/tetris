@@ -36,7 +36,7 @@ public class OnePlayerKeyEventDispatcher implements KeyEventDispatcher {
     public boolean dispatchKeyEvent(KeyEvent e) {
         if(e.getID() == KeyEvent.KEY_PRESSED) {
             if (e.getKeyCode() == KEY_CODE_EXIT) {
-                Pipeline.replacePane(new SelectGameModePane());
+                feedbackListener.quit();
                 return true;
             }
             if (e.getKeyCode() == KEY_CODE_PAUSE) {

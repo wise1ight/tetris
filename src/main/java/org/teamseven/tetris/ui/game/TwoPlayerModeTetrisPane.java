@@ -124,6 +124,14 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
             }
 
             @Override
+            public void quit() {
+                gameHandler.pause();
+                KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+                manager.removeKeyEventDispatcher(keyEventDispatcher);
+                Pipeline.replacePane(new SelectGameModePane());
+            }
+
+            @Override
             public void pause() {
                 pauseLabel.setLocation(new Point(main.getWidth() / 2 - pauseLabel.getWidth() / 2,
                         main.getHeight() / 2 - pauseLabel.getHeight() / 2));
