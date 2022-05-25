@@ -3,12 +3,14 @@ package org.teamseven.tetris.ui.game;
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.handler.*;
+import org.teamseven.tetris.ui.menu.SelectGameModePane;
 
 import javax.swing.*;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.TimerTask;
 
 import static org.teamseven.tetris.Const.*;
 import static org.teamseven.tetris.ui.KeyTool.getStringKey;
@@ -94,8 +96,14 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         gameHandler.pause();
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.removeKeyEventDispatcher(keyEventDispatcher);
-        //TODO 2인 게임 했을때 스코어 처리
-        //Pipeline.replacePane(new ScoreBoardPanelTab(preferredResolution, itemMode, gameHandler.getScore()));
+
+        java.util.Timer timer = new java.util.Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Pipeline.replacePane(new SelectGameModePane());
+            }
+        }, 5000);
     }
 
     @Override
