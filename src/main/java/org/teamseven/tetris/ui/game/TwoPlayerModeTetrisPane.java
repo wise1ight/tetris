@@ -20,6 +20,7 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
     private TwoPlayerKeyEventDispatcher keyEventDispatcher;
 
     private int timeCount = 0;
+    private int i = 0;
 
     public TwoPlayerModeTetrisPane(MatchModeBridge gameHandler) {
         this.gameHandler = gameHandler;
@@ -41,6 +42,8 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
                     repaint();
                 } else {
                     finishGame();
+                    i=1;
+                    repaint();
                 }
             }
         });
@@ -52,6 +55,9 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
                     repaint();
                 } else {
                     finishGame();
+                    i=2;
+                    repaint();
+
                 }
             }
         });
@@ -178,6 +184,24 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         drawAttackBoards(g, 340, 130, gameHandler.getAGameHandler());
         drawAttackBoards(g, 120, 130, gameHandler.getBGameHandler());
 
+        if(timeCount >= TIME_MATCH) {
+            if (gameHandler.getAGameHandler().getScore() > gameHandler.getBGameHandler().getScore()){
+                drawYouWin(g, 10, 100);
+                drawYouLose(g, 230, 100);
+            }
+            if (gameHandler.getAGameHandler().getScore() < gameHandler.getBGameHandler().getScore()){
+                drawYouLose(g, 10, 100);
+                drawYouWin(g, 230, 100);
+            }
+        }
+        if(i==2){
+            drawYouWin(g, 10, 100);
+            drawYouLose(g, 230, 100);
+        }
+        if(i==1){
+            drawYouLose(g, 10, 100);
+            drawYouWin(g, 230, 100);
+        }
 //        drawYouWin(g, 10, 100);
 //        drawYouLose(g, 230, 100);
 //        drawPause(g, 0, 120);
@@ -371,7 +395,7 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         g.fillRect(x, y, BLOCK_WIDTH*sizeInt*10, BLOCK_WIDTH*sizeInt*4);
 
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 20));
+        g.setFont(new Font("Dialog", Font.PLAIN, sizeInt * 15));
         g.drawString("   YOU LOSE   ", x, y + sizeInt*24);
     }
 
