@@ -15,7 +15,7 @@ public class RouletteWheelGenerator implements BlockGenerator {
 
     private double[] initProb() {
         double[] cumProb = new double[7];
-        cumProb[0] = (1 / 7.) * PreferencesHandler.getMode().blockProb();
+        cumProb[0] = PreferencesHandler.getMode().blockProb();
         double otherProbs = getOtherProbs(cumProb[0]);
 
         for (int i = 1; i < 7; i++) {
@@ -31,7 +31,7 @@ public class RouletteWheelGenerator implements BlockGenerator {
     @Override
     public Block generate() {
         Random random = new Random();
-        double num = random.nextInt(100) / 100.;
+        double num = random.nextInt(101) / 100.;
 
         if (num < cumProb[0]) {
             return new IBlock();

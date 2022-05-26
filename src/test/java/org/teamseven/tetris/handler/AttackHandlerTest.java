@@ -168,8 +168,8 @@ class AttackHandlerTest {
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                     {1, 1, 1, 1, 1, 1, 1, 1, 0, 1}
             });
@@ -183,15 +183,16 @@ class AttackHandlerTest {
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
                     {1, 1, 1, 1, 1, 1, 1, 1, 0, 0}
             });
-            SBlock sBlock = new SBlock();
-            sBlock.left_rotate();
-            currBlock.setBlock(sBlock);
+            OBlock oBlock = new OBlock();
+            oBlock.left_rotate();
+            currBlock.setBlock(oBlock);
             currBlock.y = 17;
             currBlock.x = 8;
             List<Integer> eraseIndex = new ArrayList<>();
+            eraseIndex.add(17);
             eraseIndex.add(18);
             UnitBlock[][] newAttackLines = attackHandler.readyAttack(eraseIndex, attackLines, preBoard, currBlock);
 
