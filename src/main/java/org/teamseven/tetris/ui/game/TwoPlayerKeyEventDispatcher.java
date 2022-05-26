@@ -53,8 +53,10 @@ public class TwoPlayerKeyEventDispatcher implements KeyEventDispatcher {
                 if (keyCode == KEY_CODE_PAUSE) {
                     if (gameHandler.isPaused()) {
                         gameHandler.start();
+                        feedbackListener.start();
                     } else {
                         gameHandler.pause();
+                        feedbackListener.pause();
                     }
                 }
                 if (gameHandler.isPaused()) {

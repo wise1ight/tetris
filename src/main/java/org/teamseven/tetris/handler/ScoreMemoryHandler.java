@@ -48,6 +48,7 @@ public class ScoreMemoryHandler {
                 String mode = nextLine[4];
                 list.add(new Score(score, name, mode, date, uuid));
             }
+            reader.close();
         } catch (CsvValidationException | IOException e) {
             e.printStackTrace();
         }

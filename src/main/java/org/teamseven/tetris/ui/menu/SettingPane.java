@@ -175,6 +175,9 @@ public class SettingPane extends BasePane {
                 color.setLabel("Color Blind Mode : OFF");
                 difficulty_level.setLabel("Level : EASY" );
                 size.setLabel("Size : MIDDLE");
+                Pipeline.applyScreenSize();
+                Pipeline.replacePane(new SettingPane());
+
 
             }
         });
