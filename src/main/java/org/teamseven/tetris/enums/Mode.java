@@ -1,9 +1,9 @@
 package org.teamseven.tetris.enums;
 
 public enum Mode {
-    EASY(0, 1.2, 0.8),
-    NORMAL(1, 1, 1),
-    HARD(2, 1 / 1.2, 1.2);
+    EASY(0, 1.2/7.2, 0.8),
+    NORMAL(1, 1/7., 1),
+    HARD(2, 1/8.2, 1.2);
 
     private final int code;
     private final double blockProb;
