@@ -23,6 +23,7 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
 
     private int timeCount = 0;
     private int i = 0;
+    private boolean pauseInt = false;
 
     public TwoPlayerModeTetrisPane(MatchModeBridge gameHandler) {
         this.gameHandler = gameHandler;
@@ -135,12 +136,16 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
             public void pause() {
                 pauseLabel.setLocation(new Point(main.getWidth() / 2 - pauseLabel.getWidth() / 2,
                         main.getHeight() / 2 - pauseLabel.getHeight() / 2));
-                pauseLabel.setVisible(true);
+//                pauseLabel.setVisible(true);
+                pauseInt = true;
+                repaint();
             }
 
             @Override
             public void start() {
                 pauseLabel.setVisible(false);
+                pauseInt = false;
+                repaint();
             }
         });
         manager.addKeyEventDispatcher(keyEventDispatcher);
@@ -185,9 +190,9 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
             drawYouLose(g, 10, 100);
             drawYouWin(g, 230, 100);
         }
-//        drawYouWin(g, 10, 100);
-//        drawYouLose(g, 230, 100);
-//        drawPause(g, 0, 120);
+
+        if(pauseInt)
+            drawPause(g, 0, 120);
 
         if(gameHandler.getAGameHandler() instanceof TimeMatchModeHandler)
             drawRemainTime(g, 180, 260);
@@ -196,7 +201,6 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
     public void drawGameBoard(Graphics g, int boardConerX, int boardConerY, GameHandler gameHandler){
         drawBoards(g, boardConerX, boardConerY);
         drawCell(g, boardConerX, boardConerY, gameHandler);
-
     }
 
     public void drawHelpBox(Graphics g, int X, int Y){
