@@ -3,12 +3,14 @@ package org.teamseven.tetris.ui.game;
 import org.teamseven.tetris.Pipeline;
 import org.teamseven.tetris.block.UnitBlock;
 import org.teamseven.tetris.handler.*;
+import org.teamseven.tetris.ui.menu.SelectGameModePane;
 
 import javax.swing.*;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.TimerTask;
 
 import static org.teamseven.tetris.Const.*;
 import static org.teamseven.tetris.ui.KeyTool.getStringKey;
@@ -94,41 +96,14 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
         gameHandler.pause();
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.removeKeyEventDispatcher(keyEventDispatcher);
-        //TODO 2인 게임 했을때 스코어 처리
-        //Pipeline.replacePane(new ScoreBoardPanelTab(preferredResolution, itemMode, gameHandler.getScore()));
-    }
 
-    private void drawAttackBoard(GameHandler gh, JTextPane nbb) {
-        if(!(gh instanceof MatchModeHandler))
-            return;
-
-        StringBuffer sb = new StringBuffer();
-
-        UnitBlock[][] unitBlocks = ((MatchModeHandler) gh).getAttackLines();
-        for (UnitBlock[] unitBlock : unitBlocks) {
-            for (UnitBlock block : unitBlock) {
-                if (block != null) {
-                    sb.append("O");
-                } else {
-                    sb.append(" ");
-                }
+        java.util.Timer timer = new java.util.Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Pipeline.replacePane(new SelectGameModePane());
             }
-            sb.append("\n");
-        }
-
-        nbb.setText(sb.toString());
-        StyledDocument doc = nbb.getStyledDocument();
-        doc.setParagraphAttributes(0, doc.getLength(), TetrisStyle.getStyle(Color.WHITE), false);
-        nbb.setStyledDocument(doc);
-
-        for (int row = 0; row < unitBlocks.length; row++) {
-            for (int col = 0; col < unitBlocks[row].length; col++) {
-                int offset = (unitBlocks[row].length + 1) * row + col;
-                if(unitBlocks[row][col] != null) {
-                    doc.setCharacterAttributes(offset, 1, TetrisStyle.getStyle(unitBlocks[row][col].getColor()), false);
-                }
-            }
-        }
+        }, 5000);
     }
 
     @Override
@@ -146,6 +121,14 @@ public class TwoPlayerModeTetrisPane extends BaseTetrisPane {
             @Override
             public void feedback() {
                 repaint();
+            }
+
+            @Override
+            public void quit() {
+                gameHandler.pause();
+                KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+                manager.removeKeyEventDispatcher(keyEventDispatcher);
+                Pipeline.replacePane(new SelectGameModePane());
             }
 
             @Override

@@ -6,6 +6,7 @@ import org.teamseven.tetris.handler.GameHandler;
 import org.teamseven.tetris.handler.ItemModeHandler;
 import org.teamseven.tetris.handler.PreferencesHandler;
 import org.teamseven.tetris.ui.menu.ScoreBoardPane;
+import org.teamseven.tetris.ui.menu.SelectGameModePane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -75,6 +76,14 @@ public class TetrisPane extends BaseTetrisPane {
             @Override
             public void feedback() {
                 repaint();
+            }
+
+            @Override
+            public void quit() {
+                gameHandler.pause();
+                KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+                manager.removeKeyEventDispatcher(keyEventDispatcher);
+                Pipeline.replacePane(new SelectGameModePane());
             }
 
             @Override
