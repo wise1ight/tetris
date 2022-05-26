@@ -118,6 +118,9 @@ public class GameHandler {
     }
 
     public void drop() {
+        if (animating) {
+            return;
+        }
         int cnt = curr.moveEnd(board);
         addScoreByMove(cnt);
         addScoreByEraseLine();
@@ -125,6 +128,9 @@ public class GameHandler {
     }
 
     public void move(int[] vec) {
+        if (animating) {
+            return;
+        }
         int cnt = curr.move(board, vec);
         if (vec == DOWN) {
             addScoreByMove(cnt);
@@ -132,6 +138,9 @@ public class GameHandler {
     }
 
     public void rotate() {
+        if (animating) {
+            return;
+        }
         board.eraseCurr(curr);
         curr.rotate(board);
         board.placeBlock(curr);
