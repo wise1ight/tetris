@@ -35,6 +35,7 @@ public class ItemModeHandler extends GameHandler {
             return false;
         }
 
+        speedUp();
         if (isNewItem()) {
             nextBlock = BlockFactory.blockGenerator("item").generate();
         } else {
